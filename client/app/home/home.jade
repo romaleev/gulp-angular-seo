@@ -1,0 +1,22 @@
+div( ng-controller="HomeCtrl" )
+	h1 Welcome to my directory!
+
+	a.btn.btn-lg.btn-primary( href="/directory" ) View Directory
+
+	a.fa.fa-5x(
+		ng-repeat="contact in contacts",
+		ng-href="{{contact.url}}",
+		title="{{contact.title}}",
+		class="{{contact.icon}}",
+		target="_blank"
+	)
+
+	//- a.fa.fa-phone.fa-5x( href="tel:+48536585744", title="Phone", target="_blank" )
+	//- a.fa.fa-skype.fa-5x( href="skype:romaleev", title="Skype", target="_blank" )
+	//- a.fa.fa-envelope-o.fa-5x( href="mailto:aromaleev@gmail.com", title="Email" )
+	//- a.fa.fa-vk.fa-5x( href="http://vk.com/romaleev", title="Vkontakte", target="_blank" )
+	//- a.fa.fa-facebook.fa-5x( href="fb.com/romaleev", title="Facebook", target="_blank" )
+	//- a.fa.fa-instagram.fa-5x( href="instagram.com/romaleev", title="Instagram", target="_blank" )
+	//- a.fa.fa-linkedin.fa-5x( href="linkedin/in/romaleev", title="LinkedIn", target="_blank" )
+	//- a.fa.fa-stack-overflow.fa-5x( href="http://stackoverflow.com/users/991818/roman-malieiev", title="Stack Overflow", target="_blank" )
+	//- a.fa.fa-github.fa-5x( href="#", title="GitHub", target="_blank" )

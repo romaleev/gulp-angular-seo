@@ -1,0 +1,51 @@
+{
+    "name": "romaleev.com",
+    "version": "1.0.0",
+    "author": "Roman Malieiev",
+    "description": "Personal site",
+    "homepage": "https://github.com/romaleev/romaleev.com",
+    "repository": "https://github.com/romaleev/romaleev.git",
+    "keywords": ["roman malieiev", "angular", "node", "express", "gulp"],
+    "log": [
+        "error"
+    ],
+    "license": "MIT",
+    "dependencies": {
+        "express": "latest",
+        "bower": "latest",
+        "wiredep": "latest",
+        "require-dir": "latest",
+        "del": "latest",
+        "vinyl-paths": "latest",
+        "compression": "latest",
+        "opn": "latest",
+        "gulp": "latest",
+        "gulp-bower-files": "latest",
+        "gulp-load-plugins": "latest",
+        "gulp-install": "latest",
+        "gulp-jshint": "latest",
+        "gulp-sync": "latest",
+        "gulp-useref": "latest",
+        "gulp-minify-css": "latest",
+        "gulp-ng-annotate": "latest",
+        "gulp-uglify": "latest",
+        "gulp-imagemin": "latest",
+        "gulp-less": "latest",
+        "gulp-jade": "latest",
+        "gulp-concat": "latest",
+        "gulp-add-src": "latest",
+        "gulp-newer": "latest",
+        "gulp-nodemon": "latest",
+        "gulp-flatten": "latest",
+        "gulp-sourcemaps": "latest",
+        "gulp-ng-html2js": "latest"
+    },
+    "devDependencies": {
+        "errorhandler":"latest",
+        "morgan":"latest",
+        "jshint-stylish": "latest",
+        "less": "latest",
+        "jade": "latest",
+        "browser-sync": "latest"
+    }
+}

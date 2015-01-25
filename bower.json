@@ -1,0 +1,16 @@
+{
+    "name": "romaleev.com",
+    "version": "1.0.0",
+    "author": "Roman Malieiev",
+    "ignore": [
+        ".jshintrc",
+        "**/*.txt"
+    ],
+    "dependencies": {
+        "angular": "latest",
+		"angular-route": "latest",
+		"angular-sanitize": "latest",
+        "bootstrap": "latest",
+        "fontawesome": "latest"
+    }
+}

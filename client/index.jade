@@ -1,0 +1,54 @@
+doctype html
+html( ng-app='romaleev' )
+	head
+		meta( charset='utf8' )
+		title Roman Malieiev | 25 | Web developer
+		base(href="/")
+
+		// build:css styles.css
+		// bower:css
+		link(rel='stylesheet', href='bower_components/bootstrap/dist/css/bootstrap.css')
+		link(rel='stylesheet', href='bower_components/fontawesome/css/font-awesome.css')
+		// endbower
+		link( rel="stylesheet", href="app/app.css" )
+		link( rel="stylesheet", href="app/details/details.css" )
+		link( rel="stylesheet", href="directives/directory/directory.css" )
+		// endbuild
+
+	body
+		nav.navbar.navbar-default.navbar-static-top( id="navbar" ng-controller="NavbarCtrl" )
+			div.container
+				div.navbar-header
+					a.navbar-brand( href="/" )
+						img( class="logo glyphicon", alt="Roma", src="img/logo.jpg")
+						| Roman Malieiev
+
+				//- div.navbar-collapse.collapse
+				ul.nav.navbar-nav
+					li( ng-class="{ active: isActive('/') }" )
+						a( href="/" ) Home
+					li( ng-class="{ active: isActive('/directory') }" )
+						a( href="/directory" ) Directory
+				a.btn.btn-default.navbar-btn.pull-right( href="#" ) Resume
+
+		div.content
+			ng-view
+
+		hr
+
+		div.footer
+			p © Roman Malieiev 2015
+
+		// build:js scripts.js
+		// bower:js
+		script(src='bower_components/angular/angular.js')
+		script(src='bower_components/angular-route/angular-route.js')
+		script(src='bower_components/angular-sanitize/angular-sanitize.js')
+		// endbower
+		script( src="app/app.js")
+		script( src="app/home/home.controller.js")
+		script( src="app/directory/directory.controller.js")
+		script( src="app/details/details.controller.js")
+		script( src="directives/directory/directory.directive.js")
+		script( src="services/directories.service.js")
+		// endbuild

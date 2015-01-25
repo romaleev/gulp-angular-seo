@@ -1,0 +1,8 @@
+div.directory
+	div.pull-left
+		img.img-circle.img-thumbnail( ng-src="{{thumbsrc}}" alt="{{fullname}}" )
+	div.no-overflow
+		p.title( ng-bind='fullname' )
+		p( ng-bind='about' )
+		p
+			a.btn.btn-primary( ng-href="/directory/{{encodeURI(fullname)}}" ) View Profile

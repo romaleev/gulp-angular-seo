@@ -1,0 +1,8 @@
+h1 Directory
+
+div( ng-repeat="directory in directories" )
+	directory( 
+		fullName='{{directory.name.last}}, {{directory.name.first}}'
+		about='{{directory.about}}'
+		thumbSrc='{{directory.picture.thumbnail}}'
+	)
