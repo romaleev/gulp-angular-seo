@@ -5,6 +5,7 @@ var $ = require('gulp-load-plugins')(),
     // vinylPaths = require('vinyl-paths'),
     del = require('del'),
     opn = require('opn'),
+    ftp = require('../ftp.json'),
     dist = 'dist',
     tmp = 'tmp',
     bower = 'client/bower_components';
@@ -126,6 +127,37 @@ gulp.task('nodemon:prod', function(cb) {
     });
 });
 
-gulp.task('prod', $.sync(gulp).sync([
-    ['clean:prod', 'wiredep'], [['html:partials', 'js'], 'html', 'css', 'fonts', 'image'], 'useref', 'nodemon:prod'
+gulp.task('sitemap', function() {
+    return gulp.src(dist + '/index.html')
+        .pipe($.sitemap({
+            siteUrl: 'http://www.romaleev.com'
+        }))
+        .pipe(gulp.dest(dist));
+});
+
+gulp.task('ftp:prod', function() {
+    return gulp.src(dist + '/**/*.*')
+        .pipe($.newer(tmp + '/ftp'))
+        .pipe(gulp.dest(tmp + '/ftp'))
+        .pipe($.ftp(ftp));
+});
+
+gulp.task('dist', $.sync(gulp).sync([
+    ['clean:prod', 'wiredep'],
+    [
+        ['html:partials', 'js'],
+        ['html', 'sitemap'],
+        'css',
+        'fonts',
+        'image'
+    ],
+    'useref'
 ]));
+
+gulp.task('prod', ['dist'], function(){
+    gulp.start('nodemon:prod');
+});
+
+gulp.task('ftp', ['dist'], function(){
+    gulp.start('ftp:prod');
+});

@@ -11,3 +11,4 @@ dist/
 !.gitkeep
 bower_components/
 bak/
+ftp.json
