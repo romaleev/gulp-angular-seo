@@ -7,6 +7,8 @@
 	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
 }
 body{
+}
+body {
 	font-family: 'Open Sans';
 }
 .logo{
@@ -15,11 +17,33 @@ body{
 	margin-right: 0.7em;
 	margin-top: -7px;
 }
-.content,
-.footer{
+.content{
 	margin: 0 auto;
-	max-width: 45em;
+	max-width: 55em;
 }
+#home{
+	img{
+		display: block;
+		margin: 0 auto 1em auto;
+		border-radius: 1em;
+	}
+	a.fa{
+	/*	border:1px solid black;*/
+	}
+	.contact{
+		padding: 0.5em;
+		min-width: 6em;
+		a{
+			color: grey;
+			&:hover{
+				color: red;
+				text-decoration: none;
+			}
+		}
+
+	}
+}
+
 /*[ng\:cloak], [ng-cloak], .ng-cloak {
   display: none !important;
 }*/

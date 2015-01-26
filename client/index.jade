@@ -29,14 +29,14 @@ html( ng-app='romaleev' )
 						a( href="/" ) Home
 					li( ng-class="{ active: isActive('/directory') }" )
 						a( href="/directory" ) Directory
-				a.btn.btn-default.navbar-btn.pull-right( href="#" ) Resume
+				//- a.btn.btn-default.navbar-btn.pull-right( href="#" ) Resume
 
 		div.content
 			ng-view
 
 		hr
 
-		div.footer
+		div.text-center
 			p © Roman Malieiev 2015
 
 		// build:js scripts.js
@@ -51,4 +51,5 @@ html( ng-app='romaleev' )
 		script( src="app/details/details.controller.js")
 		script( src="directives/directory/directory.directive.js")
 		script( src="services/directories.service.js")
+		script( src="services/data.service.js")
 		// endbuild
