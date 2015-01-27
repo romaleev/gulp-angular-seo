@@ -48,6 +48,10 @@ gulp.task('nodemon:dev', function(cb) {
 	});
 });
 
+gulp.task('livereload', function() {
+    //TODO
+});
+
 gulp.task('browser-sync', ['nodemon:dev'], function() {
 	return $.browserSync.init({
 		proxy: "http://localhost:8000",

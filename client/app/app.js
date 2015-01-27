@@ -1,11 +1,12 @@
 'use strict';
 
 angular.module('romaleev', ['ngRoute', 'ngSanitize'])
-	.config(function($locationProvider, $routeProvider) {
+	.config(function($locationProvider, $routeProvider, $compileProvider) {
 		$locationProvider.html5Mode(true);
 		$routeProvider.otherwise({
 			redirectTo: '/'
 		});
+		$compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|tel|mailto|skype):/);
 	})
 	.controller('NavbarCtrl', function ($scope, $location, data) {
 		$scope.isActive = function (viewLocation) {

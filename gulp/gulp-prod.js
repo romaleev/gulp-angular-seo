@@ -146,6 +146,16 @@ gulp.task('ftp:prod', function() {
         .pipe(conn.dest('/public_html'))
 });
 
+gulp.task('heroku', function() {
+    //TODO
+});
+gulp.task('seo', function() {
+    //TODO
+});
+gulp.task('sass', function() {
+    //TODO
+});
+
 gulp.task('dist', $.sync(gulp).sync([
     ['clean:prod', 'wiredep'],
     [
