@@ -1,16 +1,23 @@
 'use strict';
 
-var gulp = require('gulp');
-var del = require('del');
+var gulp = require('gulp'),
+	del = require('del');
+
+gulp.path = {
+	dist: 'dist',
+	tmp: 'tmp',
+	bower: 'client/bower_components'
+}
+gulp.ftpConfig = require('./ftp.json');
+
+if(!gulp.ftpConfig) throw new Error('Define ./ftp.json with host, port, user, pass and remotePath fields.');
 
 require('require-dir')('./gulp');
 
 gulp.task('clean', function(cb) {
 	del([
-		'node_modules',
-		'client/bower_components',
-		'dist/**/*.*',
-		'tmp/**/*.*'
+		dist + '/**/*.*',
+		tmp + '/**/*.*'
 	], cb);
 });
 

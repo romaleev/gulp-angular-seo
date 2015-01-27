@@ -7,8 +7,10 @@ angular.module('romaleev', ['ngRoute', 'ngSanitize'])
 			redirectTo: '/'
 		});
 	})
-	.controller('NavbarCtrl', function ($scope, $location) {
-		$scope.isActive = function (viewLocation) { 
+	.controller('NavbarCtrl', function ($scope, $location, data) {
+		$scope.isActive = function (viewLocation) {
 			return viewLocation === $location.path();
 		};
+		$scope.tab_title = data.tab_title;
+		$scope.header_title = data.header_title;
 	});

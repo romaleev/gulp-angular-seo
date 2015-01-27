@@ -3,6 +3,8 @@
 angular.module('romaleev')
   .factory('data', function() {
     return {
+      tab_title: "Roman Malieiev | 25 | Web Developer",
+      header_title: "Roman Malieiev",
       contacts: [{
         title: "Phone",
         icon: "fa-phone",

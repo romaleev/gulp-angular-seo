@@ -62,4 +62,18 @@ gulp.task('browser-sync', ['nodemon:dev'], function() {
 	});
 });
 
+gulp.task('livereload', ['nodemon:dev'], function() {
+	return $.browserSync.init({
+		proxy: "http://localhost:8000",
+		files: [
+			"client/**/*.{js,jade,less}",
+			"client/{!bower_components}"
+		],
+		browser: "chrome",
+		port: 8001,
+		notify: false
+		//logLevel: 'silent'
+	});
+});
+
 gulp.task('dev', ['watch', 'browser-sync']);

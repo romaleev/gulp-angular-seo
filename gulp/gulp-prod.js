@@ -5,16 +5,14 @@ var $ = require('gulp-load-plugins')(),
     // vinylPaths = require('vinyl-paths'),
     del = require('del'),
     opn = require('opn'),
-    ftp = require('../ftp.json'),
-    dist = 'dist',
-    tmp = 'tmp',
-    bower = 'client/bower_components';
+    ftp = require('vinyl-ftp'),
+    path = gulp.path;
 
 gulp.task('clean:prod', function(cb) {
     del([
-        dist + '/**/*.*',
-        '!' + dist + '/font/**',
-        '!' + dist + '/img/**'
+        path.dist + '/**/*.*',
+        '!' + path.dist + '/fonts/*',
+        '!' + path.dist + '/img/*'
     ], cb); //return gulp.src('tmp/**/*.*', {read: false}).pipe(vinylPaths(del));
 });
 
@@ -23,7 +21,7 @@ gulp.task('html', function() {
         .pipe($.jade({
             pretty: true
         }))
-        .pipe(gulp.dest(dist))
+        .pipe(gulp.dest(path.dist))
 });
 
 gulp.task('html:partials', function() {
@@ -38,23 +36,23 @@ gulp.task('html:partials', function() {
         }))
         .pipe($.concat("partials.min.js"))
         .pipe($.uglify())
-        .pipe(gulp.dest(tmp));
+        .pipe(gulp.dest(path.tmp));
 });
 
 gulp.task('js', function() {
     return gulp.src([
             'client/**/*.js',
-            '!' + bower + '/**'
+            '!' + path.bower + '/**'
         ])
         .pipe($.ngAnnotate())
         .pipe($.sourcemaps.init())
         .pipe($.uglify())
         .pipe($.sourcemaps.write())
-        .pipe($.addSrc.append(tmp + '/partials.min.js'))
+        .pipe($.addSrc.append(path.tmp + '/partials.min.js'))
         .pipe($.addSrc.prepend([
-            bower + '/**/*.min.js',
-            '!' + bower + '/bootstrap/**',
-            '!' + bower + '/jquery/**'
+            path.bower + '/**/*.min.js',
+            '!' + path.bower + '/bootstrap/**',
+            '!' + path.bower + '/jquery/**'
             //'client/bower_components/angular/angular.min.js',
             //'client/bower_components/angular-route/angular-route.min.js',
             //'client/bower_components/angular-sanitize/angular-sanitize.min.js'
@@ -62,54 +60,60 @@ gulp.task('js', function() {
         // .pipe($.sourcemaps.init({loadMaps: true}))
         .pipe($.concat('scripts.js'))
         // .pipe($.sourcemaps.write())
-        .pipe(gulp.dest(dist));
+        .pipe(gulp.dest(path.dist));
 });
 
 gulp.task('css', function() {
     return gulp.src([
             'client/**/*.less',
-            '!' + bower + '/**'
+            '!' + path.bower + '/**'
         ])
         .pipe($.less())
         .pipe($.minifyCss())
         .pipe($.addSrc([
-            bower + '/bootstrap/dist/css/bootstrap.min.css',
-            bower + '/fontawesome/css/font-awesome.min.css'
+            path.bower + '/bootstrap/dist/css/bootstrap.min.css',
+            path.bower + '/fontawesome/css/font-awesome.min.css'
         ]))
         .pipe($.concat('styles.css'))
-        .pipe(gulp.dest(dist));
+        .pipe(gulp.dest(path.dist));
 });
 
 gulp.task('fonts', function() {
     return gulp.src([
             'client/fonts/*.woff2',
-            bower + '/fontawesome/fonts/fontawesome-webfont.woff2'
+            path.bower + '/fontawesome/fonts/fontawesome-webfont.woff2'
         ])
-        .pipe($.newer(dist + '/fonts'))
-        .pipe(gulp.dest(dist + '/fonts'));
+        .pipe($.newer(path.dist + '/fonts'))
+        .pipe($.debug({
+            title: "fonts:"
+        }))
+        .pipe(gulp.dest(path.dist + '/fonts'));
 });
 
 gulp.task('image', function() {
     return gulp.src('client/img/**/*.*')
-        .pipe($.newer(tmp + '/img'))
-        .pipe(gulp.dest(tmp + '/img'))
+        .pipe($.newer(path.tmp + '/img'))
+        .pipe($.debug({
+            title: "images:"
+        }))
+        .pipe(gulp.dest(path.tmp + '/img'))
         .pipe($.imagemin({
             progressive: true,
             interlaced: true
         }))
-        .pipe(gulp.dest(dist + '/img'));
+        .pipe(gulp.dest(path.dist + '/img'));
 });
 
 gulp.task('useref', function() {
     var assets = $.useref.assets({
-        searchPath: '{' + dist + '}' // noconcat: true
+        searchPath: '{' + path.dist + '}' // noconcat: true
     });
 
-    return gulp.src(dist + '/index.html')
+    return gulp.src(path.dist + '/index.html')
         .pipe(assets)
         .pipe(assets.restore())
         .pipe($.useref())
-        .pipe(gulp.dest(dist));
+        .pipe(gulp.dest(path.dist));
 });
 
 gulp.task('nodemon:prod', function(cb) {
@@ -128,18 +132,18 @@ gulp.task('nodemon:prod', function(cb) {
 });
 
 gulp.task('sitemap', function() {
-    return gulp.src(dist + '/index.html')
+    return gulp.src(path.dist + '/index.html')
         .pipe($.sitemap({
             siteUrl: 'http://www.romaleev.com'
         }))
-        .pipe(gulp.dest(dist));
+        .pipe(gulp.dest(path.dist));
 });
 
 gulp.task('ftp:prod', function() {
-    return gulp.src(dist + '/**/*.*')
-        .pipe($.newer(tmp + '/ftp'))
-        .pipe(gulp.dest(tmp + '/ftp'))
-        .pipe($.ftp(ftp));
+    var conn = ftp.create(gulp.ftpConfig);
+    return gulp.src(path.dist + '/**/*.*')
+        .pipe(conn.newer('/public_html')) //TODO content change instead of time
+        .pipe(conn.dest('/public_html'))
 });
 
 gulp.task('dist', $.sync(gulp).sync([
@@ -152,12 +156,12 @@ gulp.task('dist', $.sync(gulp).sync([
         'image'
     ],
     'useref'
-]));
+], 'dist'));
 
-gulp.task('prod', ['dist'], function(){
+gulp.task('prod', ['dist'], function() {
     gulp.start('nodemon:prod');
 });
 
-gulp.task('ftp', ['dist'], function(){
+gulp.task('ftp', ['dist'], function() {
     gulp.start('ftp:prod');
 });

@@ -18,6 +18,7 @@
         "del": "latest",
         "compression": "latest",
         "opn": "latest",
+        "vinyl-ftp": "latest",
         "gulp": "latest",
         "gulp-load-plugins": "latest",
         "gulp-jshint": "latest",
@@ -36,7 +37,9 @@
         "gulp-sourcemaps": "latest",
         "gulp-ng-html2js": "latest",
         "gulp-sitemap": "latest",
-        "gulp-ftp": "latest"
+        "gulp-size": "latest",
+        "gulp-debug": "latest",
+        "gulp-changed": "latest"
     },
     "devDependencies": {
         "errorhandler": "latest",
@@ -44,6 +47,7 @@
         "jshint-stylish": "latest",
         "less": "latest",
         "jade": "latest",
-        "browser-sync": "latest"
+        "browser-sync": "latest",
+        "gulp-livereload": "latest"
     }
 }

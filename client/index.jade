@@ -7,7 +7,7 @@ html( ng-app='romaleev' )
 		<meta name="keywords" content="romaleev, Roman Malieiev, web developer" />
 		<meta name="description" content="Personal site" />
 		//- <meta name="document-state" content="Dynamic" />
-		title Roman Malieiev | 25 | Web developer
+		title( ng-bind="tab_title" )
 		base(href="/")
 
 		// build:css styles.css
@@ -26,7 +26,7 @@ html( ng-app='romaleev' )
 				div.navbar-header
 					a.navbar-brand( href="/" )
 						img.logo( alt="Roman Malieiev", src="img/logo.jpg" )
-						| Roman Malieiev
+						span( ng-bind="header_title" )
 
 				//- div.navbar-collapse.collapse
 				ul.nav.navbar-nav
@@ -42,7 +42,7 @@ html( ng-app='romaleev' )
 		hr
 
 		div.text-center
-			p © Roman Malieiev 2015
+			p © Roman Malieiev 2012-2015
 
 		// build:js scripts.js
 		// bower:js
