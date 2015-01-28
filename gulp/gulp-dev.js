@@ -81,3 +81,4 @@ gulp.task('livereload', ['nodemon:dev'], function() {
 });
 
 gulp.task('dev', ['watch', 'browser-sync']);
+gulp.task('d', ['dev']);

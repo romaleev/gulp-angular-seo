@@ -1,7 +1,6 @@
 TODO
 generator
 description
-fix fonts: include all than woff2
 
 ## Synopsis
 

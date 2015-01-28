@@ -19,6 +19,8 @@
         "compression": "latest",
         "opn": "latest",
         "vinyl-ftp": "latest",
+        "prerender-node": "latest",
+        "lazypipe": "latest",
         "gulp": "latest",
         "gulp-load-plugins": "latest",
         "gulp-jshint": "latest",

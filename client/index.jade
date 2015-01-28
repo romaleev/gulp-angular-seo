@@ -3,9 +3,10 @@ html( ng-app='romaleev' )
 	head
 		meta( charset='utf8' )
 		meta( name="viewport" content="width=device-width, initial-scale=1.0" )
-		<meta name="author" content="Roman Malieiev">
-		<meta name="keywords" content="romaleev, Roman Malieiev, web developer" />
-		<meta name="description" content="Personal site" />
+		meta( name="author" content="Roman Malieiev" )
+		meta( name="keywords" content="romaleev, Roman Malieiev, web developer" )
+		meta( name="description" content="Personal site" )
+		meta( name="fragment" content="!" )
 		//- <meta name="document-state" content="Dynamic" />
 		title( ng-bind="tab_title" )
 		base(href="/")
@@ -44,12 +45,15 @@ html( ng-app='romaleev' )
 		div.text-center
 			p © Roman Malieiev 2012-2015
 
-		// build:js scripts.js
+		// build:js vendor.js
 		// bower:js
 		script(src='bower_components/angular/angular.js')
 		script(src='bower_components/angular-route/angular-route.js')
 		script(src='bower_components/angular-sanitize/angular-sanitize.js')
 		// endbower
+		// endbuild
+
+		// build:js scripts.js
 		script( src="app/app.js")
 		script( src="app/home/home.controller.js")
 		script( src="app/directory/directory.controller.js")

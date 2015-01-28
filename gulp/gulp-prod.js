@@ -6,6 +6,7 @@ var $ = require('gulp-load-plugins')(),
     del = require('del'),
     opn = require('opn'),
     ftp = require('vinyl-ftp'),
+    lazypipe = require('lazypipe'),
     path = gulp.path;
 
 gulp.task('clean:prod', function(cb) {
@@ -39,7 +40,37 @@ gulp.task('html:partials', function() {
         .pipe(gulp.dest(path.tmp));
 });
 
-gulp.task('js', function() {
+//merged vendor+scripts, no sourcemaps
+gulp.task('js:merged', function() {
+    return gulp.src([
+            'client/**/*.js',
+            '!' + path.bower + '/**'
+        ])
+        .pipe($.ngAnnotate())
+        .pipe($.uglify())
+        .pipe($.addSrc.prepend([
+            path.bower + '/**/*.min.js',
+            '!' + path.bower + '/bootstrap/**',
+            '!' + path.bower + '/jquery/**'
+        ]))
+        .pipe($.addSrc.append(path.tmp + '/partials.min.js'))
+        .pipe($.concat('scripts.js'))
+        .pipe(gulp.dest(path.dist));
+});
+
+gulp.task('js:vendor', function() {
+    return gulp.src([
+            path.bower + '/**/*.min.js',
+            '!' + path.bower + '/angular/**',
+            '!' + path.bower + '/bootstrap/**',
+            '!' + path.bower + '/jquery/**'
+        ])
+        .pipe($.addSrc.prepend(path.bower + '/angular/angular.min.js'))
+        .pipe($.concat('vendor.js'))
+        .pipe(gulp.dest(path.dist));
+});
+
+gulp.task('js:user', function() {
     return gulp.src([
             'client/**/*.js',
             '!' + path.bower + '/**'
@@ -47,19 +78,9 @@ gulp.task('js', function() {
         .pipe($.ngAnnotate())
         .pipe($.sourcemaps.init())
         .pipe($.uglify())
-        .pipe($.sourcemaps.write())
         .pipe($.addSrc.append(path.tmp + '/partials.min.js'))
-        .pipe($.addSrc.prepend([
-            path.bower + '/**/*.min.js',
-            '!' + path.bower + '/bootstrap/**',
-            '!' + path.bower + '/jquery/**'
-            //'client/bower_components/angular/angular.min.js',
-            //'client/bower_components/angular-route/angular-route.min.js',
-            //'client/bower_components/angular-sanitize/angular-sanitize.min.js'
-        ]))
-        // .pipe($.sourcemaps.init({loadMaps: true}))
         .pipe($.concat('scripts.js'))
-        // .pipe($.sourcemaps.write())
+        .pipe($.sourcemaps.write())
         .pipe(gulp.dest(path.dist));
 });
 
@@ -68,8 +89,27 @@ gulp.task('css', function() {
             'client/**/*.less',
             '!' + path.bower + '/**'
         ])
+        .pipe($.sourcemaps.init())
         .pipe($.less())
         .pipe($.minifyCss())
+        .pipe($.sourcemaps.write())
+        .pipe($.addSrc([
+            path.bower + '/bootstrap/dist/css/bootstrap.min.css',
+            path.bower + '/fontawesome/css/font-awesome.min.css'
+        ]))
+        .pipe($.concat('styles.css'))
+        .pipe(gulp.dest(path.dist));
+});
+//TODO for generator
+gulp.task('css:sass', function() {
+    gulp.src([
+            'client/**/*.sass',
+            '!' + path.bower + '/**'
+        ])
+        .pipe($.sourcemaps.init())
+        .pipe($.sass())
+        .pipe($.minifyCss())
+        .pipe($.sourcemaps.write())
         .pipe($.addSrc([
             path.bower + '/bootstrap/dist/css/bootstrap.min.css',
             path.bower + '/fontawesome/css/font-awesome.min.css'
@@ -80,7 +120,9 @@ gulp.task('css', function() {
 
 gulp.task('fonts', function() {
     return gulp.src([
+            'client/fonts/*.woff',
             'client/fonts/*.woff2',
+            path.bower + '/fontawesome/fonts/fontawesome-webfont.woff',
             path.bower + '/fontawesome/fonts/fontawesome-webfont.woff2'
         ])
         .pipe($.newer(path.dist + '/fonts'))
@@ -142,7 +184,11 @@ gulp.task('sitemap', function() {
 gulp.task('ftp:prod', function() {
     var conn = ftp.create(gulp.ftpConfig);
     return gulp.src(path.dist + '/**/*.*')
-        .pipe(conn.newer('/public_html')) //TODO content change instead of time
+        .pipe($.changed(path.tmp + '/ftp', {hasChanged: $.changed.compareSha1Digest}))
+        .pipe(gulp.dest(path.tmp + '/ftp'))
+        .pipe($.debug({
+            title: "ftp:"
+        }))
         .pipe(conn.dest('/public_html'))
 });
 
@@ -150,20 +196,19 @@ gulp.task('heroku', function() {
     //TODO
 });
 gulp.task('seo', function() {
-    //TODO
-});
-gulp.task('sass', function() {
-    //TODO
+    return gulp.src(path.tmp + '/*.html')
+        .pipe(gulp.dest(path.dist + '/snapshots'));
 });
 
 gulp.task('dist', $.sync(gulp).sync([
     ['clean:prod', 'wiredep'],
     [
-        ['html:partials', 'js'],
+        ['html:partials', 'js:vendor', 'js:user'],
         ['html', 'sitemap'],
         'css',
         'fonts',
-        'image'
+        'image',
+        'seo'
     ],
     'useref'
 ], 'dist'));
@@ -171,7 +216,9 @@ gulp.task('dist', $.sync(gulp).sync([
 gulp.task('prod', ['dist'], function() {
     gulp.start('nodemon:prod');
 });
+gulp.task('p', ['prod']);
 
 gulp.task('ftp', ['dist'], function() {
     gulp.start('ftp:prod');
 });
+gulp.task('f', ['ftp']);

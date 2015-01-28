@@ -2,7 +2,7 @@
 
 angular.module('romaleev', ['ngRoute', 'ngSanitize'])
 	.config(function($locationProvider, $routeProvider, $compileProvider) {
-		$locationProvider.html5Mode(true);
+		$locationProvider.html5Mode(true).hashPrefix('!');
 		$routeProvider.otherwise({
 			redirectTo: '/'
 		});
@@ -14,4 +14,7 @@ angular.module('romaleev', ['ngRoute', 'ngSanitize'])
 		};
 		$scope.tab_title = data.tab_title;
 		$scope.header_title = data.header_title;
+	}).
+	run(function(){
+		console.log('ready');
 	});
