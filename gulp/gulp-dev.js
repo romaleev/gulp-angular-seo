@@ -1,8 +1,8 @@
 'use strict';
 
 var gulp = require('gulp'),
-	$ = require('gulp-load-plugins')();
-
+	$ = require('gulp-load-plugins')(),
+	path = gulp.path;
 	$.browserSync = require('browser-sync');
 
 gulp.task('validate', function() {
@@ -54,30 +54,20 @@ gulp.task('livereload', function() {
 
 gulp.task('browser-sync', ['nodemon:dev'], function() {
 	return $.browserSync.init({
-		proxy: "http://localhost:8000",
+		proxy: path.devURL,
 		files: [
 			"client/**/*.{js,jade,less}",
 			"client/{!bower_components}"
 		],
 		browser: "chrome",
-		port: 8001,
+		//port: 8001,
 		notify: false
 		//logLevel: 'silent'
 	});
 });
 
 gulp.task('livereload', ['nodemon:dev'], function() {
-	return $.browserSync.init({
-		proxy: "http://localhost:8000",
-		files: [
-			"client/**/*.{js,jade,less}",
-			"client/{!bower_components}"
-		],
-		browser: "chrome",
-		port: 8001,
-		notify: false
-		//logLevel: 'silent'
-	});
+	//TODO
 });
 
 gulp.task('dev', ['watch', 'browser-sync']);

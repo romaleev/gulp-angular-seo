@@ -1,6 +1,23 @@
 TODO
+phantomjs generator
+.htaccess for snapshots
+less sourcemaps
+heroku publish with server config
+
 generator
 description
+## Quick start
+For SEO you need to have in the env path.
+https://www.python.org/downloads/
+http://phantomjs.org/download.html
+
+##Options
+html/jade
+css/less/sass
+dev/prod server
+html5mode/hashbang?
+pregenerated/middleware SEO? (PhantomJS/Prerender.io)
+
 
 ## Synopsis
 

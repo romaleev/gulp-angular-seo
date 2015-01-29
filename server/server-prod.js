@@ -4,19 +4,17 @@
 var express = require('express'),
 	app = express(),
 	path = require('path'),
-	clientPath = path.join(__dirname, '/../dist'),
-	compress = require('compression');
+	compress = require('compression'),
+	clientPath = path.join(__dirname, '/../dist');
 
 app.set('views', clientPath);
-//app.use(require('prerender-node').set('prerenderToken', 'pre'));
-//app.use(require('prerender-node'));//?_escaped_fragment_=
 //app.use(express.static(clientPath));
 app.use(compress());
 
 app.use('/', function(req, res){
-    if(/_escaped_fragment_=/.test(req.url)){ // testing if url contains '_escaped_fragment_=' part
+    if(/_escaped_fragment_=/.test(req.url)){//?_escaped_fragment_=
     	console.log('OK'+req.url);
-        req.url = req.url.replace(/\?.*$/,'').replace(/\/+$/,''); // if it does, then strip it
+        req.url = req.url.replace(/\?.*$/,'').replace(/\/+$/,'');
         req.url += (req.url === '') ? '/index.html' : '.html';
         express.static(clientPath + '/snapshots').apply(this, arguments);
     } else {

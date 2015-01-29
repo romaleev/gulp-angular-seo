@@ -1,16 +1,13 @@
 'use strict';
 
-var gulp = require('gulp');
-var $ = require('gulp-load-plugins')(),
-    // vinylPaths = require('vinyl-paths'),
-    del = require('del'),
-    opn = require('opn'),
-    ftp = require('vinyl-ftp'),
-    lazypipe = require('lazypipe'),
+var gulp = require('gulp'),
+    $ = require('gulp-load-plugins')(),
     path = gulp.path;
+    // vinylPaths = require('vinyl-paths'),
+    //lazypipe = require('lazypipe'),
 
 gulp.task('clean:prod', function(cb) {
-    del([
+    require('del')([
         path.dist + '/**/*.*',
         '!' + path.dist + '/fonts/*',
         '!' + path.dist + '/img/*'
@@ -166,7 +163,7 @@ gulp.task('nodemon:prod', function(cb) {
         watch: 'server/server-prod.js' //ignore:[]
     }).on('start', function() {
         if (!called) {
-            opn('http://localhost:7997', 'chrome');
+            require('opn')(path.prodURL, 'chrome');
             called = true;
             cb();
         }
@@ -182,7 +179,7 @@ gulp.task('sitemap', function() {
 });
 
 gulp.task('ftp:prod', function() {
-    var conn = ftp.create(gulp.ftpConfig);
+    var conn = require('vinyl-ftp').create(gulp.ftpConfig);
     return gulp.src(path.dist + '/**/*.*')
         .pipe($.changed(path.tmp + '/ftp', {hasChanged: $.changed.compareSha1Digest}))
         .pipe(gulp.dest(path.tmp + '/ftp'))
@@ -195,20 +192,72 @@ gulp.task('ftp:prod', function() {
 gulp.task('heroku', function() {
     //TODO
 });
-gulp.task('seo', function() {
-    return gulp.src(path.tmp + '/*.html')
-        .pipe(gulp.dest(path.dist + '/snapshots'));
+
+gulp.task('seo:render', function(cb) {
+    var host = path.prodURL,
+        urls = [
+            '/',
+            '/directory'
+        ],
+        phantom = require('phantom'),
+        fs = require('fs'),
+        files = urls.length;
+
+    urls.forEach(function(url, i, arr) {
+        var file = path.dist + '/snapshots' + url + ((url === '/') ? 'index.html' : '.html');
+        function ready(){
+            if(--files === 0) cb();
+        }
+        phantom.create(function(ph) {
+            ph.createPage(function(page) {
+                page.open(host + url, function(status) {
+                    page.evaluate(function() {
+                        return document.getElementsByTagName("html")[0].innerHTML;
+                    }, function(result) {
+                        fs.writeFile(file, result, function(err) {
+                            console.log(file);
+                            if (err) console.log('err: ' + err);
+                        });
+                        ph.exit();
+                        ready();
+                    });
+                });
+            });
+        }, {
+            dnodeOpts: {
+                weak: false
+            }
+        });
+    });
+    //.pipe(gulp.dest(path.tmp + '/snapshots'))
+    //return gulp.src(path.tmp + '/*.html')
+    //.pipe(gulp.dest(path.dist + '/snapshots'));
+});
+
+gulp.task('ss', [], function() {
+    $.express.run({
+        file: 'server/server-dev.js'
+    }).stdout.on('data', function(){
+        gulp.start('seo:render')
+        .pipe
+        //console.log(2);
+    });
+    //console.log(1);
+    //.pipe(gulp.start('seo:render'));
+});
+
+gulp.task('ss2', ['ss'], function() {
+    console.log(2);
 });
 
 gulp.task('dist', $.sync(gulp).sync([
     ['clean:prod', 'wiredep'],
     [
-        ['html:partials', 'js:vendor', 'js:user'],
+        ['html:partials', ['js:vendor', 'js:user']],
         ['html', 'sitemap'],
         'css',
         'fonts',
-        'image',
-        'seo'
+        'image'
     ],
     'useref'
 ], 'dist'));

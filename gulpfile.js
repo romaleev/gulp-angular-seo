@@ -4,6 +4,8 @@ var gulp = require('gulp'),
 	del = require('del');
 
 gulp.path = {
+	devURL: 'http://localhost:8000',
+	prodURL: 'http://localhost:7997',
 	dist: 'dist',
 	tmp: 'tmp',
 	bower: 'client/bower_components'
