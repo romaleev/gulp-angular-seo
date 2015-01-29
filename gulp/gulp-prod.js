@@ -37,24 +37,6 @@ gulp.task('html:partials', function() {
         .pipe(gulp.dest(path.tmp));
 });
 
-//merged vendor+scripts, no sourcemaps
-gulp.task('js:merged', function() {
-    return gulp.src([
-            'client/**/*.js',
-            '!' + path.bower + '/**'
-        ])
-        .pipe($.ngAnnotate())
-        .pipe($.uglify())
-        .pipe($.addSrc.prepend([
-            path.bower + '/**/*.min.js',
-            '!' + path.bower + '/bootstrap/**',
-            '!' + path.bower + '/jquery/**'
-        ]))
-        .pipe($.addSrc.append(path.tmp + '/partials.min.js'))
-        .pipe($.concat('scripts.js'))
-        .pipe(gulp.dest(path.dist));
-});
-
 gulp.task('js:vendor', function() {
     return gulp.src([
             path.bower + '/**/*.min.js',
@@ -89,7 +71,7 @@ gulp.task('css', function() {
         .pipe($.sourcemaps.init())
         .pipe($.less())
         .pipe($.minifyCss())
-        .pipe($.sourcemaps.write())
+        .pipe($.sourcemaps.write('/'))
         .pipe($.addSrc([
             path.bower + '/bootstrap/dist/css/bootstrap.min.css',
             path.bower + '/fontawesome/css/font-awesome.min.css'
@@ -97,6 +79,24 @@ gulp.task('css', function() {
         .pipe($.concat('styles.css'))
         .pipe(gulp.dest(path.dist));
 });
+
+gulp.task('css', function() {
+    return gulp.src([
+            'client/**/*.less',
+            '!' + path.bower + '/**'
+        ])
+        .pipe($.sourcemaps.init())
+        .pipe($.less())
+        .pipe($.minifyCss())
+        .pipe($.sourcemaps.write('/'))
+        .pipe($.addSrc([
+            path.bower + '/bootstrap/dist/css/bootstrap.min.css',
+            path.bower + '/fontawesome/css/font-awesome.min.css'
+        ]))
+        .pipe($.concat('styles.css'))
+        .pipe(gulp.dest(path.dist));
+});
+
 //TODO for generator
 gulp.task('css:sass', function() {
     gulp.src([
@@ -179,6 +179,13 @@ gulp.task('sitemap', function() {
 });
 
 gulp.task('ftp:prod', function() {
+    var ftp;
+    try{
+        ftp = require('./ftp.json');
+    }catch(e){
+        console.error
+        throw new Error('Define ./ftp.json with host, port, user, pass and remotePath fields.');
+    }
     var conn = require('vinyl-ftp').create(gulp.ftpConfig);
     return gulp.src(path.dist + '/**/*.*')
         .pipe($.changed(path.tmp + '/ftp', {hasChanged: $.changed.compareSha1Digest}))

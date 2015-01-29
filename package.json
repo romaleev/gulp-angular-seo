@@ -21,6 +21,7 @@
         "vinyl-ftp": "latest",
         "lazypipe": "latest",
         "phantom": "latest",
+        "phantomjs": "latest",
         "gulp": "latest",
         "gulp-express": "latest",
         "gulp-load-plugins": "latest",
