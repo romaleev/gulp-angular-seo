@@ -1,0 +1,5 @@
+RewriteEngine On
+Options +FollowSymLinks
+RewriteCond %{REQUEST_URI}  ^/$
+RewriteCond %{QUERY_STRING} ^_escaped_fragment_=/?(.*)$
+RewriteRule ^(.*)$ /snapshots/%1? [NC,L]
