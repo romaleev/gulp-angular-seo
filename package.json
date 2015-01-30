@@ -23,7 +23,6 @@
         "phantom": "latest",
         "phantomjs": "latest",
         "gulp": "latest",
-        "gulp-express": "latest",
         "gulp-load-plugins": "latest",
         "gulp-jshint": "latest",
         "gulp-sync": "latest",
@@ -43,7 +42,9 @@
         "gulp-sitemap": "latest",
         "gulp-size": "latest",
         "gulp-debug": "latest",
-        "gulp-changed": "latest"
+        "gulp-changed": "latest",
+        "gulp-uncss": "latest",
+        "gulp-flatten": "latest"
     },
     "devDependencies": {
         "errorhandler": "latest",

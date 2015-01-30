@@ -1,18 +1,18 @@
 'use strict';
 
-//Init
 var express = require('express'),
 	app = express(),
 	path = require('path'),
 	clientPath = path.join(__dirname, '/../client'),
 	less = require('less'),
-	fs = require('fs');
+	fs = require('fs'),
+	url = require('../config.json').url.dev,
+	port = url.slice(-4);
 
 app.set('views', clientPath);
 app.set('view engine', 'jade');
 app.use(express.static(clientPath));
 
-//Logging
 app.use(require('morgan')('combined', {
 	skip: function(req, res) {
 		return res.statusCode < 400;
@@ -23,7 +23,6 @@ app.use(require('errorhandler')({
 	showStack: true
 }));
 
-//Routes
 app.get("/*.html", function(request, response) {
 	response.render('./' + request.params[0] + '.jade', {
 		pretty: true
@@ -44,7 +43,6 @@ app.get("*", function(request, response) {
 	});
 });
 
-//Start
-app.listen(8000, function() {
-	console.log('DEV server started http://localhost:8000');
+app.listen(port, function() {
+	console.log('DEV ' + url);
 });

@@ -1,17 +1,17 @@
 'use strict';
 
-//Init
 var express = require('express'),
 	app = express(),
 	path = require('path'),
 	compress = require('compression'),
-	clientPath = path.join(__dirname, '/../dist');
+	clientPath = path.join(__dirname, '/../dist'),
+    url = require('../config.json').url.dev,
+    port = url.slice(-4);
 
 app.set('views', clientPath);
-//app.use(express.static(clientPath));
 app.use(compress());
 
-app.use('/', function(req, res){
+app.use('/', function(req, res){//app.use(express.static(clientPath));
     if(/_escaped_fragment_=/.test(req.url)){//?_escaped_fragment_=
     	console.log('OK'+req.url);
         req.url = req.url.replace(/\?.*$/,'').replace(/\/+$/,'');
@@ -26,7 +26,6 @@ app.get('/[^\.]+$', function(req, res){
     res.sendFile(clientPath + '/index.html');
 });
 
-//Start
-app.listen(7997, function() {
-	console.log('PROD server started http://localhost:7997');
+app.listen(port, function() {
+	console.log('PROD ' + url);
 });

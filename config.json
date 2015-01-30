@@ -1,0 +1,11 @@
+{
+	"url": {
+		"dev": "http://localhost:8000",
+		"prod": "http://localhost:7997"
+	},
+	"path": {
+		"dist": "dist",
+		"tmp": "tmp",
+		"bower": "client/bower_components"
+	}
+}

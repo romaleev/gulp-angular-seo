@@ -1,15 +1,12 @@
 TODO
-phantomjs generator
+fig index.html via useref
 .htaccess for snapshots
-less sourcemaps
 heroku publish with server config
 
 generator
 description
 ## Quick start
-For SEO you need to have in the env path.
-https://www.python.org/downloads/
-http://phantomjs.org/download.html
+
 
 ##Options
 html/jade
