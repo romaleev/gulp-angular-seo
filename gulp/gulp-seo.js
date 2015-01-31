@@ -2,6 +2,7 @@
 
 var gulp = require('gulp'),
     process = require('child_process'),
+    $ = require('gulp-load-plugins')(),
     path = gulp.config.path,
     server;
 
@@ -17,7 +18,7 @@ gulp.task('seo:server-start', function(cb) {
 	});
 });
 
-gulp.task('seo:phantom', ['seo:server-start'], function(cb) {
+gulp.task('seo:phantom', function(cb) {
 	var host = gulp.config.url.dev,
 		urls = [
 			'/',
@@ -28,8 +29,7 @@ gulp.task('seo:phantom', ['seo:server-start'], function(cb) {
 		files = urls.length;
 
 	urls.forEach(function(url, i, arr) {
-		var file = path.dist + '/snapshots' + url + ((url === '/') ? 'index.html' : '.html');
-
+		var fileName = url + ((url === '/') ? 'index.html' : '.html');
 		function ready() {
 			if (--files === 0) cb();
 		}
@@ -39,8 +39,8 @@ gulp.task('seo:phantom', ['seo:server-start'], function(cb) {
 					page.evaluate(function() {
 						return document.getElementsByTagName("html")[0].innerHTML.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
 					}, function(result) {
-						fs.writeFile(file, result, function(err) {
-							console.log(file);
+						fs.writeFile(path.dist + '/snapshots' + fileName, result, function(err) {
+							console.log('seo:' + fileName.substring(1));
 							if (err) console.log('err: ' + err);
 							ready();
 						});
@@ -56,7 +56,28 @@ gulp.task('seo:phantom', ['seo:server-start'], function(cb) {
 	});
 });
 
-gulp.task('seo', ['seo:phantom'], function(cb) {
+gulp.task('seo:useref', function() {
+    var assets = $.useref.assets({
+        searchPath: '{' + path.dist + '/snapshots}' // noconcat: true
+    });
+
+    return gulp.src(path.dist + '/snapshots/*.html')
+        .pipe(assets)
+        .pipe(assets.restore())
+        .pipe($.useref())
+        .pipe(gulp.dest(path.dist + '/snapshots'));
+});
+
+gulp.task('seo:server-stop', function(cb) {
 	server.on('exit', cb)
 	server.kill('SIGKILL');
 });
+
+gulp.task('seo', $.sync(gulp).sync([
+	'seo:server-start',
+    'seo:phantom',
+    [
+        'seo:useref',
+        'seo:server-stop'
+    ]
+], 'seo'));

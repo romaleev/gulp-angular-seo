@@ -20,6 +20,8 @@
         "opn": "latest",
         "vinyl-ftp": "latest",
         "lazypipe": "latest",
+        "merge-stream": "latest",
+        "streamqueue": "latest",
         "phantom": "latest",
         "phantomjs": "latest",
         "gulp": "latest",

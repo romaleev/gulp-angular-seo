@@ -4,18 +4,16 @@ var gulp = require('gulp'),
     $ = require('gulp-load-plugins')(),
     path = gulp.config.path;
 
-gulp.task('css:vendor', function() {//after html:tmp
+gulp.task('css:vendor', function() {//after html:tmp //TODO add sourcemaps when uncss will be supported
     return gulp.src([
-            //path.bower + '/**/*.{min.css|css.map}'
             path.bower + '/bootstrap/dist/css/bootstrap.min.css',
             path.bower + '/fontawesome/css/font-awesome.min.css'
         ])
-        //.pipe($.sourcemaps.init())
         .pipe($.concat('vendor.css'))
         .pipe($.uncss({
-            html: [path.tmp + '/html/*.html']
+            html: [path.tmp + '/html/**/*.html']
         }))
-        //.pipe($.sourcemaps.write('/'))
+        .pipe($.minifyCss())
         .pipe(gulp.dest(path.dist + '/styles'));
 });
 
@@ -27,8 +25,8 @@ gulp.task('css:user', function() {
         .pipe($.sourcemaps.init())
         .pipe($.less())
         .pipe($.minifyCss())
-        .pipe($.sourcemaps.write('/'))
         .pipe($.concat('styles.css'))
+        .pipe($.sourcemaps.write('.'))
         .pipe(gulp.dest(path.dist + '/styles'));
 });
 

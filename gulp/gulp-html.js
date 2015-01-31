@@ -9,14 +9,13 @@ gulp.task('html:tmp', function() {
         .pipe($.jade({
             pretty: true
         }))
-        .pipe($.flatten())
         .pipe(gulp.dest(path.tmp + '/html'))
 });
 
-gulp.task('sitemap', function() {// after html:tmp
+gulp.task('sitemap', function() {// after html:tmp. Fix .html  redirects
     return gulp.src([
-            path.tmp + '/html/*.html',
-            '!' + path.tmp + '/html/home.html',
+            path.tmp + '/html/index.html'
+            //'!' + path.tmp + '/html/home.html'
     	])
         .pipe($.sitemap({
             siteUrl: 'http://www.romaleev.com'

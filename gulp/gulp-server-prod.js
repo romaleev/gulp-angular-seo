@@ -6,10 +6,8 @@ var gulp = require('gulp'),
 
 gulp.task('clean:prod', function(cb) {
     require('del')([
-        path.dist + '/**/*.*',
-        path.tmp + '/html/*.html',
-        '!' + path.dist + '/fonts/*',
-        '!' + path.dist + '/img/*'
+        path.dist + '/{scripts,styles,snapshots}/*.*',
+        path.tmp + '/html/*.html'
     ], cb); //return gulp.src('tmp/**/*.*', {read: false}).pipe(vinylPaths(del));
 });
 
@@ -31,13 +29,11 @@ gulp.task('nodemon:prod', function(cb) {
 gulp.task('dist', $.sync(gulp).sync([
     ['clean:prod', 'wiredep'],
     [
-        ['html:tmp', ['css:vendor', 'js:user']],
+        ['html:tmp', ['html', 'css:vendor', 'js:user', 'sitemap']],
         'fonts',
         'image',
         'css:user',
         'js:vendor',
-        'html',
-        'sitemap',
         'seo'
     ],
 ], 'dist'));

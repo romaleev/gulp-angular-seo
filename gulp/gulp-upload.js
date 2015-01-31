@@ -4,16 +4,21 @@ var gulp = require('gulp'),
     $ = require('gulp-load-plugins')(),
     path = gulp.config.path;
 
-gulp.task('ftp:upload', function() {//TODO create ftp.json on fly with user input
+gulp.task('ftp:upload', function() { //TODO create ftp.json on fly with user input
     var ftp;
-    try{
+    try {
         ftp = require('./ftp.json');
-    }catch(e){
+    } catch (e) {
         console.error('Define ./ftp.json with host, port, user, pass and remotePath fields.');
     }
     var conn = require('vinyl-ftp').create(gulp.ftpConfig);
-    return gulp.src(path.dist + '/**/*.*')
-        .pipe($.changed(path.tmp + '/ftp', {hasChanged: $.changed.compareSha1Digest}))
+    return gulp.src([
+            path.dist + '/**/*.*',
+            'server/.htaccess'
+        ])
+        .pipe($.changed(path.tmp + '/ftp', {
+            hasChanged: $.changed.compareSha1Digest
+        }))
         .pipe(gulp.dest(path.tmp + '/ftp'))
         .pipe($.debug({
             title: "ftp:"

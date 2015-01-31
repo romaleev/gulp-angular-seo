@@ -5,7 +5,7 @@ var express = require('express'),
 	path = require('path'),
 	compress = require('compression'),
 	clientPath = path.join(__dirname, '/../dist'),
-    url = require('../config.json').url.dev,
+    url = require('../config.json').url.prod,
     port = url.slice(-4);
 
 app.set('views', clientPath);

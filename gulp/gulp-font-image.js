@@ -6,10 +6,8 @@ var gulp = require('gulp'),
 
 gulp.task('fonts', function() {
     return gulp.src([
-            'client/fonts/*.woff',
-            'client/fonts/*.woff2',
-            path.bower + '/fontawesome/fonts/fontawesome-webfont.woff',
-            path.bower + '/fontawesome/fonts/fontawesome-webfont.woff2'
+            'client/fonts/*.{woff,woff2}',
+            path.bower + '/fontawesome/fonts/fontawesome-webfont.{woff,woff2}',
         ])
         .pipe($.newer(path.dist + '/fonts'))
         .pipe($.debug({
