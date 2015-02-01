@@ -28,6 +28,11 @@ gulp.task('seo:phantom', function(cb) {
 		fs = require('fs'),
 		files = urls.length;
 
+//console.log(fs.stat(path.dist + '/snapshots'));
+	//if (!fs.exists(path.dist + '/snapshots')) 
+	fs.mkdir(path.dist + '/snapshots', function(e) {
+		if(e && e.code !== 'EEXIST') console.log(e);
+	});
 	urls.forEach(function(url, i, arr) {
 		var fileName = url + ((url === '/') ? 'index.html' : '.html');
 		function ready() {
@@ -40,15 +45,16 @@ gulp.task('seo:phantom', function(cb) {
 						return document.getElementsByTagName("html")[0].innerHTML.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
 					}, function(result) {
 						fs.writeFile(path.dist + '/snapshots' + fileName, result, function(err) {
-							console.log('seo:' + fileName.substring(1));
-							if (err) console.log('err: ' + err);
+							console.log('seo: ' + fileName.substring(1));
+							if (err) console.log(err);
 							ready();
 						});
-						ph.exit();
+						ph.exit(0);
 					});
 				});
 			});
 		}, {
+			path: 'node_modules/phantomjs/lib/phantom/',
 			dnodeOpts: {
 				weak: false
 			}
