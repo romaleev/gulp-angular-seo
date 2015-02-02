@@ -1,7 +1,7 @@
 'use strict';
 
 var gulp = require('gulp'),
-    $ = require('gulp-load-plugins')(),
+    $ = gulp.$,
     path = gulp.config.path;
 
 gulp.task('html:tmp', function() {
@@ -13,10 +13,6 @@ gulp.task('html:tmp', function() {
 });
 
 gulp.task('html', function() {// after html:tmp
-/*    var assets = $.useref.assets({
-        searchPath: '{' + path.tmp + '/html}' // noconcat: true
-    });
-*/
     var assets = $.useref.assets();
     return gulp.src(path.tmp + '/html/index.html')
         .pipe(assets)

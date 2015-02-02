@@ -1,8 +1,7 @@
 'use strict';
 
 var gulp = require('gulp'),
-	$ = require('gulp-load-plugins')(),
-	browserSync = require('browser-sync');
+	$ = gulp.$;
 
 gulp.task('validate', function() {
 	return gulp.src(['./server/*.js',
@@ -13,8 +12,8 @@ gulp.task('validate', function() {
 
 gulp.task('wiredep', function() {
 	return require('wiredep')({
-		src: 'client/index.jade',
-		exclude: ['bootstrap.js', 'jquery.js']
+		src: 'client/index.jade'
+		//exclude: ['bootstrap.js', 'jquery.js']
 	});
 });
 
@@ -28,7 +27,7 @@ gulp.task('watch', ['validate', 'wiredep'], function() {
 	return gulp.watch('bower.json', ['wiredep']);
 });
 
-gulp.task('nodemon:dev', function(cb) {
+gulp.task('nodemon', function(cb) {
 	var called = false;
 	return $.nodemon({
 		script: 'server/server-dev.js',
@@ -50,8 +49,8 @@ gulp.task('livereload', function() {
     //TODO
 });
 
-gulp.task('browser-sync', ['nodemon:dev'], function() {
-	return browserSync.init({
+gulp.task('browser-sync', ['nodemon'], function() {
+	return require('browser-sync').init({
 		proxy: gulp.config.url.dev,
 		files: [
 			"client/**/*.{js,jade,less}",

@@ -3,13 +3,12 @@
 var express = require('express'),
 	app = express(),
 	path = require('path'),
-	compress = require('compression'),
 	clientPath = path.join(__dirname, '/../dist'),
     url = require('../config.json').url.prod,
     port = url.slice(-4);
 
 app.set('views', clientPath);
-app.use(compress());
+app.use(require('compression')());
 
 app.use('/', function(req, res){//app.use(express.static(clientPath));
     if(/_escaped_fragment_=/.test(req.url)){//?_escaped_fragment_=

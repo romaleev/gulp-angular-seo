@@ -2,12 +2,12 @@ doctype html
 html( ng-app='romaleev' )
 	head
 		meta( charset='utf8' )
-		meta( name="viewport" content="width=device-width, initial-scale=1.0" )
+		meta( name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" )
 		meta( name="author" content="Roman Malieiev" )
 		meta( name="keywords" content="romaleev, Roman Malieiev, web developer" )
-		meta( name="description" content="Personal site" )
+		meta( name="description" content="Home Page" )
 		meta( name="fragment" content="!" )
-		//- <meta name="document-state" content="Dynamic" />
+
 		title( ng-bind="tab_title" )
 		base(href="/")
 
@@ -16,6 +16,7 @@ html( ng-app='romaleev' )
 		link(rel='stylesheet', href='bower_components/bootstrap/dist/css/bootstrap.css')
 		link(rel='stylesheet', href='bower_components/fontawesome/css/font-awesome.css')
 		// endbower
+		link(rel='stylesheet', href='bower_components/bootstrap/dist/css/bootstrap-theme.css')
 		// endbuild
 
 		// build:css styles/styles.css
@@ -25,22 +26,29 @@ html( ng-app='romaleev' )
 		// endbuild
 
 	body
-		nav.navbar.navbar-default.navbar-static-top( id="navbar" ng-controller="NavbarCtrl" )
-			div.container
+		nav.navbar.navbar-default.navbar-fixed-top( id="navbar" ng-controller="NavbarCtrl" )
+			div.container-fluid
 				div.navbar-header
+					button.navbar-toggle( type="button" data-toggle="collapse" data-target=".navbar-collapse" )
+						span.sr-only Toggle navigation
+						span.icon-bar
+						span.icon-bar
+						span.icon-bar
 					a.navbar-brand( href="/" )
 						img.logo( alt="Roman Malieiev", src="img/logo.jpg" )
 						span( ng-bind="header_title" )
 
-				//- div.navbar-collapse.collapse
-				ul.nav.navbar-nav
-					li( ng-class="{ active: isActive('/') }" )
-						a( href="/" ) Home
-					li( ng-class="{ active: isActive('/directory') }" )
-						a( href="/directory" ) Directory
+				div.collapse.navbar-collapse
+					ul.nav.navbar-nav
+						li( ng-class="{ active: isActive('/') }" )
+							a.hidden-xs( href="/" ) Home
+							a.visible-xs( href="/" data-toggle="collapse" data-target=".navbar-collapse" ) Home
+						li( ng-class="{ active: isActive('/directory') }" )
+							a.hidden-xs( href="/directory" ) Directory
+							a.visible-xs( href="/directory" data-toggle="collapse" data-target=".navbar-collapse" ) Directory
 				//- a.btn.btn-default.navbar-btn.pull-right( href="#" ) Resume
 
-		div.content
+		div.container-fluid
 			ng-view
 
 		hr
@@ -50,9 +58,11 @@ html( ng-app='romaleev' )
 
 		// build:js scripts/vendor.js
 		// bower:js
+		script(src='bower_components/jquery/dist/jquery.js')
 		script(src='bower_components/angular/angular.js')
 		script(src='bower_components/angular-route/angular-route.js')
 		script(src='bower_components/angular-sanitize/angular-sanitize.js')
+		script(src='bower_components/bootstrap/dist/js/bootstrap.js')
 		// endbower
 		// endbuild
 

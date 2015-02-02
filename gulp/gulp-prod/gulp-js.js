@@ -1,25 +1,26 @@
 'use strict';
 
 var gulp = require('gulp'),
-    $ = require('gulp-load-plugins')(),
+$ = gulp.$,
     path = gulp.config.path;
 
 gulp.task('js:vendor', function() {
     return gulp.src([
-            path.bower + '/**/*.min.js',
-            '!' + path.bower + '/angular/**',
-            '!' + path.bower + '/bootstrap/**',
-            '!' + path.bower + '/jquery/**'
+            path.bower + '/jquery/dist/jquery.min.js',
+            path.bower + '/angular/angular.min.js',
+            path.bower + '/angular-route/angular-route.min.js',
+            path.bower + '/angular-sanitize/angular-sanitize.min.js',
+            path.bower + '/bootstrap/dist/js/bootstrap.min.js'
+            //path.bower + '/bootstrap/js/collapse.js'
         ])
-        .pipe($.addSrc.prepend(path.bower + '/angular/angular.min.js'))
         .pipe($.sourcemaps.init({loadMaps: true}))
         .pipe($.concat('vendor.js'))
+        // .pipe($.uglify())
         .pipe($.sourcemaps.write('.'))
         .pipe(gulp.dest(path.dist + '/scripts'));
 });
 
 gulp.task('js:user', function() {// after html:tmp
-    var queue = require('streamqueue');
     var html = gulp.src([
             'client/**/*.js',
             '!' + path.bower + '/**'
@@ -37,7 +38,7 @@ gulp.task('js:user', function() {// after html:tmp
             }))
             .pipe($.concat("html2js"))
 
-    return queue({objectMode: true}, html, html2js)
+    return require('streamqueue')({objectMode: true}, html, html2js)
         .pipe($.uglify())
         .pipe($.concat('scripts.js'))
         .pipe($.sourcemaps.write('.'))

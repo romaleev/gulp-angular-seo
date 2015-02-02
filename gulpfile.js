@@ -1,16 +1,13 @@
 'use strict';
 
-var gulp = require('gulp'),
-	$ = require('gulp-load-plugins')(),
-	del = require('del'),
-	browserSync = require('browser-sync');
-	//TODO make gulp.$ single init
+var gulp = require('gulp');
+gulp.$ = require('gulp-load-plugins')(),
 gulp.config = require('./config.json');
 
 require('require-dir')('./gulp');
 
 gulp.task('clean', function(cb) {
-	del([
+	require('del')([
 		dist + '/**/*.*',
 		tmp + '/**/*.*'
 	], cb);

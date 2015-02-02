@@ -1,7 +1,7 @@
 'use strict';
 
 var gulp = require('gulp'),
-    $ = require('gulp-load-plugins')(),
+    $ = gulp.$,
     path = gulp.config.path;
 
 gulp.task('seo:phantom', function(cb) {

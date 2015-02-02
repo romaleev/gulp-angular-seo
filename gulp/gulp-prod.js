@@ -1,9 +1,8 @@
 'use strict';
 
 var gulp = require('gulp'),
-    $ = require('gulp-load-plugins')(),
+    $ = gulp.$,
     path = gulp.config.path,
-    process = require('child_process'),
     server;
 
 require('require-dir')('./gulp-prod');
@@ -16,7 +15,7 @@ gulp.task('clean:prod', function(cb) {
 });
 
 gulp.task('server:start', function(cb) {
-    server = process.spawn('node', ['server/server-prod.js']);
+    server = require('child_process').spawn('node', ['server/server-prod.js']);
     server.stdout.setEncoding('utf8');
     server.stdout.on('data', function(text) {
         if(text.indexOf(gulp.config.url.prod) != -1){
@@ -52,4 +51,8 @@ gulp.task('prod', ['dist'], function() {
     require('opn')(gulp.config.url.prod, 'chrome');
 });
 
-gulp.task('ftp', $.sync(gulp).sync(['dist', ['ftp:upload', 'server:stop']], 'ftp'));
+//gulp.task('ftp', $.sync(gulp).sync(['dist', ['ftp:upload', 'server:stop']], 'ftp'));
+gulp.task('ftp', ['dist'], function(){
+    gulp.start('ftp:upload');
+    gulp.start('server:stop');
+});
