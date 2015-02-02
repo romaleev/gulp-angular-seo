@@ -6,6 +6,7 @@
 	"path": {
 		"dist": "dist",
 		"tmp": "tmp",
-		"bower": "client/bower_components"
+		"bower": "client/bower_components",
+		"phantomjs": "node_modules/phantomjs/lib/phantom/"
 	}
 }

@@ -25,6 +25,8 @@
         "phantom": "latest",
         "phantomjs": "latest",
         "gulp": "latest",
+        "gulp-if": "latest",
+        "gulp-prompt": "latest",
         "gulp-load-plugins": "latest",
         "gulp-jshint": "latest",
         "gulp-sync": "latest",
@@ -38,10 +40,8 @@
         "gulp-concat": "latest",
         "gulp-add-src": "latest",
         "gulp-newer": "latest",
-        "gulp-nodemon": "latest",
         "gulp-sourcemaps": "latest",
         "gulp-ng-html2js": "latest",
-        "gulp-sitemap": "latest",
         "gulp-size": "latest",
         "gulp-debug": "latest",
         "gulp-changed": "latest",
@@ -55,6 +55,7 @@
         "less": "latest",
         "jade": "latest",
         "browser-sync": "latest",
+        "gulp-nodemon": "latest",
         "gulp-livereload": "latest"
     }
 }

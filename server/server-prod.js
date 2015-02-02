@@ -13,7 +13,6 @@ app.use(compress());
 
 app.use('/', function(req, res){//app.use(express.static(clientPath));
     if(/_escaped_fragment_=/.test(req.url)){//?_escaped_fragment_=
-    	console.log('OK'+req.url);
         req.url = req.url.replace(/\?.*$/,'').replace(/\/+$/,'');
         req.url += (req.url === '') ? '/index.html' : '.html';
         express.static(clientPath + '/snapshots').apply(this, arguments);

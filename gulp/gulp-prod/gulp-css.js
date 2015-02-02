@@ -11,7 +11,7 @@ gulp.task('css:vendor', function() {//after html:tmp //TODO add sourcemaps when 
         ])
         .pipe($.concat('vendor.css'))
         .pipe($.uncss({
-            html: [path.tmp + '/html/**/*.html']
+            html: [path.dist + '/snapshots/*.html'] //path.tmp + '/html/**/*.html'
         }))
         .pipe($.minifyCss())
         .pipe(gulp.dest(path.dist + '/styles'));
