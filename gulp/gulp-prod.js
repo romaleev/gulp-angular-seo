@@ -7,13 +7,6 @@ var gulp = require('gulp'),
 
 require('require-dir')('./gulp-prod');
 
-gulp.task('clean:prod', function(cb) {
-    require('del')([
-        path.dist + '/{scripts,styles,snapshots}/*.*',
-        path.tmp + '/html/*.html'
-    ], cb); //return gulp.src('tmp/**/*.*', {read: false}).pipe(vinylPaths(del));
-});
-
 gulp.task('server:start', function(cb) {
     server = require('child_process').spawn('node', [path.server.prod]);
     server.stdout.setEncoding('utf8');
@@ -32,7 +25,21 @@ gulp.task('server:stop', function(cb) {
 });
 
 gulp.task('dist', $.sync(gulp).sync([
-    ['clean:prod', 'inject'],
+    [
+        [
+            ['html:tmp', 'server:start'],
+            ['html', 'js:user', 'js:vendor'],
+            'seo:phantom',
+            'css:vendor'
+        ],
+        'fonts',
+        'image',
+        'css:user',
+        'js:vendor'
+    ],
+], 'dist'));
+
+gulp.task('dist', $.sync(gulp).sync([
     [
         [
             ['html:tmp', 'server:start'],
@@ -49,6 +56,35 @@ gulp.task('dist', $.sync(gulp).sync([
 
 gulp.task('prod', ['dist'], function() {
     require('opn')(gulp.config.url.server.prod, 'chrome');
+});
+
+
+gulp.task('new', function(cb){
+    var path = require('path'),
+        data = [
+            {
+                modified: false,
+                ext: ['js']
+            }
+        ]
+        htmlExt = [],
+        jsExt = [],
+        cssExt = [],
+        fontExt = [],
+        imgExt = [],
+        htaccessExt = [],
+    gulp.src(['client/**/*.*','!client/bower_components/**'])
+    .pipe($.changed('tmp/src', {
+        hasChanged: $.changed.compareSha1Digest
+    }))
+    .pipe(gulp.dest('tmp/src'))
+    .on('data', function(file){
+        console.log(path.extname(file.history[0]));
+    })
+    .on('end',function(){
+        console.log('end');
+        cb();
+    })
 });
 
 //gulp.task('ftp', $.sync(gulp).sync(['dist', ['ftp:upload', 'server:stop']], 'ftp'));
