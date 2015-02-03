@@ -4,7 +4,7 @@ var express = require('express'),
 	app = express(),
 	path = require('path'),
 	clientPath = path.join(__dirname, '/../dist'),
-    url = require('../config.json').url.prod,
+    url = require('../config.json').url.server.prod,
     port = url.slice(-4);
 
 app.set('views', clientPath);

@@ -1,6 +1,6 @@
 TODO
-fig index.html via useref
-.htaccess for snapshots
+
+fix navbar in prod via useref
 heroku publish with server config
 
 generator

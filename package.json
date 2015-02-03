@@ -13,7 +13,6 @@
     "dependencies": {
         "express": "latest",
         "bower": "latest",
-        "wiredep": "latest",
         "require-dir": "latest",
         "del": "latest",
         "compression": "latest",
@@ -25,6 +24,8 @@
         "phantom": "latest",
         "phantomjs": "latest",
         "gulp": "latest",
+        "gulp-watch": "latest",
+        "gulp-inject": "latest",
         "gulp-if": "latest",
         "gulp-prompt": "latest",
         "gulp-load-plugins": "latest",
@@ -46,7 +47,8 @@
         "gulp-debug": "latest",
         "gulp-changed": "latest",
         "gulp-uncss": "latest",
-        "gulp-flatten": "latest"
+        "gulp-flatten": "latest",
+        "gulp-rename": "latest"
     },
     "devDependencies": {
         "errorhandler": "latest",

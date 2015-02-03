@@ -19,7 +19,7 @@ gulp.task('ftp:config', function(cb) {
             if (err) return console.error(err);
             var ftp = JSON.stringify(result);
             conn = vinylFtp.create(ftp);
-            require('fs').writeFile('./ftp1.json', ftp, function(err) {
+            require('fs').writeFile('./ftp.json', ftp, function(err) {
                 if (err) console.error(err);
                 cb();
             });
@@ -28,14 +28,11 @@ gulp.task('ftp:config', function(cb) {
 });
 
 gulp.task('ftp:upload', ['ftp:config'], function() {
-    return gulp.src([
-            path.dist + '/**/*.*',
-            'server/.htaccess'
-        ])
-        .pipe($.changed(path.tmp + '/ftp', {
+    return gulp.src(path.ftp.src)
+        .pipe($.changed(path.ftp.tmp, {
             hasChanged: $.changed.compareSha1Digest
         }))
-        .pipe(gulp.dest(path.tmp + '/ftp'))
+        .pipe(gulp.dest(path.ftp.tmp))
         .pipe($.debug({
             title: "ftp:"
         }))

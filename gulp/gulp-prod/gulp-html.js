@@ -5,16 +5,16 @@ var gulp = require('gulp'),
     path = gulp.config.path;
 
 gulp.task('html:tmp', function() {
-    return gulp.src('client/**/*.jade')
+    return gulp.src(path.html.src)
         .pipe($.jade({
             pretty: true
         }))
-        .pipe(gulp.dest(path.tmp + '/html'))
+        .pipe(gulp.dest(path.html.tmp))
 });
 
 gulp.task('html', function() {// after html:tmp
     var assets = $.useref.assets();
-    return gulp.src(path.tmp + '/html/index.html')
+    return gulp.src(path.html.tmp + '/index.html')
         .pipe(assets)
         .pipe(assets.restore())
         .pipe($.useref())

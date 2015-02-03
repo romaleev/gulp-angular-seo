@@ -15,10 +15,10 @@ gulp.task('clean:prod', function(cb) {
 });
 
 gulp.task('server:start', function(cb) {
-    server = require('child_process').spawn('node', ['server/server-prod.js']);
+    server = require('child_process').spawn('node', [path.server.prod]);
     server.stdout.setEncoding('utf8');
     server.stdout.on('data', function(text) {
-        if(text.indexOf(gulp.config.url.prod) != -1){
+        if(text.indexOf(gulp.config.url.server.prod) != -1){
             cb();
         } else {
             console.error('unexpected output: ' + text);
@@ -32,7 +32,7 @@ gulp.task('server:stop', function(cb) {
 });
 
 gulp.task('dist', $.sync(gulp).sync([
-    ['clean:prod', 'wiredep'],
+    ['clean:prod', 'inject'],
     [
         [
             ['html:tmp', 'server:start'],
@@ -48,7 +48,7 @@ gulp.task('dist', $.sync(gulp).sync([
 ], 'dist'));
 
 gulp.task('prod', ['dist'], function() {
-    require('opn')(gulp.config.url.prod, 'chrome');
+    require('opn')(gulp.config.url.server.prod, 'chrome');
 });
 
 //gulp.task('ftp', $.sync(gulp).sync(['dist', ['ftp:upload', 'server:stop']], 'ftp'));

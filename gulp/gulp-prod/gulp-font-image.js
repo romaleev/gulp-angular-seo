@@ -5,27 +5,24 @@ var gulp = require('gulp'),
     path = gulp.config.path;
 
 gulp.task('fonts', function() {
-    return gulp.src([
-            'client/fonts/*.{woff,woff2}',
-            path.bower + '/fontawesome/fonts/fontawesome-webfont.{woff,woff2}',
-        ])
-        .pipe($.newer(path.dist + '/fonts'))
+    return gulp.src(path.fonts.src)
+        .pipe($.newer(path.fonts.dist))
         .pipe($.debug({
             title: "fonts:"
         }))
-        .pipe(gulp.dest(path.dist + '/fonts'));
+        .pipe(gulp.dest(path.fonts.dist));
 });
 
 gulp.task('image', function() {
-    return gulp.src('client/img/**/*.*')
-        .pipe($.newer(path.tmp + '/img'))
+    return gulp.src(path.img.src)
+        .pipe($.newer(path.img.tmp))
         .pipe($.debug({
             title: "images:"
         }))
-        .pipe(gulp.dest(path.tmp + '/img'))
+        .pipe(gulp.dest(path.img.tmp))
         .pipe($.imagemin({
             progressive: true,
             interlaced: true
         }))
-        .pipe(gulp.dest(path.dist + '/img'));
+        .pipe(gulp.dest(path.img.dist));
 });

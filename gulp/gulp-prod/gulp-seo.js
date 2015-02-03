@@ -5,16 +5,13 @@ var gulp = require('gulp'),
     path = gulp.config.path;
 
 gulp.task('seo:phantom', function(cb) {
-	var host = gulp.config.url.prod,
-		urls = [
-			'/',
-			'/directory'
-		],
+	var host = gulp.config.url.server.prod,
+		urls = gulp.config.url.snapshots,
 		phantom = require('phantom'),
 		fs = require('fs'),
 		files = urls.length;
 
-	fs.mkdir(path.dist + '/snapshots', function(e) {
+	fs.mkdir(path.snapshots, function(e) {
 		if(e && e.code !== 'EEXIST') console.log(e);
 	});
 	urls.forEach(function(url, i, arr) {
@@ -28,7 +25,7 @@ gulp.task('seo:phantom', function(cb) {
 					page.evaluate(function() {
 						return document.getElementsByTagName("html")[0].innerHTML.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
 					}, function(result) {
-						fs.writeFile(path.dist + '/snapshots' + fileName, result, function(err) {
+						fs.writeFile(path.snapshots + fileName, result, function(err) {
 							console.log('seo: ' + fileName.substring(1));
 							if (err) console.log(err);
 							ready();

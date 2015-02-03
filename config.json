@@ -1,12 +1,96 @@
 {
 	"url": {
-		"dev": "http://localhost:8000",
-		"prod": "http://localhost:7997"
+		"server": {
+			"dev": "http://localhost:8000",
+			"prod": "http://localhost:7997"
+		},
+		"snapshots": ["/", "/directory"]
 	},
 	"path": {
 		"dist": "dist",
 		"tmp": "tmp",
+		"phantomjs": "node_modules/phantomjs/lib/phantom/",
 		"bower": "client/bower_components",
-		"phantomjs": "node_modules/phantomjs/lib/phantom/"
+		"snapshots": "dist/snapshots/",
+		"server": {
+			"dev": "server/server-dev.js",
+			"prod": "server/server-prod.js"
+		},
+		"html": {
+			"src": "client/**/*.jade",
+			"tmp": "tmp/html"
+		},
+		"js":{
+			"vendor": [
+				"client/bower_components/jquery/dist/jquery.min.js",
+				"client/bower_components/angular/angular.min.js",
+				"client/bower_components/angular-route/angular-route.min.js",
+				"client/bower_components/angular-sanitize/angular-sanitize.min.js",
+				"client/bower_components/bootstrap/dist/js/bootstrap.min.js"
+			],
+			"user": [
+				"client/**/*.js",
+				"!client/bower_components/**"
+			]
+		},
+		"css":{
+			"vendor": [
+				"client/bower_components/bootstrap/dist/css/bootstrap.min.css",
+				"client/bower_components/bootstrap/dist/css/bootstrap-theme.min.css",
+				"client/bower_components/fontawesome/css/font-awesome.min.css"
+			],
+			"user": [
+				"client/**/*.less",
+				"!client/bower_components/**"
+			]
+		},
+		"html2js": [
+			"tmp/html/**/*.html",
+			"!tmp/html/index.html"
+		],
+		"ftp": {
+			"src": [
+            	"dist/**/*.*",
+            	"server/.htaccess"
+        	],
+			"tmp": "tmp/ftp"
+		},
+		"fonts": {
+			"src": [
+            	"client/fonts/*.{woff,woff2}",
+            	"client/bower_components/fontawesome/fonts/fontawesome-webfont.{woff,woff2}"
+        	],
+			"dist": "dist/fonts"
+		},
+		"img": {
+			"src": "client/img/**/*.*",
+			"dist": "dist/img",
+			"tmp": "tmp/img"
+		}
+	},
+	"devPath": {
+		"watch": [
+			"./server/*.js",
+			"./client/**/*.js",
+			"./client/{!bower_components}"
+		],
+		"validate": [
+			"./server/*.js",
+			"./client/{app,components,directives,services}/**/*.js"
+		],
+		"browserSync":{
+			"reload": [
+				"client/**/*.{js,jade}",
+				"client/{!bower_components}"
+			],
+			"inject": [
+				"client/**/*.less",
+				"client/{!bower_components}"
+			]
+		}
+	},
+	"uncss": {
+		"html": ["dist/snapshots/*.html"],
+		"ignore": [".collapse", ".collapsing", ".collapsed", ".collapse.in"]
 	}
 }

@@ -43,6 +43,13 @@ body {
 	}
 }
 
-/*[ng\:cloak], [ng-cloak], .ng-cloak {
-  display: none !important;
-}*/
+.collapsing {/*webkit fix*/
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  -webkit-transform: translateZ(0);
+  -webkit-transition: height 0.35s ease 1s linear;
+  transition: height 0.35s ease 1s linear;
+  -webkit-transition: height 0.35s ease;
+  transition: height 0.35s ease;
+}

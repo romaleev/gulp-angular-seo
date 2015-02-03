@@ -6,7 +6,7 @@ var express = require('express'),
 	clientPath = path.join(__dirname, '/../client'),
 	less = require('less'),
 	fs = require('fs'),
-	url = require('../config.json').url.dev,
+	url = require('../config.json').url.server.dev,
 	port = url.slice(-4);
 
 app.set('views', clientPath);
