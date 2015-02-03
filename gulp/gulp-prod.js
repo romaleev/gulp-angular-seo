@@ -61,7 +61,8 @@ gulp.task('prod', ['dist'], function() {
 
 gulp.task('new', function(cb){
     var path = require('path'),
-        data = [
+        extArr = [];
+        /*data = [
             {
                 modified: false,
                 ext: ['js']
@@ -72,17 +73,19 @@ gulp.task('new', function(cb){
         cssExt = [],
         fontExt = [],
         imgExt = [],
-        htaccessExt = [],
+        htaccessExt = [],*/
     gulp.src(['client/**/*.*','!client/bower_components/**'])
     .pipe($.changed('tmp/src', {
         hasChanged: $.changed.compareSha1Digest
     }))
     .pipe(gulp.dest('tmp/src'))
     .on('data', function(file){
-        console.log(path.extname(file.history[0]));
+        var ext = path.extname(file.history[0]);
+        if(extArr.indexOf(ext) === -1) extArr.push(ext);
+        //console.log();
     })
     .on('end',function(){
-        console.log('end');
+        console.log(extArr);
         cb();
     })
 });
