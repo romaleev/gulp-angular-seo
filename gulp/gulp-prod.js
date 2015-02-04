@@ -40,48 +40,26 @@ gulp.task('prod', ['dist'], function() {
 });
 
 gulp.task('check', function(cb) {
-    var path = require('path'),
-        extArr = [];
-    gulp.src(['client/**/*.*', '!client/bower_components/**'])
-        .pipe($.changed('tmp/src', {
-            hasChanged: $.changed.compareSha1Digest
-        }))
-        .pipe(gulp.dest('tmp/src'))
-        .pipe($.if())
-        .on('data', function(file) {
-            console.log(file, file.history[0]);
-            var ext = path.extname(file.history[0]);
-            if (extArr.indexOf(ext) === -1) extArr.push(ext);
-        })
-        .on('end', function() {
-            console.log(extArr);
-            //console.log(gulp.tasks['seo:phantom']);
-            //if(gulp.tasks['seo:phantom'].dep.length > 0) console.log('aa')
-            //gulp.tasks['seo:phantom'].dep.push('server:start');
-            //console.log(gulp.tasks['seo:phantom']);
-            cb();
-        })
-});
+    var match = require("multimatch"),
+        files = [];
 
-gulp.task('check1', function(cb) {
-    var path = require('path'),
-        extArr = [];
-    gulp.src(['client/**/*.*', '!client/bower_components/**'])
+    gulp.src(['client/**/*.*'].concat(path.js.vendor).concat(path.css.vendor))
         .pipe($.changed('tmp/src', {
             hasChanged: $.changed.compareSha1Digest
         }))
         .pipe(gulp.dest('tmp/src'))
         .on('data', function(file) {
-            console.log(file, file.history[0]);
-            var ext = path.extname(file.history[0]);
-            if (extArr.indexOf(ext) === -1) extArr.push(ext);
+            files.push(file.history[0].slice(file.cwd.length + 1));
         })
         .on('end', function() {
-            console.log(extArr);
-            //console.log(gulp.tasks['seo:phantom']);
-            //if(gulp.tasks['seo:phantom'].dep.length > 0) console.log('aa')
-            //gulp.tasks['seo:phantom'].dep.push('server:start');
-            //console.log(gulp.tasks['seo:phantom']);
+            if(!match(files, path.html.index).length) console.log('no html');
+            if(!match(files, path.js.user).length) console.log('no js user');
+            if(!match(files, path.js.vendor).length) console.log('no js vendor');
+            if(!match(files, path.css.user).length) console.log('no css user');
+            if(!match(files, path.css.vendor).length) console.log('no css vendor');
+            if(!match(files, path.fonts.src).length) console.log('no fonts');
+            if(!match(files, path.img.src).length) console.log('no img');
+            console.log('end');
             cb();
         })
 });
