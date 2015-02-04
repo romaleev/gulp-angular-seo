@@ -24,6 +24,7 @@
         "phantom": "latest",
         "phantomjs": "latest",
         "gulp": "latest",
+        "gulp-filter": "latest",
         "gulp-watch": "latest",
         "gulp-inject": "latest",
         "gulp-if": "latest",

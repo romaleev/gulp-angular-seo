@@ -18,9 +18,15 @@
 		},
 		"html": {
 			"src": "client/**/*.jade",
-			"tmp": "tmp/html"
+			"tmp": "tmp/html",
+			"index": "client/index.jade",
+			"partials": [
+				"client/**/*.jade",
+				"!client/index.jade"
+			]
 		},
 		"js":{
+			"dist": "dist/scripts",
 			"vendor": [
 				"client/bower_components/jquery/dist/jquery.min.js",
 				"client/bower_components/angular/angular.min.js",
@@ -34,6 +40,7 @@
 			]
 		},
 		"css":{
+			"dist": "dist/styles",
 			"vendor": [
 				"client/bower_components/bootstrap/dist/css/bootstrap.min.css",
 				"client/bower_components/bootstrap/dist/css/bootstrap-theme.min.css",
@@ -44,10 +51,6 @@
 				"!client/bower_components/**"
 			]
 		},
-		"html2js": [
-			"tmp/html/**/*.html",
-			"!tmp/html/index.html"
-		],
 		"ftp": {
 			"src": [
             	"dist/**/*.*",

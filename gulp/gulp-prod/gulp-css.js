@@ -4,12 +4,12 @@ var gulp = require('gulp'),
     $ = gulp.$,
     path = gulp.config.path;
 
-gulp.task('css:vendor', function() {//after html:tmp //TODO add sourcemaps when uncss will be supported
+gulp.task('css:vendor', function() {//TODO add sourcemaps when uncss will be supported
     return gulp.src(path.css.vendor)
         .pipe($.concat('vendor.css'))
-        .pipe($.uncss(gulp.config.uncss))//path.tmp + '/html/**/*.html'
+        .pipe($.uncss(gulp.config.uncss))
         .pipe($.minifyCss())
-        .pipe(gulp.dest(path.dist + '/styles'));
+        .pipe(gulp.dest(path.css.dist));
 });
 
 gulp.task('css:user', function() {
@@ -19,7 +19,7 @@ gulp.task('css:user', function() {
         .pipe($.minifyCss())
         .pipe($.concat('styles.css'))
         .pipe($.sourcemaps.write('.'))
-        .pipe(gulp.dest(path.dist + '/styles'));
+        .pipe(gulp.dest(path.css.dist));
 });
 
 //TODO for generator

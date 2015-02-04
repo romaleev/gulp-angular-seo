@@ -24,70 +24,66 @@ gulp.task('server:stop', function(cb) {
     server.kill('SIGKILL');
 });
 
-gulp.task('dist', $.sync(gulp).sync([
+gulp.task('dist', $.sync(gulp).async([
     [
-        [
-            ['html:tmp', 'server:start'],
-            ['html', 'js:user', 'js:vendor'],
-            'seo:phantom',
-            'css:vendor'
-        ],
-        'fonts',
-        'image',
-        'css:user',
-        'js:vendor'
+        ['server:start', 'js:vendor', ['html', 'js:user']],
+        'seo:phantom',
+        'css:vendor'
     ],
-], 'dist'));
-
-gulp.task('dist', $.sync(gulp).sync([
-    [
-        [
-            ['html:tmp', 'server:start'],
-            ['html', 'js:user', 'js:vendor'],
-            'seo:phantom',
-            'css:vendor'
-        ],
-        'fonts',
-        'image',
-        'css:user',
-        'js:vendor'
-    ],
+    'fonts',
+    'image',
+    'css:user'
 ], 'dist'));
 
 gulp.task('prod', ['dist'], function() {
     require('opn')(gulp.config.url.server.prod, 'chrome');
 });
 
-
-gulp.task('new', function(cb){
+gulp.task('check', function(cb) {
     var path = require('path'),
         extArr = [];
-        /*data = [
-            {
-                modified: false,
-                ext: ['js']
-            }
-        ]
-        htmlExt = [],
-        jsExt = [],
-        cssExt = [],
-        fontExt = [],
-        imgExt = [],
-        htaccessExt = [],*/
-    gulp.src(['client/**/*.*','!client/bower_components/**'])
-    .pipe($.changed('tmp/src', {
-        hasChanged: $.changed.compareSha1Digest
-    }))
-    .pipe(gulp.dest('tmp/src'))
-    .on('data', function(file){
-        var ext = path.extname(file.history[0]);
-        if(extArr.indexOf(ext) === -1) extArr.push(ext);
-        //console.log();
-    })
-    .on('end',function(){
-        console.log(extArr);
-        cb();
-    })
+    gulp.src(['client/**/*.*', '!client/bower_components/**'])
+        .pipe($.changed('tmp/src', {
+            hasChanged: $.changed.compareSha1Digest
+        }))
+        .pipe(gulp.dest('tmp/src'))
+        .pipe($.if())
+        .on('data', function(file) {
+            console.log(file, file.history[0]);
+            var ext = path.extname(file.history[0]);
+            if (extArr.indexOf(ext) === -1) extArr.push(ext);
+        })
+        .on('end', function() {
+            console.log(extArr);
+            //console.log(gulp.tasks['seo:phantom']);
+            //if(gulp.tasks['seo:phantom'].dep.length > 0) console.log('aa')
+            //gulp.tasks['seo:phantom'].dep.push('server:start');
+            //console.log(gulp.tasks['seo:phantom']);
+            cb();
+        })
+});
+
+gulp.task('check1', function(cb) {
+    var path = require('path'),
+        extArr = [];
+    gulp.src(['client/**/*.*', '!client/bower_components/**'])
+        .pipe($.changed('tmp/src', {
+            hasChanged: $.changed.compareSha1Digest
+        }))
+        .pipe(gulp.dest('tmp/src'))
+        .on('data', function(file) {
+            console.log(file, file.history[0]);
+            var ext = path.extname(file.history[0]);
+            if (extArr.indexOf(ext) === -1) extArr.push(ext);
+        })
+        .on('end', function() {
+            console.log(extArr);
+            //console.log(gulp.tasks['seo:phantom']);
+            //if(gulp.tasks['seo:phantom'].dep.length > 0) console.log('aa')
+            //gulp.tasks['seo:phantom'].dep.push('server:start');
+            //console.log(gulp.tasks['seo:phantom']);
+            cb();
+        })
 });
 
 //gulp.task('ftp', $.sync(gulp).sync(['dist', ['ftp:upload', 'server:stop']], 'ftp'));
