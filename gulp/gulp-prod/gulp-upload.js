@@ -27,11 +27,29 @@ gulp.task('ftp:config', function(cb) {
 });
 
 gulp.task('ftp:upload', ['ftp:config'], function() {
+    var ProgressBar = require('progress'),
+        size = 0,
+        bar;
+
     return gulp.src(path.ftp.src)
+        .on('data', function() {
+            size++;
+        })
+        .on('end', function() {
+            if (size) bar = new ProgressBar('Uploading [:bar] :percent', {
+                complete: '#',
+                incomplete: ' ',
+                width: 20,
+                total: size
+            });
+        })
         .pipe($.debug({
             title: "ftp:"
         }))
-        .pipe(gulp.config.ftpConnection.dest(path.ftp.root));
+        .pipe(gulp.config.ftpConnection.dest(path.ftp.root))
+        .on('data', function() {
+            if (bar) bar.tick();
+        });
 });
 
 gulp.task('heroku', function() {

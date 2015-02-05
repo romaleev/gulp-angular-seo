@@ -24,6 +24,7 @@
         "phantomjs": "latest",
         "multimatch": "latest",
         "run-sequence": "latest",
+        "progress": "latest",
         "gulp": "latest",
         "gulp-filter": "latest",
         "gulp-watch": "latest",

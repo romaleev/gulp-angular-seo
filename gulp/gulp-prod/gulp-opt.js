@@ -69,15 +69,33 @@ gulp.task('ftp:opt:clean', function(cb) {
 });
 
 gulp.task('ftp:opt:upload', ['ftp:config'], function() {
+    var ProgressBar = require('progress'),
+        size = 0,
+        bar;
+
     return gulp.src(path.ftp.src)
         .pipe($.changed(path.ftp.tmp, {
             hasChanged: $.changed.compareSha1Digest
         }))
+        .on('data', function() {
+            size++;
+        })
+        .on('end', function() {
+            if (size) bar = new ProgressBar('Uploading [:bar] :percent', {
+                complete: '#',
+                incomplete: ' ',
+                width: 20,
+                total: size
+            });
+        })
         .pipe(gulp.dest(path.ftp.tmp))
         .pipe($.debug({
             title: "ftp:"
         }))
-        .pipe(gulp.config.ftpConnection.dest(path.ftp.root));
+        .pipe(gulp.config.ftpConnection.dest(path.ftp.root))
+        .on('data', function() {
+            if (bar) bar.tick();
+        });
 });
 
 gulp.task('ftp:opt', ['dist:opt'], function(cb){

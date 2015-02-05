@@ -15,8 +15,6 @@
 			"prod": "server/server-prod.js"
 		},
 		"html": {
-			"src": "client/**/*.jade",
-			"tmp": "tmp/html",
 			"index": "client/index.jade",
 			"partials": [
 				"client/**/*.jade",
