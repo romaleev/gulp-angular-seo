@@ -7,7 +7,7 @@ var gulp = require('gulp'),
 gulp.task('css:vendor', function() {//TODO add sourcemaps when uncss will be supported
     return gulp.src(path.css.vendor)
         .pipe($.concat('vendor.css'))
-        .pipe($.uncss(gulp.config.uncss))
+        .pipe($.uncss(path.css.uncss))
         .pipe($.minifyCss())
         .pipe(gulp.dest(path.css.dist));
 });

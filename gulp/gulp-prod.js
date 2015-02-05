@@ -8,6 +8,7 @@ var gulp = require('gulp'),
 require('require-dir')('./gulp-prod');
 
 gulp.task('server:start', function(cb) {
+    if(server) return cb();
     server = require('child_process').spawn('node', [path.server.prod]);
     server.stdout.setEncoding('utf8');
     server.stdout.on('data', function(text) {
@@ -20,52 +21,36 @@ gulp.task('server:start', function(cb) {
 });
 
 gulp.task('server:stop', function(cb) {
-    server.on('exit', cb)
-    server.kill('SIGKILL');
+    if(server){
+        server.on('exit', cb)
+        server.kill('SIGKILL');
+    } else cb();
 });
 
-gulp.task('dist', $.sync(gulp).async([
+gulp.task('dist:clean', function(cb) {
+    require('del')([
+        path.dist + '/**/*.*'
+    ], cb);
+});
+
+gulp.distTasks = [
     [
         ['server:start', 'js:vendor', ['html', 'js:user']],
-        'seo:phantom',
+        'seo',
         'css:vendor'
     ],
     'fonts',
     'image',
     'css:user'
-], 'dist'));
+];
+
+gulp.task('dist', $.sync(gulp).async(gulp.distTasks, 'dist'));
 
 gulp.task('prod', ['dist'], function() {
-    require('opn')(gulp.config.url.server.prod, 'chrome');
+    console.log('Server is running: ' + gulp.config.url.server.prod);
+    require('opn')(gulp.config.url.server.prod, gulp.config.browser);
 });
 
-gulp.task('check', function(cb) {
-    var match = require("multimatch"),
-        files = [];
-
-    gulp.src(['client/**/*.*'].concat(path.js.vendor).concat(path.css.vendor))
-        .pipe($.changed('tmp/src', {
-            hasChanged: $.changed.compareSha1Digest
-        }))
-        .pipe(gulp.dest('tmp/src'))
-        .on('data', function(file) {
-            files.push(file.history[0].slice(file.cwd.length + 1));
-        })
-        .on('end', function() {
-            if(!match(files, path.html.index).length) console.log('no html');
-            if(!match(files, path.js.user).length) console.log('no js user');
-            if(!match(files, path.js.vendor).length) console.log('no js vendor');
-            if(!match(files, path.css.user).length) console.log('no css user');
-            if(!match(files, path.css.vendor).length) console.log('no css vendor');
-            if(!match(files, path.fonts.src).length) console.log('no fonts');
-            if(!match(files, path.img.src).length) console.log('no img');
-            console.log('end');
-            cb();
-        })
-});
-
-//gulp.task('ftp', $.sync(gulp).sync(['dist', ['ftp:upload', 'server:stop']], 'ftp'));
-gulp.task('ftp', ['dist'], function(){
-    gulp.start('ftp:upload');
-    gulp.start('server:stop');
+gulp.task('ftp', ['dist'], function(cb){
+    require('run-sequence')(['ftp:upload', 'server:stop'], cb);
 });

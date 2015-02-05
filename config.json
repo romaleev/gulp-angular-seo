@@ -1,17 +1,15 @@
 {
+	"browser": "chrome",
 	"url": {
 		"server": {
 			"dev": "http://localhost:8000",
 			"prod": "http://localhost:7997"
-		},
-		"snapshots": ["/", "/directory"]
+		}
 	},
 	"path": {
 		"dist": "dist",
-		"tmp": "tmp",
+		"dist_tmp": "tmp/src",
 		"phantomjs": "node_modules/phantomjs/lib/phantom/",
-		"bower": "client/bower_components",
-		"snapshots": "dist/snapshots/",
 		"server": {
 			"dev": "server/server-dev.js",
 			"prod": "server/server-prod.js"
@@ -49,14 +47,19 @@
 			"user": [
 				"client/**/*.less",
 				"!client/bower_components/**"
-			]
+			],
+			"uncss": {
+				"html": ["dist/snapshots/*.html"],
+				"ignore": [".collapse", ".collapsing", ".collapsed", ".collapse.in"]
+			}
 		},
 		"ftp": {
 			"src": [
             	"dist/**/*.*",
             	"server/.htaccess"
         	],
-			"tmp": "tmp/ftp"
+			"tmp": "tmp/ftp",
+			"root": "/public_html"
 		},
 		"fonts": {
 			"src": [
@@ -67,8 +70,11 @@
 		},
 		"img": {
 			"src": "client/img/**/*.*",
-			"dist": "dist/img",
-			"tmp": "tmp/img"
+			"dist": "dist/img"
+		},
+		"seo":{
+			"urls": ["/", "/directory"],
+			"dist": "dist/snapshots/"
 		}
 	},
 	"devPath": {
@@ -91,9 +97,5 @@
 				"client/{!bower_components}"
 			]
 		}
-	},
-	"uncss": {
-		"html": ["dist/snapshots/*.html"],
-		"ignore": [".collapse", ".collapsing", ".collapsed", ".collapse.in"]
 	}
 }
