@@ -10,9 +10,12 @@ Source code: https://github.com/romaleev/gulp-angular-seo
 
 ## Usage
 
-Checkout `generator-angular-fullstack` and `cd` into it:
+Checkout and install it:
 ```
 git clone https://github.com/romaleev/gulp-angular-seo
+cd gulp-angular-seo
+npm install
+bower install
 ```
 
 Run development build:
@@ -20,31 +23,20 @@ Run development build:
 gulp dev
 ```
 
-Run production build:
-```
-gulp prod
-```
+Run production builds:
+* `gulp dist` - optimization
+* `gulp prod` - optimization and preview
+* `gulp ftp` - optimization and upload to ftp
+* `gulp dist:opt` - enchanced optimization
+* `gulp prod:opt` - enchanced optimization and preview
+* `gulp ftp:opt` - enchanced optimization and upload to ftp
 
-Run ftp upload build:
-```
-gulp ftp
-```
 
-Run enchanced production build:
-```
-gulp prod:opt
-```
+## Optimizations
 
-Run enchanced ftp upload build:
-```
-gulp ftp:opt
-```
-
-## Details
-
-> Low latency auto-reload with nodemon, browser-sync and gulp-watch.
-> Production optimizations: gulp-ng-html2js, gulp-uncss, gulp-changed caching, streamqueue, gulp-sync/run-sequence task ordering and others.
-> AngularJS snapshots for SEO using Phantom.js
+* Low latency auto-reload with nodemon, browser-sync and gulp-watch.
+* Production optimizations: gulp-ng-html2js, gulp-uncss, gulp-changed caching, streamqueue, gulp-sync/run-sequence task ordering and others.
+* AngularJS snapshots for SEO using Phantom.js
 
 ## TODOs
 
