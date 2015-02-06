@@ -1,49 +1,59 @@
-TODO
+# Gulp AngularJS SEO template
 
-fix navbar in prod via useref
-heroku publish with server config
+> Gulp AngularJS SEO template with fast development and production optimized builds.
 
-generator
-description
-## Quick start
+## Example project
 
+Built with defaults: http://romaleev.com.
 
-##Options
-html/jade
-css/less/sass
-dev/prod server
-html5mode/hashbang?
-pregenerated/middleware SEO? (PhantomJS/Prerender.io)
+Source code: https://github.com/romaleev/gulp-angular-seo
 
+## Usage
 
-## Synopsis
+Checkout `generator-angular-fullstack` and `cd` into it:
+```
+git clone https://github.com/romaleev/gulp-angular-seo
+```
 
-At the top of the file there should be a short introduction and/ or overview that explains **what** the project is. This description should match descriptions added for package managers (Gemspec, package.json, etc.)
+Run development build:
+```
+gulp dev
+```
 
-## Code Example
+Run production build:
+```
+gulp prod
+```
 
-Show what the library does as concisely as possible, developers should be able to figure out **how** your project solves their problem by looking at the code example. Make sure the API you are showing off is obvious, and that your code is short and concise.
+Run ftp upload build:
+```
+gulp ftp
+```
 
-## Motivation
+Run enchanced production build:
+```
+gulp prod:opt
+```
 
-A short description of the motivation behind the creation and maintenance of the project. This should explain **why** the project exists.
+Run enchanced ftp upload build:
+```
+gulp ftp:opt
+```
 
-## Installation
+## Details
 
-Provide code examples and explanations of how to get the project.
+> Low latency auto-reload with nodemon, browser-sync and gulp-watch.
+> Production optimizations: gulp-ng-html2js, gulp-uncss, gulp-changed caching, streamqueue, gulp-sync/run-sequence task ordering and others.
+> AngularJS snapshots for SEO using Phantom.js
 
-## API Reference
+## TODOs
 
-Depending on the size of the project, if it is small and simple enough the reference docs can be added to the README. For medium size to larger projects it is important to at least provide a link to where the API reference docs live.
-
-## Tests
-
-Describe and show how to run the tests with code examples.
-
-## Contributors
-
-Let people know how they can dive into the project, include important links to things like issue trackers, irc, twitter accounts if applicable.
+* `Heroku` upload, `Yeoman` generator with options:
+* `html/jade`
+* `css/less/sass`
+* `html5mode/hashbang`
+* `Ftp/Heroku uploading`
 
 ## License
 
-A short snippet describing the license (MIT, Apache, etc.)
+[BSD license](http://opensource.org/licenses/bsd-license.php)
