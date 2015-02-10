@@ -14,7 +14,11 @@ angular.module('romaleev', ['ngRoute', 'ngSanitize'])
 		};
 		$scope.tab_title = data.tab_title;
 		$scope.header_title = data.header_title;
-	}).
-	run(function(){
-		console.log('ready');
+	})
+	.run(function($location, $rootScope) {
+	    $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
+	        if (current.hasOwnProperty('$$route'))
+	            $rootScope.title = current.$$route.title;
+	    });
+	    console.log('ready');
 	});

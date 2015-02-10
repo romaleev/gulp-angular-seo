@@ -34,7 +34,7 @@ Run production builds:
 
 ## Optimizations
 
-* Low latency auto-reload with nodemon, browser-sync and gulp-watch.
+* Fast reload with nodemon, browser-sync and gulp-watch.
 * Production optimizations: gulp-ng-html2js, gulp-uncss, gulp-changed caching, streamqueue, gulp-sync/run-sequence task ordering and others.
 * AngularJS snapshots for SEO using Phantom.js
 

@@ -4,7 +4,8 @@ angular.module('romaleev')
 	.config(function($routeProvider) {
 		$routeProvider.when('/directory/:name', {
 			templateUrl: "app/details/details.html",
-			controller: "DetailsCtrl"
+			controller: "DetailsCtrl",
+			title: 'Details'
 		});
 	})
 	.controller('DetailsCtrl', function($scope, $routeParams, $location, directories) {

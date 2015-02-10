@@ -5,7 +5,8 @@ angular.module('romaleev')
 		$routeProvider
 			.when('/directory', {
 				templateUrl: "app/directory/directory.html",
-				controller: "DirectoryCtrl"
+				controller: "DirectoryCtrl",
+				title: 'Directory'
 			});
 	})
 	.controller('DirectoryCtrl', function($scope, directories) {

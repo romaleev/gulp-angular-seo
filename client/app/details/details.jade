@@ -1,9 +1,10 @@
-h1 Person
+div( id='details' )
+	h1 Person
 
-table.details
-	tr( ng-repeat="key in person | keys" )
-		td( ng-bind='key' )
-		td( ng-bind-html='person[key]' )
+	table.details
+		tr( ng-repeat="key in person | keys" )
+			td( ng-bind='key' )
+			td( ng-bind-html='person[key]' )
 
-p.text-right
-	a.btn.btn-primary( href="/directory" ) View Directory
+	p.text-right
+		a.btn.btn-primary( href="/directory" ) View Directory

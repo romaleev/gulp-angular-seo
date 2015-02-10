@@ -6,5 +6,6 @@
     "require": false,
     "__dirname": false,
     "console": false
-  }
+  },
+  "indent": 1
 }
