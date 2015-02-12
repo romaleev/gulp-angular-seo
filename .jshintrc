@@ -5,7 +5,8 @@
     "module": false,
     "require": false,
     "__dirname": false,
-    "console": false
+    "console": false,
+    "document": false
   },
   "indent": 1
 }

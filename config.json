@@ -1,5 +1,6 @@
 {
 	"browser": "chrome",
+	"debug": false,
 	"url": {
 		"server": {
 			"dev": "http://localhost:8000",
@@ -7,6 +8,7 @@
 		}
 	},
 	"path": {
+		"client": "client",
 		"dist": "dist",
 		"dist_tmp": "tmp/src",
 		"phantomjs": "node_modules/phantomjs/lib/phantom/",

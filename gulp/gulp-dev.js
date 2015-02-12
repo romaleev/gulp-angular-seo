@@ -34,7 +34,7 @@ gulp.task('inject', function() {
 				return gulp.$.inject.transform.apply(gulp.$.inject.transform, arguments);
 			}
 		}))
-		.pipe(gulp.dest('client'));
+		.pipe(gulp.dest(path.client));
 });
 
 gulp.task('validate', function() {
@@ -49,7 +49,7 @@ gulp.task('nodemon', function(cb) {
 		script: path.server.dev,
 		ext: 'js',
 		watch: path.server.dev,
-		verbose: false
+		verbose: gulp.config.debug
 	}).on('start', function() {
 		if (!called) {
 			called = true;
@@ -67,9 +67,9 @@ gulp.task('livereload', function() {
 gulp.task('browserSync', ['inject', 'nodemon'], function() {
 	return browserSync.init({
 		proxy: gulp.config.url.server.dev,
-		browser: "chrome",
+		browser: gulp.config.browser,
 		notify: false,
-		logLevel: "silent"
+		logLevel: gulp.config.debug ? "debug" : "silent"
 	});
 });
 

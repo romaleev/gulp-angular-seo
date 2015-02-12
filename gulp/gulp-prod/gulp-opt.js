@@ -19,7 +19,7 @@ gulp.task('dist:opt', function(cb) {
 
     function no(patterns){
         return !match(files, patterns).length;
-    };
+    }
     function cancel(name, tasks){
         var ind = tasks.indexOf(name);
         if(ind !== -1){
@@ -28,7 +28,7 @@ gulp.task('dist:opt', function(cb) {
             for(var i = 0; i < tasks.length; i++)
                 if(Array.isArray(tasks[i])) cancel(name, tasks[i]);
         }
-    };
+    }
 
     gulp.src(src)
         .pipe($.changed(path.dist_tmp, {
