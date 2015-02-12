@@ -22,7 +22,7 @@ gulp.task('server:start', function(cb) {
 
 gulp.task('server:stop', function(cb) {
     if(server){
-        server.on('exit', cb)
+        server.on('exit', cb);
         server.kill('SIGKILL');
     } else cb();
 });
