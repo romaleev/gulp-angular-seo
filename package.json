@@ -1,16 +1,16 @@
 {
-    "name": "romaleev.com",
+    "name": "gulp-angular-seo",
     "version": "1.0.0",
     "author": "Roman Malieiev",
-    "description": "Personal site",
-    "homepage": "https://github.com/romaleev/romaleev.com",
-    "repository": "https://github.com/romaleev/romaleev.git",
+    "description": "Gulp AngularJS SEO template with fast development and production optimized builds",
+    "homepage": "https://github.com/romaleev/gulp-angular-seo",
+    "repository": "https://github.com/romaleev/gulp-angulaer-seo.git",
     "keywords": ["roman malieiev", "angular", "node", "express", "gulp"],
     "log": [
         "error"
     ],
-    "license": "MIT",
-    "dependencies": {
+    "license": "BSD",
+    "devDependencies": {
         "express": "latest",
         "bower": "latest",
         "require-dir": "latest",
@@ -51,9 +51,7 @@
         "gulp-changed": "latest",
         "gulp-uncss": "latest",
         "gulp-flatten": "latest",
-        "gulp-rename": "latest"
-    },
-    "devDependencies": {
+        "gulp-rename": "latest",
         "errorhandler": "latest",
         "morgan": "latest",
         "jshint-stylish": "latest",

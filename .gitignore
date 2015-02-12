@@ -12,3 +12,4 @@ dist/
 bower_components/
 bak/
 ftp.json
+npm-debug.log
