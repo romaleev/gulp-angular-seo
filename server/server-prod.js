@@ -3,7 +3,7 @@
 var express = require('express'),
 	app = express(),
 	path = require('path'),
-	clientPath = path.join(__dirname, '/../dist'),
+	clientPath = path.join(__dirname, '/../tmp/dist'),
     url = require('../config.json').url.server.prod,
     port = url.slice(-4);
 

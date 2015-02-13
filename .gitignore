@@ -6,7 +6,6 @@ logs/*
 .settings
 .project
 tmp/
-dist/
 .idea
 !.gitkeep
 bower_components/

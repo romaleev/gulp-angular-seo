@@ -54,4 +54,21 @@ gulp.task('ftp:upload', ['ftp:config'], function() {
 
 gulp.task('heroku', function() {
     //TODO
+    //download & install Heroku with toolbelt
+    //> heroku login
+    //> 1. heroku create %appname%
+    //> 1. heroku ps:scale web=1
+    //> 1. git init
+    //> 2. git add -A
+    //> 2. git commit -m "update"
+    //> 2. git push heroku master
+    var run = require('gulp-run');
+    return gulp.src(path.heroku.tmp)
+            .pipe($.shell([
+        'git diff'
+//        'git add .',
+//        "git commit -am 'commit for #{process.env.TAG} push'",
+    ]));
+
+
 });

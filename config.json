@@ -9,7 +9,7 @@
 	},
 	"path": {
 		"client": "client",
-		"dist": "dist",
+		"dist": "tmp/dist",
 		"dist_tmp": "tmp/src",
 		"phantomjs": "node_modules/phantomjs/lib/phantom/",
 		"server": {
@@ -24,7 +24,7 @@
 			]
 		},
 		"js":{
-			"dist": "dist/scripts",
+			"dist": "tmp/dist/scripts",
 			"vendor": [
 				"client/bower_components/jquery/dist/jquery.min.js",
 				"client/bower_components/angular/angular.min.js",
@@ -38,7 +38,7 @@
 			]
 		},
 		"css":{
-			"dist": "dist/styles",
+			"dist": "tmp/dist/styles",
 			"vendor": [
 				"client/bower_components/bootstrap/dist/css/bootstrap.min.css",
 				"client/bower_components/bootstrap/dist/css/bootstrap-theme.min.css",
@@ -49,32 +49,35 @@
 				"!client/bower_components/**"
 			],
 			"uncss": {
-				"html": ["dist/snapshots/*.html"],
+				"html": ["tmp/dist/snapshots/*.html"],
 				"ignore": [".collapse", ".collapsing", ".collapsed", ".collapse.in"]
 			}
 		},
 		"ftp": {
 			"src": [
-            	"dist/**/*.*",
+            	"tmp/dist/**/*.*",
             	"server/.htaccess"
         	],
 			"tmp": "tmp/ftp",
 			"root": "/public_html"
+		},
+		"heroku":{
+			"tmp": "tmp"
 		},
 		"fonts": {
 			"src": [
             	"client/fonts/*.{woff,woff2}",
             	"client/bower_components/fontawesome/fonts/fontawesome-webfont.{woff,woff2}"
         	],
-			"dist": "dist/fonts"
+			"dist": "tmp/dist/fonts"
 		},
 		"img": {
 			"src": "client/img/**/*.*",
-			"dist": "dist/img"
+			"dist": "tmp/dist/img"
 		},
 		"seo":{
 			"urls": ["/", "/directory"],
-			"dist": "dist/snapshots/"
+			"dist": "tmp/dist/snapshots/"
 		}
 	},
 	"devPath": {

@@ -1,0 +1,24 @@
+{
+    "name": "gulp-angular-seo",
+    "version": "1.0.0",
+    "author": "Roman Malieiev",
+    "description": "Gulp AngularJS SEO template with fast development and production optimized builds",
+    "homepage": "https://github.com/romaleev/gulp-angular-seo",
+    "repository": "https://github.com/romaleev/gulp-angulaer-seo.git",
+    "keywords": ["roman malieiev", "angular", "node", "express", "gulp"],
+    "log": [
+        "error"
+    ],
+    "dependencies": {
+        "express": "latest",
+        "compression": "latest"
+    },
+    "main": "server-prod.js",
+    "scripts": {
+        "start": "node server-prod.js"
+    },
+    "engines": {
+        "node": "latest"
+    },
+    "license": "BSD"
+}

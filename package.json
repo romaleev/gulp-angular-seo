@@ -26,6 +26,7 @@
         "run-sequence": "latest",
         "progress": "latest",
         "gulp": "latest",
+        "gulp-shell": "latest",
         "gulp-filter": "latest",
         "gulp-watch": "latest",
         "gulp-inject": "latest",
