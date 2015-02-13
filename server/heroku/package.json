@@ -13,9 +13,9 @@
         "express": "latest",
         "compression": "latest"
     },
-    "main": "server-prod.js",
+    "main": "server-heroku.js",
     "scripts": {
-        "start": "node server-prod.js"
+        "start": "node server-heroku.js"
     },
     "engines": {
         "node": "latest"

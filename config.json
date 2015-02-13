@@ -62,7 +62,9 @@
 			"root": "/public_html"
 		},
 		"heroku":{
-			"tmp": "tmp"
+			"appName": "romaleev",
+			"tmp": "tmp",
+			"src": "server/heroku"
 		},
 		"fonts": {
 			"src": [

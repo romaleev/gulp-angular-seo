@@ -52,8 +52,7 @@ gulp.task('ftp:upload', ['ftp:config'], function() {
         });
 });
 
-gulp.task('heroku', function() {
-    //TODO
+    //TODO heroku
     //download & install Heroku with toolbelt
     //> heroku login
     //> 1. heroku create %appname%
@@ -62,13 +61,21 @@ gulp.task('heroku', function() {
     //> 2. git add -A
     //> 2. git commit -m "update"
     //> 2. git push heroku master
-    var run = require('gulp-run');
-    return gulp.src(path.heroku.tmp)
-            .pipe($.shell([
-        'git diff'
-//        'git add .',
-//        "git commit -am 'commit for #{process.env.TAG} push'",
-    ]));
 
+gulp.task('heroku:config', function() {
+    //return 
+    /*return $.shell.task([
+        'git init',
+        'heroku login',
+        'heroku create ' + path.heroku.appName,
+        'heroku ps:scale web=1'
+    ], {cwd: path.heroku.tmp})();*/
+});
 
+gulp.task('heroku', ['heroku:config'], function() {
+    return $.shell.task([
+        'git add -A',
+        'git commit -m "update"',
+        'git push heroku master'
+    ], {cwd: path.heroku.tmp})();
 });

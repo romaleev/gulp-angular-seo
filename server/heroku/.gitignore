@@ -1,0 +1,9 @@
+node_modules/
+logs/*
+.DS_Store
+.externalToolBuilders
+.
+src/
+ftp/
+!.gitkeep
+npm-debug.log

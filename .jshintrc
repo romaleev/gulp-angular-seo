@@ -6,7 +6,8 @@
     "require": false,
     "__dirname": false,
     "console": false,
-    "document": false
+    "document": false,
+    "process": false
   },
   "indent": 1
 }
