@@ -27,9 +27,9 @@ gulp.task('server:stop', function(cb) {
     } else cb();
 });
 
-gulp.task('dist:clean', function(cb) {
+gulp.task('clean', function(cb) {
     require('del')([
-        path.dist + '/**/*.*'
+        path.tmp + '/**/*.*'
     ], cb);
 });
 

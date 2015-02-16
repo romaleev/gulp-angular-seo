@@ -10,9 +10,9 @@ gulp.task('ftp:config', function(cb) {
         gulp.config.ftpConnection = vinylFtp.create(require('../../ftp.json'));
         cb();
     } catch (e) {
-        console.log('Creating ftp.config, enter properties:');
+        console.log('No "./ftp.json" config, creating:');
         var prompt = require('prompt');
-        prompt.message = 'ftp.config';
+        prompt.message = 'ftp.json';
         prompt.start();
         prompt.get(['host', 'port', 'user', 'pass'], function(err, result) {
             if (err) return console.error(err);
@@ -62,20 +62,46 @@ gulp.task('ftp:upload', ['ftp:config'], function() {
     //> 2. git commit -m "update"
     //> 2. git push heroku master
 
-gulp.task('heroku:config', function() {
-    //return 
-    /*return $.shell.task([
+/*
+    return $.shell.task([
         'git init',
-        'heroku login',
+        'git add -A', //reuse
+        'git commit -m "init"',// reuse
+        'heroku login', //optional
         'heroku create ' + path.heroku.appName,
+        'git push heroku master', //reuse
         'heroku ps:scale web=1'
-    ], {cwd: path.heroku.tmp})();*/
+    ], {cwd: path.heroku.tmp})();
+*/
+
+gulp.task('heroku:config', function() {
+    require('fs').stat(path.heroku.git, function(err, stats) {
+        if (err && err.code !== 'ENOENT') console.error(err);
+
+        if (!err && stats.isDirectory()) return; //cancel if tmp git already initialized
+
+        return gulp.src(path.heroku.src)
+            .pipe($.changed(path.heroku.dist, {
+                hasChanged: $.changed.compareSha1Digest
+            }))
+            .pipe(gulp.dest(path.heroku.dist))
+            .pipe($.shell([
+                '/WAIT git init'//,
+                //'heroku create ' + path.heroku.appName, //optional: 'heroku ps:scale web=1'
+            ], {cwd: path.heroku.dist}));
+    });
 });
 
-gulp.task('heroku', ['heroku:config'], function() {
-    return $.shell.task([
-        'git add -A',
-        'git commit -m "update"',
-        'git push heroku master'
-    ], {cwd: path.heroku.tmp})();
+gulp.task('heroku:upload', ['heroku:config'], function() {
+    return gulp.src('')
+            .pipe($.shell([
+                'git add -A .'//,
+                //'heroku create ' + path.heroku.appName, //optional: 'heroku ps:scale web=1'
+            ], {cwd: path.heroku.dist}));
+    //console.log(1);
+    //return $.shell.task([
+        //'git add -A .'
+        //'git commit',
+        //'git push heroku master'
+    //], {cwd: path.heroku.dist})();
 });

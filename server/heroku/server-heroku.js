@@ -3,7 +3,7 @@
 var express = require('express'),
 	app = express(),
 	path = require('path'),
-	clientPath = path.join(__dirname, '/../dist');
+	clientPath = path.join(__dirname, '/dist');
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -26,5 +26,5 @@ app.get('/[^\.]+$', function(req, res){
 });
 
 app.listen(app.get('port'), function() {
-	console.log('HEROKU ' + url);
+	console.log('HEROKU server started at port: ' + app.get('port'));
 });

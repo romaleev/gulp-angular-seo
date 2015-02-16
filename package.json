@@ -44,7 +44,6 @@
         "gulp-jade": "latest",
         "gulp-concat": "latest",
         "gulp-add-src": "latest",
-        "gulp-newer": "latest",
         "gulp-sourcemaps": "latest",
         "gulp-ng-html2js": "latest",
         "gulp-size": "latest",

@@ -40,7 +40,8 @@ Run production builds:
 
 ## TODOs
 
-* `Heroku` upload, `Yeoman` generator with options:
+* `Heroku` upload,
+* `Yeoman` generator with options:
 * `html/jade`
 * `css/less/sass`
 * `html5mode/hashbang`

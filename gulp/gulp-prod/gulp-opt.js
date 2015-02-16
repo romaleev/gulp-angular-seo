@@ -3,13 +3,7 @@
 var gulp = require('gulp'),
     $ = gulp.$,
     path = gulp.config.path,
-    server;
-
-gulp.task('dist:opt:clean', function(cb) {
-    require('del')([
-        path.dist_tmp + '/**/*.*'
-    ], cb);
-});
+    runSequence = require('run-sequence');
 
 gulp.task('dist:opt', function(cb) {
     var match = require("multimatch"),
@@ -20,13 +14,16 @@ gulp.task('dist:opt', function(cb) {
     function no(patterns){
         return !match(files, patterns).length;
     }
-    function cancel(name, tasks){
+    function cancel(name, _tasks, _index){
+        var tasks = (_index !== undefined) ? _tasks[_index] : _tasks;
         var ind = tasks.indexOf(name);
         if(ind !== -1){
-            return tasks.splice(ind, 1);
+            tasks.splice(ind, 1);
+            if(tasks.length === 0 && _index !== undefined)
+                _tasks.splice(_index, 1);
         } else {
             for(var i = 0; i < tasks.length; i++)
-                if(Array.isArray(tasks[i])) cancel(name, tasks[i]);
+                if(Array.isArray(tasks[i])) cancel(name, tasks, i);
         }
     }
 
@@ -41,31 +38,22 @@ gulp.task('dist:opt', function(cb) {
         })
         .on('end', function() {
             if(no(path.html.index)) cancel('html', tasks);
-            if(no(path.js.user) && no(path.html.partials)) cancel('js:user', tasks);
+            if(no(path.js.user) && no(path.html.partials)) cancel('js:user', tasks); //js:user dependent on both js:user and html.partials htat are injected into js.
             if(no(path.js.vendor)) cancel('js:vendor', tasks);
             if(no(path.css.user)) cancel('css:user', tasks);
             if(no(path.fonts.src)) cancel('fonts', tasks);
             if(no(path.img.src)) cancel('image', tasks);
-            if(tasks[0][0].length === 2 && Array.isArray(tasks[0][0][1]) && !tasks[0][0][1].length){// cancel server start
-                tasks.splice(0, 1);
-                tasks.push('server:start');
-                if(match(files, path.css.vendor).length) tasks.push('css:vendor');
+            if(tasks[0][0][0] == ['server:start']){
+                cancel('seo', tasks); //cancel if no 'js:vendor', 'html' and 'js:user' changes
+                if(no(path.css.vendor)) cancel('css:vendor', tasks); //cancel if no 'seo' and 'path.css.vendor' changes
             }
-            if(tasks.length){
-                require('run-sequence')($.sync(gulp).async(tasks, 'dist:opt:tmp'), cb);
-            } else cb();
+            runSequence($.sync(gulp).async(tasks, 'dist:opt:tmp'), cb);
         });
 });
 
 gulp.task('prod:opt', ['dist:opt'], function() {
     console.log('Server is running: ' + gulp.config.url.server.prod);
     require('opn')(gulp.config.url.server.prod, gulp.config.browser);
-});
-
-gulp.task('ftp:opt:clean', function(cb) {
-    require('del')([
-        path.ftp.tmp + '/**/*.*'
-    ], cb);
 });
 
 gulp.task('ftp:opt:upload', ['ftp:config'], function() {
@@ -99,5 +87,5 @@ gulp.task('ftp:opt:upload', ['ftp:config'], function() {
 });
 
 gulp.task('ftp:opt', ['dist:opt'], function(cb){
-    require('run-sequence')(['ftp:opt:upload', 'server:stop'], cb);
+    runSequence(['ftp:opt:upload', 'server:stop'], cb);
 });

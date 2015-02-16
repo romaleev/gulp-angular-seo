@@ -63,8 +63,9 @@
 		},
 		"heroku":{
 			"appName": "romaleev",
-			"tmp": "tmp",
-			"src": "server/heroku"
+			"src": "server/heroku",
+			"dist": "tmp",
+			"git": "tmp/.git"
 		},
 		"fonts": {
 			"src": [
