@@ -5,6 +5,7 @@
 ## Example project
 
 Built via FTP: http://romaleev.com
+
 Built in Heroku: http://romaleev.herokuapp.com
 
 Source code: https://github.com/romaleev/gulp-angular-seo
@@ -31,11 +32,13 @@ gulp dev
 ### Run FTP upload builds:
 * `gulp ftp:upload` - upload via FTP
 * `gulp ftp[:opt]` - optimization [enchanced] and upload via FTP
+
 You need to enter FTP credentials on first use: host, port, user, pass.
 
 ### Run Heroku upload builds:
 * `gulp heroku:upload` - upload into Heroku
 * `gulp heroku[:opt]` - optimization [enchanced] and upload into Heroku
+
 You need to install Heroku with Toolbelt and login first: `heroku login`
 
 ## Optimizations
