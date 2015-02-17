@@ -10,7 +10,7 @@
 	"path": {
 		"client": "client",
 		"dist": "tmp/dist",
-		"dist_tmp": "tmp/src",
+		"dist_cache": "tmp/src-cache",
 		"phantomjs": "node_modules/phantomjs/lib/phantom/",
 		"server": {
 			"dev": "server/server-dev.js",
@@ -58,12 +58,12 @@
             	"tmp/dist/**/*.*",
             	"server/.htaccess"
         	],
-			"tmp": "tmp/ftp",
+			"cache": "tmp/ftp-cache",
 			"root": "/public_html"
 		},
 		"heroku":{
 			"appName": "romaleev",
-			"src": "server/heroku",
+			"src": "server/heroku/{**,.*}",
 			"dist": "tmp",
 			"git": "tmp/.git"
 		},

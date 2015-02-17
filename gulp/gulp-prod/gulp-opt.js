@@ -28,11 +28,11 @@ gulp.task('dist:opt', function(cb) {
     }
 
     gulp.src(src)
-        .pipe($.changed(path.dist_tmp, {
+        .pipe($.changed(path.dist_cache, {
             hasChanged: $.changed.compareSha1Digest
         }))
         .pipe($.debug({title: 'dist:opt'}))
-        .pipe(gulp.dest(path.dist_tmp))
+        .pipe(gulp.dest(path.dist_cache))
         .on('data', function(file) {
             files.push(file.history[0].slice(file.cwd.length + 1));
         })
@@ -43,7 +43,7 @@ gulp.task('dist:opt', function(cb) {
             if(no(path.css.user)) cancel('css:user', tasks);
             if(no(path.fonts.src)) cancel('fonts', tasks);
             if(no(path.img.src)) cancel('image', tasks);
-            if(tasks[0][0][0] == ['server:start']){
+            if(Array.isArray(tasks[0][0]) && tasks[0][0].length === 1){
                 cancel('seo', tasks); //cancel if no 'js:vendor', 'html' and 'js:user' changes
                 if(no(path.css.vendor)) cancel('css:vendor', tasks); //cancel if no 'seo' and 'path.css.vendor' changes
             }
@@ -62,7 +62,7 @@ gulp.task('ftp:opt:upload', ['ftp:config'], function() {
         bar;
 
     return gulp.src(path.ftp.src)
-        .pipe($.changed(path.ftp.tmp, {
+        .pipe($.changed(path.ftp.cache, {
             hasChanged: $.changed.compareSha1Digest
         }))
         .on('data', function() {
@@ -76,7 +76,7 @@ gulp.task('ftp:opt:upload', ['ftp:config'], function() {
                 total: size
             });
         })
-        .pipe(gulp.dest(path.ftp.tmp))
+        .pipe(gulp.dest(path.ftp.cache))
         .pipe($.debug({
             title: "ftp:"
         }))
@@ -88,4 +88,8 @@ gulp.task('ftp:opt:upload', ['ftp:config'], function() {
 
 gulp.task('ftp:opt', ['dist:opt'], function(cb){
     runSequence(['ftp:opt:upload', 'server:stop'], cb);
+});
+
+gulp.task('heroku:opt', ['dist:opt'], function(cb){
+    runSequence(['heroku:upload', 'server:stop'], cb);
 });

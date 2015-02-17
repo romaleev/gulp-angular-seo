@@ -54,3 +54,7 @@ gulp.task('prod', ['dist'], function() {
 gulp.task('ftp', ['dist'], function(cb){
     require('run-sequence')(['ftp:upload', 'server:stop'], cb);
 });
+
+gulp.task('heroku', ['dist'], function(cb){
+    require('run-sequence')(['heroku:upload', 'server:stop'], cb);
+});

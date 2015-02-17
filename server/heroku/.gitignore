@@ -3,7 +3,6 @@ logs/*
 .DS_Store
 .externalToolBuilders
 .
-src/
-ftp/
+*-cache/
 !.gitkeep
 npm-debug.log
