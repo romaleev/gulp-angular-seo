@@ -25,6 +25,7 @@ gulp.task('seo', function(cb) {
 						page.evaluate(function() {
 							return document.getElementsByTagName("html")[0].innerHTML.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
 						}, function(result) {
+							if(path.debug) console.log('seo: ' + path.seo.dist + fileName);
 							fs.writeFile(path.seo.dist + fileName, result, function(err) {
 								if (err) console.log(err);
 								ready();

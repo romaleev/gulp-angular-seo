@@ -3,6 +3,7 @@
 var gulp = require('gulp'),
     $ = gulp.$,
     path = gulp.config.path,
+    runSequence = require('run-sequence'),
     server;
 
 require('require-dir')('./gulp-prod');
@@ -52,9 +53,9 @@ gulp.task('prod', ['dist'], function() {
 });
 
 gulp.task('ftp', ['dist'], function(cb){
-    require('run-sequence')(['ftp:upload', 'server:stop'], cb);
+    runSequence(['ftp:upload', 'server:stop'], cb);
 });
 
 gulp.task('heroku', ['dist'], function(cb){
-    require('run-sequence')(['heroku:upload', 'server:stop'], cb);
+    runSequence(['heroku:upload', 'server:stop'], cb);
 });

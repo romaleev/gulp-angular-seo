@@ -11,6 +11,7 @@ gulp.task('ftp:upload', ['ftp:config'], function() {
         bar;
 
     return gulp.src(path.ftp.src)
+        .pipe($.if(gulp.config.cache, $.changed(path.ftp.cache, { hasChanged: $.changed.compareSha1Digest })))
         .on('data', function() {
             size++;
         })
@@ -22,6 +23,7 @@ gulp.task('ftp:upload', ['ftp:config'], function() {
                 total: size
             });
         })
+        .pipe($.if(gulp.config.cache, gulp.dest(path.ftp.cache)))
         .pipe($.debug({
             title: "ftp:"
         }))
@@ -52,18 +54,6 @@ gulp.task('ftp:config', function(cb) {
     }
 });
 
-/*
-    return gulp.src(path.heroku.src)
-        .pipe($.changed(path.heroku.dist, {
-            hasChanged: $.changed.compareSha1Digest
-        }))
-        .pipe(gulp.dest(path.heroku.dist))
-        .pipe($.shell([
-            'git init'
-            //'heroku create ' + path.heroku.appName //optional: 'heroku ps:scale web=1'
-        ], {cwd: path.heroku.dist}));
-*/
-
 gulp.task('heroku:upload', ['heroku:config'], $.shell.task([
     'git add -A .',
     'git commit -m update',
@@ -72,7 +62,7 @@ gulp.task('heroku:upload', ['heroku:config'], $.shell.task([
 
 gulp.task('heroku:config', function(cb) {
     if(!require('fs').existsSync(path.heroku.git)){
-        console.error('You need to be logged in Heroku first: heroku auth:whoami | heroku login');
+        console.log('You need to be logged in Heroku first: heroku auth:whoami | heroku login');
         require('run-sequence')('heroku:config:copy', 'heroku:config:shell', cb);
     } else cb();
 });

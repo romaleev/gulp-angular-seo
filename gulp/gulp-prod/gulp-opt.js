@@ -56,38 +56,9 @@ gulp.task('prod:opt', ['dist:opt'], function() {
     require('opn')(gulp.config.url.server.prod, gulp.config.browser);
 });
 
-gulp.task('ftp:opt:upload', ['ftp:config'], function() {
-    var ProgressBar = require('progress'),
-        size = 0,
-        bar;
-
-    return gulp.src(path.ftp.src)
-        .pipe($.changed(path.ftp.cache, {
-            hasChanged: $.changed.compareSha1Digest
-        }))
-        .on('data', function() {
-            size++;
-        })
-        .on('end', function() {
-            if (size) bar = new ProgressBar('Uploading [:bar] :percent', {
-                complete: '#',
-                incomplete: ' ',
-                width: 20,
-                total: size
-            });
-        })
-        .pipe(gulp.dest(path.ftp.cache))
-        .pipe($.debug({
-            title: "ftp:"
-        }))
-        .pipe(gulp.config.ftpConnection.dest(path.ftp.root))
-        .on('data', function() {
-            if (bar) bar.tick();
-        });
-});
-
 gulp.task('ftp:opt', ['dist:opt'], function(cb){
-    runSequence(['ftp:opt:upload', 'server:stop'], cb);
+    gulp.config.cache = true;
+    runSequence(['ftp:upload', 'server:stop'], cb);
 });
 
 gulp.task('heroku:opt', ['dist:opt'], function(cb){

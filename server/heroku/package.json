@@ -18,7 +18,8 @@
         "start": "node server-heroku.js"
     },
     "engines": {
-        "node": "latest"
+        "node": "latest",
+        "npm": "latest"
     },
     "license": "BSD"
 }
