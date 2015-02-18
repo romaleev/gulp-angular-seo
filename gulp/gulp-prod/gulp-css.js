@@ -23,10 +23,10 @@ gulp.task('css:user', function() {
 });
 
 //TODO for generator
-gulp.task('css:sass', function() {
+/*gulp.task('css:sass', function() {
     gulp.src([
-            'client/**/*.sass',
-            '!' + path.bower + '/**'
+            'client/ * * /*.sass',
+            '!' + path.bower + '/ * *'
         ])
         .pipe($.sourcemaps.init())
         .pipe($.sass())
@@ -39,4 +39,4 @@ gulp.task('css:sass', function() {
         ]))
         .pipe($.concat('styles.css'))
         .pipe(gulp.dest(path.dist));
-});
+});*/

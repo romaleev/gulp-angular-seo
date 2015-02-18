@@ -13,17 +13,17 @@ html( ng-app='romaleev' )
 
 		// build:css styles/vendor.css
 		//- vendorCSS:css
-		link(rel="stylesheet", href="bower_components/bootstrap/dist/css/bootstrap.min.css")
-		link(rel="stylesheet", href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css")
-		link(rel="stylesheet", href="bower_components/fontawesome/css/font-awesome.min.css")
+		link(rel="stylesheet", href="../bower_components/bootstrap/dist/css/bootstrap.min.css")
+		link(rel="stylesheet", href="../bower_components/bootstrap/dist/css/bootstrap-theme.min.css")
+		link(rel="stylesheet", href="../bower_components/fontawesome/css/font-awesome.min.css")
 		//- endinject
 		// endbuild
 
 		// build:css styles/styles.css
 		//- userCSS:less
 		link(rel="stylesheet", href="app/app.css")
-		link(rel="stylesheet", href="app/details/details.css")
 		link(rel="stylesheet", href="directives/directory/directory.css")
+		link(rel="stylesheet", href="app/details/details.css")
 		//- endinject
 		// endbuild
 
@@ -60,11 +60,11 @@ html( ng-app='romaleev' )
 
 		// build:js scripts/vendor.js
 		//- vendorJS:js
-		script(src="bower_components/jquery/dist/jquery.min.js")
-		script(src="bower_components/angular/angular.min.js")
-		script(src="bower_components/angular-route/angular-route.min.js")
-		script(src="bower_components/angular-sanitize/angular-sanitize.min.js")
-		script(src="bower_components/bootstrap/dist/js/bootstrap.min.js")
+		script(src="../bower_components/jquery/dist/jquery.min.js")
+		script(src="../bower_components/angular/angular.min.js")
+		script(src="../bower_components/angular-route/angular-route.min.js")
+		script(src="../bower_components/angular-sanitize/angular-sanitize.min.js")
+		script(src="../bower_components/bootstrap/dist/js/bootstrap.min.js")
 		//- endinject
 		// endbuild
 
@@ -73,9 +73,9 @@ html( ng-app='romaleev' )
 		script(src="app/app.js")
 		script(src="services/data.service.js")
 		script(src="services/directories.service.js")
+		script(src="directives/directory/directory.directive.js")
 		script(src="app/details/details.controller.js")
 		script(src="app/directory/directory.controller.js")
 		script(src="app/home/home.controller.js")
-		script(src="directives/directory/directory.directive.js")
 		//- endinject
 		// endbuild

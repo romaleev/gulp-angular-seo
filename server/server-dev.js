@@ -4,6 +4,7 @@ var express = require('express'),
 	app = express(),
 	path = require('path'),
 	clientPath = path.join(__dirname, '/../client'),
+	bowerPath = path.join(__dirname, '/../bower_components'),
 	less = require('less'),
 	fs = require('fs'),
 	url = require('../config.json').url.server.dev,
@@ -12,6 +13,7 @@ var express = require('express'),
 app.set('views', clientPath);
 app.set('view engine', 'jade');
 app.use(express.static(clientPath));
+app.use('/bower_components', express.static(bowerPath));
 
 app.use(require('morgan')('combined', {
 	skip: function(req, res) {
@@ -29,7 +31,7 @@ app.get("/*.html", function(request, response) {
 	});
 });
 app.get("/*.css", function(request, response) {
-	fs.readFile('./client/' + request.params[0] + '.less', 'utf8', function(err, data) {
+	fs.readFile(clientPath + '/' + request.params[0] + '.less', 'utf8', function(err, data) {
 		if (err) throw new Error(err.toString());
 		less.render(data, function(e, css) {
 			response.set('Content-Type', 'text/css');

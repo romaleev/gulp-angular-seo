@@ -26,28 +26,22 @@
 		"js":{
 			"dist": "tmp/dist/scripts",
 			"vendor": [
-				"client/bower_components/jquery/dist/jquery.min.js",
-				"client/bower_components/angular/angular.min.js",
-				"client/bower_components/angular-route/angular-route.min.js",
-				"client/bower_components/angular-sanitize/angular-sanitize.min.js",
-				"client/bower_components/bootstrap/dist/js/bootstrap.min.js"
+				"bower_components/jquery/dist/jquery.min.js",
+				"bower_components/angular/angular.min.js",
+				"bower_components/angular-route/angular-route.min.js",
+				"bower_components/angular-sanitize/angular-sanitize.min.js",
+				"bower_components/bootstrap/dist/js/bootstrap.min.js"
 			],
-			"user": [
-				"client/**/*.js",
-				"!client/bower_components/**"
-			]
+			"user": "client/**/*.js"
 		},
 		"css":{
 			"dist": "tmp/dist/styles",
 			"vendor": [
-				"client/bower_components/bootstrap/dist/css/bootstrap.min.css",
-				"client/bower_components/bootstrap/dist/css/bootstrap-theme.min.css",
-				"client/bower_components/fontawesome/css/font-awesome.min.css"
+				"bower_components/bootstrap/dist/css/bootstrap.min.css",
+				"bower_components/bootstrap/dist/css/bootstrap-theme.min.css",
+				"bower_components/fontawesome/css/font-awesome.min.css"
 			],
-			"user": [
-				"client/**/*.less",
-				"!client/bower_components/**"
-			],
+			"user": "client/**/*.less",
 			"uncss": {
 				"html": ["tmp/dist/snapshots/*.html"],
 				"ignore": [".collapse", ".collapsing", ".collapsed", ".collapse.in"]
@@ -70,7 +64,7 @@
 		"fonts": {
 			"src": [
             	"client/fonts/*.{woff,woff2}",
-            	"client/bower_components/fontawesome/fonts/fontawesome-webfont.{woff,woff2}"
+            	"bower_components/fontawesome/fonts/fontawesome-webfont.{woff,woff2}"
         	],
 			"dist": "tmp/dist/fonts"
 		},
@@ -84,24 +78,13 @@
 		}
 	},
 	"devPath": {
-		"watch": [
-			"./server/*.js",
-			"./client/**/*.js",
-			"./client/{!bower_components}"
-		],
 		"validate": [
-			"./server/*.js",
-			"./client/{app,components,directives,services}/**/*.js"
+			"./server/server-dev.js",
+			"./client/**/*.js"
 		],
 		"browserSync":{
-			"reload": [
-				"client/**/*.{js,jade}",
-				"client/{!bower_components}"
-			],
-			"inject": [
-				"client/**/*.less",
-				"client/{!bower_components}"
-			]
+			"reload": "client/**/*.{js,jade}",
+			"inject": "client/**/*.less"
 		}
 	}
 }

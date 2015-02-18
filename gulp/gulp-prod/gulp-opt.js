@@ -9,7 +9,7 @@ gulp.task('dist:opt', function(cb) {
     var match = require("multimatch"),
         tasks = gulp.distTasks,
         files = [],
-        src = ['client/**/*.*'].concat(path.js.vendor).concat(path.css.vendor).concat('!client/bower_components/**');
+        src = [path.client + '/**/*.*'].concat(path.js.vendor).concat(path.css.vendor);
 
     function no(patterns){
         return !match(files, patterns).length;
