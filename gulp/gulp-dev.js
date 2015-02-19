@@ -4,7 +4,7 @@ var gulp = require('gulp'),
 	$ = gulp.$,
 	path = gulp.config.path,
 	devPath = gulp.config.devPath,
-	browserSync = require('browser-sync');
+	browserSync = require('browser-sync')
 
 gulp.task('inject', function() {
 	return gulp.src(path.html.index)
@@ -37,14 +37,9 @@ gulp.task('inject', function() {
 		.pipe(gulp.dest(path.client));
 });
 
-gulp.task('validate', function() {
-	return gulp.src(devPath.validate)
-			.pipe($.jshint())
-			.pipe($.jshint.reporter('jshint-stylish'));
-});
-
 gulp.task('nodemon', function(cb) {
 	var called = false;
+
 	return $.nodemon({
 		script: path.server.dev,
 		ext: 'js',
@@ -53,6 +48,12 @@ gulp.task('nodemon', function(cb) {
 	}).on('start', function() {
 		if (!called) {
 			called = true;
+			browserSync.init({
+				proxy: gulp.config.url.server.dev,
+				browser: gulp.config.browser,
+				notify: false,
+				logLevel: gulp.config.debug ? "debug" : "silent"
+			});
 			cb();
 		}
 	}).on('restart', function() {
@@ -60,21 +61,8 @@ gulp.task('nodemon', function(cb) {
 	});
 });
 
-gulp.task('livereload', function() {
-    //TODO
-});
-
-gulp.task('browserSync', ['inject', 'nodemon'], function() {
-	return browserSync.init({
-		proxy: gulp.config.url.server.dev,
-		browser: gulp.config.browser,
-		notify: false,
-		logLevel: gulp.config.debug ? "debug" : "silent"
-	});
-});
-
-gulp.task('dev', ['validate', 'browserSync'], function() {
-	$.watch(devPath.validate)
+gulp.task('dev', ['inject', 'nodemon'], function() {
+	$.watch(devPath.validate, {ignoreInitial: false})
 		.pipe($.jshint())
 		.pipe($.jshint.reporter('jshint-stylish'));
 

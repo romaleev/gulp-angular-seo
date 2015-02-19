@@ -55,6 +55,7 @@ You need to install Heroku with Toolbelt and login first: `heroku login`
 * `express+browserSync/connect+livereload`
 * `Ftp/Heroku uploading`
 * `html5mode/hashbang`
+* `tests`
 
 ## License
 

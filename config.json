@@ -85,6 +85,7 @@
 		"browserSync":{
 			"reload": "client/**/*.{js,jade}",
 			"inject": "client/**/*.less"
-		}
+		},
+		"liveReload": "client/**/*.*"
 	}
 }

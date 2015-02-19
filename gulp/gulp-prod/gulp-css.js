@@ -23,20 +23,5 @@ gulp.task('css:user', function() {
 });
 
 //TODO for generator
-/*gulp.task('css:sass', function() {
-    gulp.src([
-            'client/ * * /*.sass',
-            '!' + path.bower + '/ * *'
-        ])
-        .pipe($.sourcemaps.init())
-        .pipe($.sass())
-        .pipe($.minifyCss())
-        .pipe($.sourcemaps.write())
-        .pipe($.addSrc([
-            path.bower + '/bootstrap/dist/css/bootstrap.min.css',
-            path.bower + '/bootstrap/dist/css/bootstrap-theme.min.css',
-            path.bower + '/fontawesome/css/font-awesome.min.css'
-        ]))
-        .pipe($.concat('styles.css'))
-        .pipe(gulp.dest(path.dist));
-});*/
+//    .pipe($.if('*.less', $.less()))
+//    .pipe($.if('*.scss', $.sass()))
