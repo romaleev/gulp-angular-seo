@@ -13,16 +13,16 @@ angular.module('romaleev')
 			if (!response)
 				return $location.path('/');
 
-			var person = {};
-			person.Name = response.name.first + ' ' + response.name.last;
-			person.About = '<span class="about">' + response.about + '</span>';
-			person.Picture = '<img class="img-circle img-thumbnail" src="' + response.picture.large + '" />';
-			person.ID = '<span class="alert alert-danger">' + response._id + '</span>';
-			person.Email = response.email;
-			person.Phone = response.phone;
-			person.Address = response.address;
-
-			$scope.person = person;
+			$scope.person = {
+				Name: '<span class="bold">' + response.name.first + ' ' + response.name.last + '</span>',
+				About: response.about,
+				Picture: '<img class="img-circle img-thumbnail" src="' + response.picture.large + '" />',
+				ID: '<span class="alert alert-danger">' + response._id + '</span>',
+				Email: response.email,
+				Phone: response.phone,
+				Address: response.address,
+				Salary: '<span class="text-primary">' + response.price + ',000$</span>'
+			};
 		});
 	})
 	.filter('keys', function() {

@@ -1,9 +1,27 @@
 div( id='directory' )
-	h1 Directory
+	h1 People
 
-	div( ng-repeat="directory in directories" )
+	div
+		div.btn-group
+			button.btn.btn-default.active
+				span.glyphicon.glyphicon-th-list
+				|  List
+			button.btn.btn-default
+				span.glyphicon.glyphicon-th
+				|  Grid
+		div.pull-right
+			input.form-control(
+				type='text'
+				ng-model='searchFilter'
+				placeholder='Search...'
+			)
+
+	br
+
+	div( ng-repeat="directory in directories | filter: searchFilter" )
 		directory(
 			fullName='{{directory.name.last}}, {{directory.name.first}}'
 			about='{{directory.about}}'
 			thumbSrc='{{directory.picture.thumbnail}}'
+			price='{{directory.price}},000$'
 		)

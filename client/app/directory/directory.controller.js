@@ -10,6 +10,8 @@ angular.module('romaleev')
 			});
 	})
 	.controller('DirectoryCtrl', function($scope, directories) {
+		$scope.viewType = 'List';
+		$scope.viewTypes = ['List', 'Grid'];
 		directories.get().then(function(response) {
 			$scope.directories = response;
 		});

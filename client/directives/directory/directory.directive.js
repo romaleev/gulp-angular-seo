@@ -7,7 +7,8 @@ angular.module('romaleev')
 	        scope: {
 	        	fullname: '@fullname',
 	        	about: '@about',
-	        	thumbsrc: '@thumbsrc'
+	        	thumbsrc: '@thumbsrc',
+	        	price: '@price'
 	        },
 	        controller: function($scope){
             	$scope.encodeURI = encodeURI;

@@ -5,11 +5,12 @@ html( ng-app='romaleev' )
 		meta( name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" )
 		meta( name="author" content="Roman Malieiev" )
 		meta( name="keywords" content="romaleev, Roman Malieiev, web developer" )
-		meta( name="description" content="Roman Malieiev | 25 | web developer" )
+		meta( name="description" content="Roman Malieiev | Web Developer" )
 		meta( name="fragment" content="!" )
 
 		title( ng-bind="'Roman Malieiev - ' + $root.title" )
-		base(href="/")
+		base( href="/" )
+		link( href="img/favicon.ico", rel="shortcut icon" )
 
 		// build:css styles/vendor.css
 		//- vendorCSS:css
@@ -23,6 +24,7 @@ html( ng-app='romaleev' )
 		//- userCSS:less
 		link(rel="stylesheet", href="app/app.css")
 		link(rel="stylesheet", href="app/details/details.css")
+		link(rel="stylesheet", href="app/home/home.css")
 		link(rel="stylesheet", href="directives/directory/directory.css")
 		//- endinject
 		// endbuild
@@ -48,7 +50,6 @@ html( ng-app='romaleev' )
 						li( ng-class="{ active: isActive('/directory') }" )
 							a.hidden-xs( href="/directory" ) Directory
 							a.visible-xs( href="/directory" data-toggle="collapse" data-target=".navbar-collapse" ) Directory
-				//- a.btn.btn-default.navbar-btn.pull-right( href="#" ) Resume
 
 		div.container-fluid
 			ng-view
@@ -56,7 +57,7 @@ html( ng-app='romaleev' )
 		hr
 
 		div.text-center
-			p © Roman Malieiev 2012-2015
+			p © Roman Malieiev 2012 - 2015
 
 		// build:js scripts/vendor.js
 		//- vendorJS:js

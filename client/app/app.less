@@ -5,42 +5,24 @@
 	font-weight: 600;
 	src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url(/fonts/OpenSansLatin600.woff2) format('woff2'), url(/fonts/OpenSansLatin600.woff) format('woff');
 }
-body {
+.bold{
+	font-size: 120%;
+	line-height: 1em;
+}
+body{
 	font-family: 'Open Sans';
 	padding-top: 4em;
+	div.container-fluid{
+		margin: 0 auto;
+		max-width: 55em;
+	}
 }
-.logo{
+img.logo{
 	float: left;
 	width: 32px;
 	height: 32px;
 	margin-right: 0.7em;
 	margin-top: -0.35em;
-}
-.container-fluid{
-	margin: 0 auto;
-	max-width: 55em;
-}
-#home{
-	img{
-		display: block;
-		margin: 0 auto 1em auto;
-		border-radius: 1em;
-	}
-	a.fa{
-	/*	border:1px solid black;*/
-	}
-	.contact{
-		padding: 0.5em;
-		min-width: 6em;
-		a{
-			color: grey;
-			&:hover{
-				color: red;
-				text-decoration: none;
-			}
-		}
-
-	}
 }
 
 .collapsing {/*webkit fix*/

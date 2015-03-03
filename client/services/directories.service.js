@@ -16,7 +16,7 @@ angular.module('romaleev')
     };
   })
   .factory('directories', function($http, util) {
-    var path = 'http://beta.json-generator.com/api/json/get/KIUGEFb?callback=JSON_CALLBACK';
+    var path = 'http://beta.json-generator.com/api/json/get/AuPwfL0?callback=JSON_CALLBACK';
 
     return {
       get: function(name) {
