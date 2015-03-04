@@ -60,7 +60,7 @@ div( id='directory' )
 				p( ng-bind='gridView ? person.aboutCut : person.about' )
 				p
 					a.btn.btn-primary( ng-href='{{person.detailsUrl}}' ) View Profile
-					button.btn(
+					a.btn(
 							ng-class="person.hired ? 'btn-danger' : 'btn-success'"
 							ng-click="person.hired = hire(person);"
 						) {{person.hired ? 'Dismiss' : 'Hire'}}

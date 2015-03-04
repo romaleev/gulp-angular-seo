@@ -8,7 +8,7 @@ div( id='details' )
 
 	div.pull-right
 		a.btn.btn-primary( href="/directory" ) Go back
-		button.btn(
+		a.btn(
 			ng-class="hired ? 'btn-danger' : 'btn-success'"
 			ng-click="hired = hire(id)"
 		) {{hired ? 'Dismiss' : 'Hire'}}

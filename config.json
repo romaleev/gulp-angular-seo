@@ -44,7 +44,11 @@
 			"user": "client/**/*.less",
 			"uncss": {
 				"html": ["tmp/dist/snapshots/*.html"],
-				"ignore": [".collapse", ".collapsing", ".collapsed", ".collapse.in", ".btn-success", ".btn-danger"]
+				"ignore": [
+					".collapse", ".collapsing", ".collapsed", ".collapse.in",
+					".btn-success", ".btn-danger", ".active",
+					".col-xs-6", ".col-sm-6", ".col-md-4", ".col-lg-4"
+				]
 			}
 		},
 		"ftp": {
