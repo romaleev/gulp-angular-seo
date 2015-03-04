@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('romaleev')
-  .factory('data', function() {
+  .factory('homeService', function() {
     return {
       header_title: "Roman Malieiev",
       contacts: [{

@@ -2,7 +2,6 @@
 
 angular.module('romaleev')
   .factory('util', function() {
-
     return {
       findByName: function findById(array, name) {
         for (var i = 0; i < array.length; i++) {
@@ -15,7 +14,8 @@ angular.module('romaleev')
       }
     };
   })
-  .factory('directories', function($http, util) {
+  .value('hired', [])
+  .factory('peopleService', function($http, util, hired) {
     var path = 'http://beta.json-generator.com/api/json/get/AuPwfL0?callback=JSON_CALLBACK';
 
     return {
@@ -29,6 +29,18 @@ angular.module('romaleev')
         }).catch(function(error) {
           console.error(error);
         });
+      },
+      hire: function(id){
+        var index = hired.indexOf(id);
+        if(index === -1){
+          hired.push(id);
+        } else {
+          hired.splice(index, 1);
+        }
+        return index === -1;
+      },
+      isHired: function(id){
+        return hired.indexOf(id) != -1;
       }
     };
   });

@@ -44,7 +44,7 @@
 			"user": "client/**/*.less",
 			"uncss": {
 				"html": ["tmp/dist/snapshots/*.html"],
-				"ignore": [".collapse", ".collapsing", ".collapsed", ".collapse.in"]
+				"ignore": [".collapse", ".collapsing", ".collapsed", ".collapse.in", ".btn-success", ".btn-danger"]
 			}
 		},
 		"ftp": {
@@ -64,7 +64,8 @@
 		"fonts": {
 			"src": [
             	"client/fonts/*.{woff,woff2}",
-            	"bower_components/fontawesome/fonts/fontawesome-webfont.{woff,woff2}"
+            	"bower_components/fontawesome/fonts/fontawesome-webfont.{woff,woff2}",
+            	"bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.{woff,woff2}"
         	],
 			"dist": "tmp/dist/fonts"
 		},

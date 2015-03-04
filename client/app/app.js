@@ -8,12 +8,12 @@ angular.module('romaleev', ['ngRoute', 'ngSanitize'])
 		});
 		$compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|tel|mailto|skype):/);
 	})
-	.controller('NavbarCtrl', function ($scope, $location, data) {
+	.controller('NavbarCtrl', function ($scope, $location, homeService) {
 		$scope.isActive = function (viewLocation) {
 			return viewLocation === $location.path();
 		};
-		$scope.tab_title = data.tab_title;
-		$scope.header_title = data.header_title;
+		$scope.tab_title = homeService.tab_title;
+		$scope.header_title = homeService.header_title;
 	})
 	.run(function($location, $rootScope) {
 	    $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {

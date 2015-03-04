@@ -1,27 +1,66 @@
 div( id='directory' )
 	h1 People
-
-	div
-		div.btn-group
-			button.btn.btn-default.active
-				span.glyphicon.glyphicon-th-list
-				|  List
-			button.btn.btn-default
-				span.glyphicon.glyphicon-th
-				|  Grid
-		div.pull-right
+	div.header
+		div.top.right
 			input.form-control(
 				type='text'
 				ng-model='searchFilter'
 				placeholder='Search...'
 			)
+		div.btn-group.left
+			button.btn.btn-default(
+					ng-class="{ active: !gridView }"
+					ng-click="gridView = false"
+				)
+				span.glyphicon.glyphicon-th-list
+				|  List
+			button.btn.btn-default(
+					ng-class="{ active: gridView }"
+					ng-click="gridView = true"
+				)
+				span.glyphicon.glyphicon-th
+				|  Grid
 
-	br
+		div.btn-group.center( ng-init="personFilter = {}" )
+			button.btn.btn-default(
+					ng-class="{ active: personFilter.hired === undefined }"
+					ng-click="personFilter = {}"
+				)
+				span.glyphicon.glyphicon-th-large.text-warning
+				|  All {{people.length}}
+			button.btn.btn-default(
+					ng-class="{ active: personFilter.hired === false}"
+					ng-click="personFilter = {hired: false}"
+				)
+				span.glyphicon.glyphicon-edit.text-success
+				|  Available {{people.length - hiredCount}}
+			button.btn.btn-default(
+					ng-class="{ active: personFilter.hired === true}"
+					ng-click="personFilter = {hired: true}"
+				)
+				span.glyphicon.glyphicon-check.text-danger
+				|  Hired {{hiredCount}}
 
-	div( ng-repeat="directory in directories | filter: searchFilter" )
-		directory(
-			fullName='{{directory.name.last}}, {{directory.name.first}}'
-			about='{{directory.about}}'
-			thumbSrc='{{directory.picture.thumbnail}}'
-			price='{{directory.price}},000$'
+		div.right
+			p.alert.alert-warning Total budget: {{hiredSum}},000$
+
+	div(
+		ng-repeat="person in people | filter: searchFilter | filter: personFilter"
+		ng-class="gridView ? 'col-xs-6 col-sm-6 col-md-4 col-lg-4 grid' : 'list'"
 		)
+			div.pull-left
+				img.img-circle.img-thumbnail( ng-src="{{person.thumbnail}}" alt="{{person.fullname}}" )
+			div.no-overflow
+				span.bold(
+						ng-bind='person.fullname'
+					)
+				span.text-primary.pull-right( ng-bind='person.salary'	)
+				div( ng-show='gridView' )
+					br
+				p( ng-bind='gridView ? person.aboutCut : person.about' )
+				p
+					a.btn.btn-primary( ng-href='{{person.detailsUrl}}' ) View Profile
+					button.btn(
+							ng-class="person.hired ? 'btn-danger' : 'btn-success'"
+							ng-click="person.hired = hire(person);"
+						) {{person.hired ? 'Dismiss' : 'Hire'}}

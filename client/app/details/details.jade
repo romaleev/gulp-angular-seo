@@ -6,6 +6,9 @@ div( id='details' )
 			td( ng-bind='key' )
 			td( ng-bind-html='person[key]' )
 
-	button.btn.btn-warning Hire
-
-	a.pull-right.btn.btn-primary( href="/directory" ) View Directory
+	div.pull-right
+		a.btn.btn-primary( href="/directory" ) Go back
+		button.btn(
+			ng-class="hired ? 'btn-danger' : 'btn-success'"
+			ng-click="hired = hire(id)"
+		) {{hired ? 'Dismiss' : 'Hire'}}

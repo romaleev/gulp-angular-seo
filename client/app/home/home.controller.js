@@ -9,6 +9,6 @@ angular.module('romaleev')
 				title: 'Home'
 			});
 	})
-	.controller('HomeCtrl', function($scope, data) {
-		$scope.contacts = data.contacts;
+	.controller('HomeCtrl', function($scope, homeService) {
+		$scope.contacts = homeService.contacts;
 	});

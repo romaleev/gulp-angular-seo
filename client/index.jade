@@ -24,6 +24,7 @@ html( ng-app='romaleev' )
 		//- userCSS:less
 		link(rel="stylesheet", href="app/app.css")
 		link(rel="stylesheet", href="app/details/details.css")
+		link(rel="stylesheet", href="app/directory/directory.css")
 		link(rel="stylesheet", href="app/home/home.css")
 		link(rel="stylesheet", href="directives/directory/directory.css")
 		//- endinject
@@ -72,8 +73,8 @@ html( ng-app='romaleev' )
 		// build:js scripts/scripts.js
 		//- userJS:js
 		script(src="app/app.js")
-		script(src="services/data.service.js")
-		script(src="services/directories.service.js")
+		script(src="services/home.service.js")
+		script(src="services/people.service.js")
 		script(src="app/details/details.controller.js")
 		script(src="app/directory/directory.controller.js")
 		script(src="app/home/home.controller.js")

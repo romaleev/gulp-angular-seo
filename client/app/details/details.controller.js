@@ -8,8 +8,8 @@ angular.module('romaleev')
 			title: 'Details'
 		});
 	})
-	.controller('DetailsCtrl', function($scope, $routeParams, $location, directories) {
-		directories.get(decodeURI($routeParams.name)).then(function(response) {
+	.controller('DetailsCtrl', function($scope, $routeParams, $location, peopleService) {
+		peopleService.get(decodeURI($routeParams.name)).then(function(response) {
 			if (!response)
 				return $location.path('/');
 
@@ -22,6 +22,11 @@ angular.module('romaleev')
 				Phone: response.phone,
 				Address: response.address,
 				Salary: '<span class="text-primary">' + response.price + ',000$</span>'
+			};
+			$scope.id = response._id;
+			$scope.hired = peopleService.isHired(response._id);
+			$scope.hire = function(id){
+				return peopleService.hire(id);
 			};
 		});
 	})
