@@ -58,7 +58,7 @@ div( id='directory' )
 				div( ng-show='gridView' )
 					br
 				p( ng-bind='gridView ? person.aboutCut : person.about' )
-				p
+				p.btns
 					a.btn.btn-primary( ng-href='{{person.detailsUrl}}' ) View Profile
 					a.btn(
 							ng-class="person.hired ? 'btn-danger' : 'btn-success'"
