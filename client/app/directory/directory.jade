@@ -1,4 +1,4 @@
-div( id='directory' )
+div.container-fluid( id='directory' )
 	div.row.title
 		div.col-xs-6
 			h2 People
@@ -46,26 +46,22 @@ div( id='directory' )
 				span  {{hiredCount}}
 		span.alert.alert-warning.pull-right Total budget: {{hiredSum}},000$
 
-	div(
+	div.container-fluid(
 		ng-repeat="person in people | filter: searchFilter | filter: personFilter"
 		ng-class="gridView ? 'col-xs-6 col-sm-6 col-md-4 col-lg-4 grid' : 'list'"
-		)
+	)
+			span.bold( ng-bind='person.fullname' )
+			span.text-primary.pull-right( ng-bind='person.salary'	)
 			div.pull-left
 				img.img-circle.img-thumbnail( ng-src="{{person.thumbnail}}" alt="{{person.fullname}}" )
 			div.no-overflow
-				span.bold(
-						ng-bind='person.fullname'
-					)
-				span.text-primary.pull-right( ng-bind='person.salary'	)
-				div( ng-show='gridView' )
-					br
-				p( ng-bind='gridView ? person.aboutCut : person.about' )
-				div
-					a.btn.btn-primary(
-						ng-href='{{person.detailsUrl}}'
-						ng-class="gridView ? 'col-xs-12 col-sm-6' : 'col-xs-6 col-sm-2 col-lg-2'"
-					) View Profile
-					a.btn(
-							ng-class="{'btn-danger': person.hired, 'btn-success': !person.hired, 'col-xs-12 col-sm-6': gridView, 'col-xs-6 col-sm-2 col-lg-2': !gridView}"
-							ng-click="person.hired = hire(person);"
+
+				p.about( ng-bind='gridView ? person.aboutCut : person.about' )
+				div.row
+					div.col-xs-12( ng-class="gridView ? 'col-sm-6' : 'col-sm-3 col-lg-3'" )
+						a.btn.btn-primary.btn-block( ng-href='{{person.detailsUrl}}' ) Details
+					div.col-xs-12( ng-class="gridView ? 'col-sm-6' : 'col-sm-3 col-lg-3'" )
+						a.btn.btn-block(
+								ng-class="person.hired ? 'btn-danger' : 'btn-success'"
+								ng-click="person.hired = hire(person);"
 						) {{person.hired ? 'Dismiss' : 'Hire'}}
