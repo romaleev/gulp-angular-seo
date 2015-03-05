@@ -47,7 +47,7 @@
 				"ignore": [
 					".collapse", ".collapsing", ".collapsed", ".collapse.in",
 					".btn-success", ".btn-danger", ".active",
-					".col-xs-6", ".col-sm-6", ".col-md-4", ".col-lg-4"
+					".col-xs-6", ".col-sm-6", ".col-md-4", ".col-lg-4", ".col-sm-2", ".col-lg-2", ".col-xs-12"
 				]
 			}
 		},

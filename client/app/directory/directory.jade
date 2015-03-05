@@ -1,48 +1,50 @@
 div( id='directory' )
-	h1 People
-	div.header
-		div.top.right
+	div.row.title
+		div.col-xs-6
+			h2 People
+		div.col-xs-6
 			input.form-control(
 				type='text'
 				ng-model='searchFilter'
 				placeholder='Search...'
 			)
-		div.btn-group.left
+	div.btn-toolbar
+		div.btn-group
 			button.btn.btn-default(
 					ng-class="{ active: !gridView }"
 					ng-click="gridView = false"
 				)
 				span.glyphicon.glyphicon-th-list
-				|  List
+				span.hidden-xs  List
 			button.btn.btn-default(
 					ng-class="{ active: gridView }"
 					ng-click="gridView = true"
 				)
 				span.glyphicon.glyphicon-th
-				|  Grid
-
-		div.btn-group.center( ng-init="personFilter = {}" )
+				span.hidden-xs  Grid
+		div.btn-group( ng-init="personFilter = {}" )
 			button.btn.btn-default(
 					ng-class="{ active: personFilter.hired === undefined }"
 					ng-click="personFilter = {}"
 				)
 				span.glyphicon.glyphicon-th-large.text-warning
-				|  All {{people.length}}
+				span.hidden-xs  All
+				span  {{people.length}}
 			button.btn.btn-default(
 					ng-class="{ active: personFilter.hired === false}"
 					ng-click="personFilter = {hired: false}"
 				)
 				span.glyphicon.glyphicon-edit.text-success
-				|  Available {{people.length - hiredCount}}
+				span.hidden-xs  Available
+				span  {{people.length - hiredCount}}
 			button.btn.btn-default(
 					ng-class="{ active: personFilter.hired === true}"
 					ng-click="personFilter = {hired: true}"
 				)
 				span.glyphicon.glyphicon-check.text-danger
-				|  Hired {{hiredCount}}
-
-		div.right
-			p.alert.alert-warning Total budget: {{hiredSum}},000$
+				span.hidden-xs  Hired
+				span  {{hiredCount}}
+		span.alert.alert-warning.pull-right Total budget: {{hiredSum}},000$
 
 	div(
 		ng-repeat="person in people | filter: searchFilter | filter: personFilter"
@@ -58,9 +60,12 @@ div( id='directory' )
 				div( ng-show='gridView' )
 					br
 				p( ng-bind='gridView ? person.aboutCut : person.about' )
-				p.btns
-					a.btn.btn-primary( ng-href='{{person.detailsUrl}}' ) View Profile
+				div
+					a.btn.btn-primary(
+						ng-href='{{person.detailsUrl}}'
+						ng-class="gridView ? 'col-xs-12 col-sm-6' : 'col-xs-6 col-sm-2 col-lg-2'"
+					) View Profile
 					a.btn(
-							ng-class="person.hired ? 'btn-danger' : 'btn-success'"
+							ng-class="{'btn-danger': person.hired, 'btn-success': !person.hired, 'col-xs-12 col-sm-6': gridView, 'col-xs-6 col-sm-2 col-lg-2': !gridView}"
 							ng-click="person.hired = hire(person);"
 						) {{person.hired ? 'Dismiss' : 'Hire'}}

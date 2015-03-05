@@ -1,14 +1,14 @@
 div( id='details' )
-	h1 Person
+	h2 Person
 
 	table.details
 		tr( ng-repeat="key in person | keys" )
 			td( ng-bind='key' )
 			td( ng-bind-html='person[key]' )
 
-	div.pull-right
-		a.btn.btn-primary( href="/directory" ) Go back
-		a.btn(
+	div
+		a.btn.col-xs-6.col-sm-2.col-lg-2.pull-right(
 			ng-class="hired ? 'btn-danger' : 'btn-success'"
 			ng-click="hired = hire(id)"
 		) {{hired ? 'Dismiss' : 'Hire'}}
+		a.btn.btn-primary.col-xs-6.col-sm-2.col-lg-2.pull-right( href="/directory" ) Back

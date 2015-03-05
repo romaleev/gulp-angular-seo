@@ -2,41 +2,22 @@ div#directory{
 	img{
 		margin-right: 0.5em;
 	}
-	.header{
-		position: relative;
-		height: 3.5em;
-		margin-top: 1em;
-		width: 100%;
-		div{
-			position:absolute;
-		}
-		.top{
-			top: -3.2em;
-		}
-		.left{
-			left: 0;
-		}
-		.right{
-			right: 0;
-		}
-		.center{
-			width: 22em;
-			left:0;
-			right:0;
-			margin: auto;
-		}
-	}
 	.alert{
-		padding: 0.5em;
+		margin: 0.15em 0 0 0;
+		padding: 0.3em;
+	}
+	.row{
+		&.title{
+			margin-top: 5px;
+			h2{
+				margin-top: 0;
+			}
+		}
 	}
 	.list{
 		margin-bottom: 0.5em;
 		div.no-overflow{
 			overflow: hidden;
-		}
-		.btn{
-			width: 50%;
-			max-width: 10em;
 		}
 	}
 	.grid{
@@ -44,12 +25,5 @@ div#directory{
 		display: inline-block;
 		vertical-align: top;
 		margin-bottom: 1em;
-		.btn{
-			width: 50%;
-			min-width: 8em;
-		}
-	}
-	.btn-group{
-		margin: 0;
 	}
 }
