@@ -1,9 +1,0 @@
-div.directory
-	div.pull-left
-		img.img-circle.img-thumbnail( ng-src="{{thumbsrc}}" alt="{{fullname}}" )
-	div.no-overflow
-		span.text-primary.pull-right( ng-bind='price' )
-		p.title.bold( ng-bind='fullname' )
-		p( ng-bind='about' )
-		p
-			a.btn.btn-primary( ng-href="/directory/{{encodeURI(fullname)}}" ) View Profile
