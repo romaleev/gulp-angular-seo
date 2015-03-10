@@ -16,7 +16,7 @@ gulp.task('server:start', function(cb) {
         if(text.indexOf(gulp.config.url.server.prod) != -1){
             cb();
         } else {
-            console.error('unexpected output: ' + text);
+            console.log('Server: ' + text);
         }
     });
 });

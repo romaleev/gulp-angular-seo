@@ -2,7 +2,8 @@
 
 var gulp = require('gulp'),
     $ = gulp.$,
-    path = gulp.config.path;
+    path = gulp.config.path,
+    mkdirp = require('mkdirp');
 
 gulp.task('seo', function(cb) {
 	var host = gulp.config.url.server.prod,
@@ -11,35 +12,36 @@ gulp.task('seo', function(cb) {
 		urls = path.seo.urls,
 		files = urls.length;
 
-	fs.mkdir(path.seo.dist, function(e) {
-		if(e && e.code !== 'EEXIST') console.log(e);
-
-		urls.forEach(function(url, i, arr) {
-			var fileName = url + ((url === '/') ? 'index.html' : '.html');
-			function ready() {
-				if (--files === 0) cb();
-			}
-			phantom.create(function(ph) {
-				ph.createPage(function(page) {
-					page.open(host + url, function(status) {
-						page.evaluate(function() {
-							return document.getElementsByTagName("html")[0].innerHTML.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
-						}, function(result) {
-							if(path.debug) console.log('seo: ' + path.seo.dist + fileName);
-							fs.writeFile(path.seo.dist + fileName, result, function(err) {
+	urls.forEach(function(url, i, arr) {
+		var preUrl = url.replace(/\/+$/, ''),
+			fileName = preUrl === '' ? 'index.html' : preUrl + '.html';
+		function ready() {
+			if (--files === 0) cb();
+		}
+		phantom.create(function(ph) {
+			ph.createPage(function(page) {
+				page.open(host + url, function(status) {
+					page.evaluate(function() {
+						return document.getElementsByTagName("html")[0].innerHTML.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+					}, function(result) {
+						var filePath = path.seo.dist + fileName;
+						mkdirp(filePath.match(/^.*\//)[0], function (err) {
+						    if (err) console.error(err);
+							fs.writeFile(filePath, result, function(err) {
 								if (err) console.log(err);
+								if(path.debug) console.log('seo: ' + filePath);
 								ready();
 							});
-							ph.exit(0);
 						});
+						ph.exit(0);
 					});
 				});
-			}, {
-				path: path.phantomjs,
-				dnodeOpts: {
-					weak: false
-				}
 			});
+		}, {
+			path: path.phantomjs,
+			dnodeOpts: {
+				weak: false
+			}
 		});
 	});
 });

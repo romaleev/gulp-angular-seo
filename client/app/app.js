@@ -1,24 +1,18 @@
 'use strict';
 
-angular.module('romaleev', ['ngRoute', 'ngSanitize'])
-	.config(function($locationProvider, $routeProvider, $compileProvider) {
+angular.module('romaleev', ['ui.router', 'ngSanitize'])
+	.config(function($locationProvider, $compileProvider, $urlRouterProvider, $urlMatcherFactoryProvider) {
 		$locationProvider.html5Mode(true).hashPrefix('!');
-		$routeProvider.otherwise({
-			redirectTo: '/'
-		});
+		$urlRouterProvider.otherwise('/');
+		//$urlMatcherFactoryProvider.strictMode(false);
 		$compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|tel|mailto|skype):/);
 	})
-	.controller('NavbarCtrl', function ($scope, $location, homeService) {
-		$scope.isActive = function (viewLocation) {
-			return viewLocation === $location.path();
-		};
+	.controller('NavbarCtrl', function ($scope, homeService) {
 		$scope.tab_title = homeService.tab_title;
 		$scope.header_title = homeService.header_title;
 	})
-	.run(function($location, $rootScope) {
-	    $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
-	        if (current.hasOwnProperty('$$route'))
-	            $rootScope.title = current.$$route.title;
-	    });
+	.run(function($rootScope, $state, $stateParams) {
+	    $rootScope.$state = $state;
+    	$rootScope.$stateParams = $stateParams;
 	    console.log('ready');
 	});

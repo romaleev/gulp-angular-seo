@@ -1,0 +1,51 @@
+div( id='people' )
+	div.row.title
+		div.col-xs-6
+			h2 People
+		div.col-xs-6
+			input.form-control(
+				type='text'
+				ng-model='searchFilter'
+				placeholder='Search...'
+			)
+	div.btn-toolbar
+		div.btn-group
+			button.btn.btn-default(
+				ui-sref="people.list({filter: $stateParams.filter})"
+				ui-sref-active="active"
+			)
+				span.glyphicon.glyphicon-th-list
+				span.hidden-xs  List
+			button.btn.btn-default(
+				ui-sref="people.grid({filter: $stateParams.filter})"
+				ui-sref-active="active"
+			)
+				span.glyphicon.glyphicon-th
+				span.hidden-xs  Grid
+		div.btn-group
+			button.btn.btn-default(
+					ng-click="$state.go($state.current, {'filter': ''})"
+					ng-class="{active: $stateParams.filter == ''}"
+				)
+				span.glyphicon.glyphicon-th-large.text-warning
+				span.hidden-xs  All
+				span  {{peopleService.allCount}}
+			button.btn.btn-default(
+					ng-click="$state.go($state.current, {'filter': 'available'})"
+					ng-class="{active: $stateParams.filter == 'available'}"
+				)
+				span.glyphicon.glyphicon-edit.text-success
+				span.hidden-xs  Available
+				span  {{peopleService.availableCount}}
+			button.btn.btn-default(
+					ng-click="$state.go($state.current, {'filter': 'hired'})"
+					ng-class="{active: $stateParams.filter == 'hired'}"
+				)
+				span.glyphicon.glyphicon-check.text-danger
+				span.hidden-xs  Hired
+				span  {{peopleService.hiredCount}}
+		div.alert.alert-warning.pull-right
+			span.hidden-xs Total budget:
+			span  {{peopleService.hiredSum}},000$
+
+	div.container-fluid( ui-view="" )

@@ -8,7 +8,7 @@
     ],
     "dependencies": {
         "angular": "latest",
-		"angular-route": "latest",
+		"angular-ui-router": "latest",
 		"angular-sanitize": "latest",
         "bootstrap": "latest",
         "fontawesome": "latest"

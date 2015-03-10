@@ -8,9 +8,9 @@ html( ng-app='romaleev' )
 		meta( name="description" content="Roman Malieiev | Web Developer" )
 		meta( name="fragment" content="!" )
 
-		title( ng-bind="'Roman Malieiev - ' + $root.title" )
+		title( ng-bind="'Roman Malieiev - ' + $state.current.title" )
 		base( href="/" )
-		link( href="img/favicon.ico", rel="shortcut icon" )
+		link( href="assets/img/favicon.ico", rel="shortcut icon" )
 
 		// build:css styles/vendor.css
 		//- vendorCSS:css
@@ -23,9 +23,9 @@ html( ng-app='romaleev' )
 		// build:css styles/styles.css
 		//- userCSS:less
 		link(rel="stylesheet", href="app/app.css")
-		link(rel="stylesheet", href="app/details/details.css")
-		link(rel="stylesheet", href="app/directory/directory.css")
 		link(rel="stylesheet", href="app/home/home.css")
+		link(rel="stylesheet", href="app/people/details.css")
+		link(rel="stylesheet", href="app/people/people.css")
 		//- endinject
 		// endbuild
 
@@ -38,21 +38,20 @@ html( ng-app='romaleev' )
 						span.icon-bar
 						span.icon-bar
 						span.icon-bar
-					a.navbar-brand( href="/" )
-						img.logo( alt="Roman Malieiev", src="img/logo.jpg" )
+					a.navbar-brand( ui-sref="home" )
+						img.logo( alt="Roman Malieiev", src="assets/img/logo.jpg" )
 						span( ng-bind="header_title" )
 
 				div.collapse.navbar-collapse
 					ul.nav.navbar-nav
-						li( ng-class="{ active: isActive('/') }" )
-							a.hidden-xs( href="/" ) Home
-							a.visible-xs( href="/" data-toggle="collapse" data-target=".navbar-collapse" ) Home
-						li( ng-class="{ active: isActive('/directory') }" )
-							a.hidden-xs( href="/directory" ) Directory
-							a.visible-xs( href="/directory" data-toggle="collapse" data-target=".navbar-collapse" ) Directory
+						li( ui-sref-active="active" )
+							a.hidden-xs( ui-sref="home" ) Home
+							a.visible-xs( ui-sref="home" data-toggle="collapse" data-target=".navbar-collapse" ) Home
+						li( ng-class="{ active: $state.includes('people') }" )
+							a.hidden-xs( ui-sref="people.list" ) People
+							a.visible-xs( ui-sref="people.list" data-toggle="collapse" data-target=".navbar-collapse" ) People
 
-		div.container-fluid
-			ng-view
+		div.container-fluid( ui-view )
 
 		hr
 
@@ -63,7 +62,7 @@ html( ng-app='romaleev' )
 		//- vendorJS:js
 		script(src="../bower_components/jquery/dist/jquery.min.js")
 		script(src="../bower_components/angular/angular.min.js")
-		script(src="../bower_components/angular-route/angular-route.min.js")
+		script(src="../bower_components/angular-ui-router/release/angular-ui-router.min.js")
 		script(src="../bower_components/angular-sanitize/angular-sanitize.min.js")
 		script(src="../bower_components/bootstrap/dist/js/bootstrap.min.js")
 		//- endinject
@@ -72,10 +71,10 @@ html( ng-app='romaleev' )
 		// build:js scripts/scripts.js
 		//- userJS:js
 		script(src="app/app.js")
-		script(src="services/home.service.js")
-		script(src="services/people.service.js")
-		script(src="app/details/details.controller.js")
-		script(src="app/directory/directory.controller.js")
+		script(src="components/filters.js")
 		script(src="app/home/home.controller.js")
+		script(src="app/people/people.controller.js")
+		script(src="components/services/home.service.js")
+		script(src="components/services/people.service.js")
 		//- endinject
 		// endbuild

@@ -1,0 +1,18 @@
+div.col-xs-6.col-sm-6.col-md-4.col-lg-4.grid(
+	ng-repeat="person in people | filter: searchFilter | filter: $stateParams.filter ? {hired: $stateParams.filter == 'hired'} : {}"
+)
+	span.bold( ng-bind='person.fullname' )
+	span.text-primary.pull-right( ng-bind='person.salary'	)
+	div.pull-left
+		img.img-circle.img-thumbnail( ng-src="{{person.thumbnail}}" alt="{{person.fullname}}" )
+	div.no-overflow
+
+		p.about( ng-bind='person.aboutCut' )
+		div.row
+			div.col-xs-12.col-sm-6
+				a.btn.btn-primary.btn-block( ui-sref='details({personId: person.id})' ) Details
+			div.col-xs-12.col-sm-6
+				a.btn.btn-block(
+						ng-class="person.hired ? 'btn-danger' : 'btn-success'"
+						ng-click="person.hired = peopleService.hire(person.id);"
+				) {{person.hired ? 'Dismiss' : 'Hire'}}

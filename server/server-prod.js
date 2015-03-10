@@ -11,7 +11,7 @@ express()
     .use(require('compression')())
     .use('/', function(req, res) {
         if (/_escaped_fragment_=/.test(req.url)) { //?_escaped_fragment_=
-            req.url = req.url.replace(/\?.*$/, '').replace(/\/+$/, '');
+            req.url = req.url.replace(/\?.*$/, '').replace(/\/+$/, ''); //cut everything after last '?' [0...] and '/' [1...] till the end
             req.url += (req.url === '') ? '/index.html' : '.html';
             express.static(clientPath + '/snapshots').apply(this, arguments);
         } else {
@@ -19,7 +19,7 @@ express()
             express.static(clientPath).apply(this, arguments);
         }
     })
-    .get('/[^\.]+$', function(req, res) {
+    .get('/[^\.]+$/', function(req, res) { //match all except containing '.' [1...] till the end
         res.sendFile(clientPath + '/index.html');
     })
     .listen(port, function() {

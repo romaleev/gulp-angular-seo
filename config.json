@@ -28,7 +28,7 @@
 			"vendor": [
 				"bower_components/jquery/dist/jquery.min.js",
 				"bower_components/angular/angular.min.js",
-				"bower_components/angular-route/angular-route.min.js",
+				"bower_components/angular-ui-router/release/angular-ui-router.min.js",
 				"bower_components/angular-sanitize/angular-sanitize.min.js",
 				"bower_components/bootstrap/dist/js/bootstrap.min.js"
 			],
@@ -43,7 +43,7 @@
 			],
 			"user": "client/**/*.less",
 			"uncss": {
-				"html": ["tmp/dist/snapshots/*.html"],
+				"html": ["tmp/dist/snapshots/**/*.html"],
 				"ignore": [
 					".collapse", ".collapsing", ".collapsed", ".collapse.in",
 					".btn-success", ".btn-danger", ".active",
@@ -67,19 +67,19 @@
 		},
 		"fonts": {
 			"src": [
-            	"client/fonts/*.{woff,woff2}",
+            	"client/assets/fonts/*.{woff,woff2}",
             	"bower_components/fontawesome/fonts/fontawesome-webfont.{woff,woff2}",
             	"bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.{woff,woff2}"
         	],
-			"dist": "tmp/dist/fonts"
+			"dist": "tmp/dist/assets/fonts"
 		},
 		"img": {
-			"src": "client/img/**/*.*",
-			"dist": "tmp/dist/img"
+			"src": "client/assets/img/**/*.*",
+			"dist": "tmp/dist/assets/img"
 		},
 		"seo":{
-			"urls": ["/", "/directory"],
-			"dist": "tmp/dist/snapshots/"
+			"urls": ["/", "/people/list/", "/people/grid/"],
+			"dist": "tmp/dist/snapshots"
 		}
 	},
 	"devPath": {

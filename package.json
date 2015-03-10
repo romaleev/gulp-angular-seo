@@ -21,6 +21,7 @@
         "streamqueue": "latest",
         "phantom": "latest",
         "phantomjs": "latest",
+        "mkdirp": "latest",
         "multimatch": "latest",
         "run-sequence": "latest",
         "progress": "latest",
