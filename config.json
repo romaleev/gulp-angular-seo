@@ -8,6 +8,7 @@
 		}
 	},
 	"path": {
+		"config": "config.json",
 		"client": "client",
 		"dist": "tmp/dist",
 		"dist_cache": "tmp/src-cache",
@@ -67,15 +68,15 @@
 		},
 		"fonts": {
 			"src": [
-            	"client/assets/fonts/*.{woff,woff2}",
+            	"client/fonts/*.{woff,woff2}",
             	"bower_components/fontawesome/fonts/fontawesome-webfont.{woff,woff2}",
             	"bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.{woff,woff2}"
         	],
-			"dist": "tmp/dist/assets/fonts"
+			"dist": "tmp/dist/fonts"
 		},
 		"img": {
-			"src": "client/assets/img/**/*.*",
-			"dist": "tmp/dist/assets/img"
+			"src": "client/img/**/*.*",
+			"dist": "tmp/dist/img"
 		},
 		"seo":{
 			"urls": ["/", "/people/list/", "/people/grid/"],

@@ -10,7 +10,7 @@ html( ng-app='romaleev' )
 
 		title( ng-bind="'Roman Malieiev - ' + $state.current.title" )
 		base( href="/" )
-		link( href="assets/img/favicon.ico", rel="shortcut icon" )
+		link( href="img/favicon.ico", rel="shortcut icon" )
 
 		// build:css styles/vendor.css
 		//- vendorCSS:css
@@ -23,9 +23,9 @@ html( ng-app='romaleev' )
 		// build:css styles/styles.css
 		//- userCSS:less
 		link(rel="stylesheet", href="app/app.css")
+		link(rel="stylesheet", href="app/home/home.css")
 		link(rel="stylesheet", href="app/people/details.css")
 		link(rel="stylesheet", href="app/people/people.css")
-		link(rel="stylesheet", href="app/home/home.css")
 		//- endinject
 		// endbuild
 
@@ -39,7 +39,7 @@ html( ng-app='romaleev' )
 						span.icon-bar
 						span.icon-bar
 					a.navbar-brand( ui-sref="home" )
-						img.logo( alt="Roman Malieiev", src="assets/img/logo.jpg" )
+						img.logo( alt="Roman Malieiev", src="img/logo.jpg" )
 						span( ng-bind="header_title" )
 
 				div.collapse.navbar-collapse
@@ -72,8 +72,8 @@ html( ng-app='romaleev' )
 		//- userJS:js
 		script(src="app/app.js")
 		script(src="components/filters.js")
-		script(src="app/people/people.controller.js")
 		script(src="app/home/home.controller.js")
+		script(src="app/people/people.controller.js")
 		script(src="components/services/home.service.js")
 		script(src="components/services/people.service.js")
 		//- endinject

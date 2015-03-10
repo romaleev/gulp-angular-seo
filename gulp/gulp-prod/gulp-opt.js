@@ -9,7 +9,7 @@ gulp.task('dist:opt', function(cb) {
     var match = require("multimatch"),
         tasks = gulp.distTasks,
         files = [],
-        src = [path.client + '/**/*.*'].concat(path.js.vendor).concat(path.css.vendor);
+        src = [path.client + '/**/*.*'].concat(path.config).concat(path.js.vendor).concat(path.css.vendor);
 
     function no(patterns){
         return !match(files, patterns).length;
@@ -37,15 +37,17 @@ gulp.task('dist:opt', function(cb) {
             files.push(file.history[0].slice(file.cwd.length + 1));
         })
         .on('end', function() {
-            if(no(path.html.index)) cancel('html', tasks);
-            if(no(path.js.user) && no(path.html.partials)) cancel('js:user', tasks); //js:user dependent on both js:user and html.partials htat are injected into js.
-            if(no(path.js.vendor)) cancel('js:vendor', tasks);
-            if(no(path.css.user)) cancel('css:user', tasks);
-            if(no(path.fonts.src)) cancel('fonts', tasks);
-            if(no(path.img.src)) cancel('image', tasks);
-            if(Array.isArray(tasks[0][0]) && tasks[0][0].length === 1){
-                cancel('seo', tasks); //cancel if no 'js:vendor', 'html' and 'js:user' changes
-                if(no(path.css.vendor)) cancel('css:vendor', tasks); //cancel if no 'seo' and 'path.css.vendor' changes
+            if(no(path.config)){ //decline cancelling if config.json changed
+                if(no(path.html.index)) cancel('html', tasks);
+                if(no(path.js.user) && no(path.html.partials)) cancel('js:user', tasks); //js:user dependent on both js:user and html.partials htat are injected into js.
+                if(no(path.js.vendor)) cancel('js:vendor', tasks);
+                if(no(path.css.user)) cancel('css:user', tasks);
+                if(no(path.fonts.src)) cancel('fonts', tasks);
+                if(no(path.img.src)) cancel('image', tasks);
+                if(Array.isArray(tasks[0][0]) && tasks[0][0].length === 1){
+                    cancel('seo', tasks); //cancel if no 'js:vendor', 'html' and 'js:user' changes
+                    if(no(path.css.vendor)) cancel('css:vendor', tasks); //cancel if no 'seo' and 'path.css.vendor' changes
+                }
             }
             runSequence($.sync(gulp).async(tasks, 'dist:opt:tmp'), cb);
         });

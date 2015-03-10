@@ -4,38 +4,7 @@ var gulp = require('gulp'),
 	$ = gulp.$,
 	path = gulp.config.path,
 	devPath = gulp.config.devPath,
-	browserSync = require('browser-sync')
-
-gulp.task('inject', function() {
-	return gulp.src(path.html.index)
-		.pipe(gulp.$.inject(gulp.src(path.js.vendor, {read: false}), {
-			name: 'vendorJS',
-			addRootSlash: false,
-			relative: true
-		}))
-		.pipe(gulp.$.inject(gulp.src(path.css.vendor, {read: false}), {
-			name: 'vendorCSS',
-			addRootSlash: false,
-			relative: true
-		}))
-		.pipe(gulp.$.inject(gulp.src(path.js.user, {read: false}), {
-			name: 'userJS',
-			addRootSlash: false,
-			relative: true
-		}))
-		.pipe(gulp.$.inject(gulp.src(path.css.user, {read: false}), {
-			name: 'userCSS',
-			addRootSlash: false,
-			relative: true,
-			transform: function(filepath) {
-				if (filepath.slice(-5) === '.less') {
-					return 'link(rel="stylesheet", href="' + filepath.slice(0, -4) + 'css")';
-				}
-				return gulp.$.inject.transform.apply(gulp.$.inject.transform, arguments);
-			}
-		}))
-		.pipe(gulp.dest(path.client));
-});
+	browserSync = require('browser-sync');
 
 gulp.task('nodemon', function(cb) {
 	var called = false;
@@ -61,7 +30,7 @@ gulp.task('nodemon', function(cb) {
 	});
 });
 
-gulp.task('dev', ['inject', 'nodemon'], function() {
+gulp.task('dev', ['html:inject', 'nodemon'], function() {
 	$.watch(devPath.validate, {ignoreInitial: false})
 		.pipe($.jshint())
 		.pipe($.jshint.reporter('jshint-stylish'));

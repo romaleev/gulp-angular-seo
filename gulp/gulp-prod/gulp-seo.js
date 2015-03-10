@@ -13,15 +13,14 @@ gulp.task('seo', function(cb) {
 		files = urls.length;
 
 	urls.forEach(function(url, i, arr) {
-		var preUrl = url.replace(/\/+$/, ''),
-			fileName = preUrl === '' ? 'index.html' : preUrl + '.html';
+		var fileName = url == '/' ? '/index.html' : url.replace(/\/+$/, '') + '.html'; //regexp: remove trailing slash
 		function ready() {
 			if (--files === 0) cb();
 		}
 		phantom.create(function(ph) {
 			ph.createPage(function(page) {
 				page.open(host + url, function(status) {
-					page.evaluate(function() {
+					page.evaluate(function() {//remove script tags
 						return document.getElementsByTagName("html")[0].innerHTML.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
 					}, function(result) {
 						var filePath = path.seo.dist + fileName;
