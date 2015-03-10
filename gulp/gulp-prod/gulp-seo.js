@@ -6,41 +6,39 @@ var gulp = require('gulp'),
     mkdirp = require('mkdirp');
 
 gulp.task('seo', function(cb) {
-	var host = gulp.config.url.server.prod,
-		fs = require('fs'),
-		phantom = require('phantom'),
-		urls = path.seo.urls,
-		files = urls.length;
+    var host = gulp.config.url.server.prod,
+        fs = require('fs'),
+        phantom = require('phantom'),
+        urls = path.seo.urls,
+        files = urls.length;
 
-	urls.forEach(function(url, i, arr) {
-		var fileName = url == '/' ? '/index.html' : url.replace(/\/+$/, '') + '.html'; //regexp: remove trailing slash
-		function ready() {
-			if (--files === 0) cb();
-		}
-		phantom.create(function(ph) {
-			ph.createPage(function(page) {
-				page.open(host + url, function(status) {
-					page.evaluate(function() {//remove script tags
-						return document.getElementsByTagName("html")[0].innerHTML.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
-					}, function(result) {
-						var filePath = path.seo.dist + fileName;
-						mkdirp(filePath.match(/^.*\//)[0], function (err) {
-						    if (err) console.error(err);
-							fs.writeFile(filePath, result, function(err) {
-								if (err) console.log(err);
-								if(path.debug) console.log('seo: ' + filePath);
-								ready();
-							});
-						});
-						ph.exit(0);
-					});
-				});
-			});
-		}, {
-			path: path.phantomjs,
-			dnodeOpts: {
-				weak: false
-			}
-		});
-	});
+    function ready() {
+        if (--files === 0) cb();
+    }
+    urls.forEach(function(url, i, arr) {
+        var fileName = url == '/' ? '/index.html' : url.replace(/\/+$/, '') + '.html'; //regexp: remove trailing slash
+        phantom.create(function(ph) {
+            ph.createPage(function(page) {
+                page.open(host + url, function(status) {
+                    page.evaluate(function() { //regexp: remove <script> tags
+                        return document.getElementsByTagName("html")[0].innerHTML.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+                    }, function(result) {
+                        var filePath = path.seo.dist + fileName;
+                        mkdirp(filePath.match(/^.*\//)[0], function(err) {
+                            if (err) console.error(err);
+                            fs.writeFile(filePath, result, function(err) {
+                                if (err) console.log(err);
+                                if (path.debug) console.log('seo: ' + filePath);
+                                ready();
+                            });
+                        });
+                        ph.exit(0);
+                    });
+                });
+            });
+        }, {
+            path: path.phantomjs,
+            dnodeOpts: { weak: false } //fix to avoid error: 'cannot find module "weak"'
+        });
+    });
 });

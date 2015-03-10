@@ -3,7 +3,11 @@ div( id="home" )
 	h4.text-center Web Developer | Krakow, Poland
 
 	div.row.text-center
-		div.contact.col-xs-4.col-sm-2.col-md-1.col-md-push-1.col-lg-1.col-lg-push-1( ng-repeat="contact in contacts" )
+		div.contact.col-xs-4.col-sm-2.col-md-1.col-lg-1(
+			ng-repeat="contact in contacts"
+			ng-init="push = contacts.length <= 10 ? (12 - contacts.length)/2 : 0"
+			ng-class="push ? 'col-md-push-' + push + ' col-lg-push-' + push : ''"
+		)
 			a.fa.fa-5x(
 				ng-href="{{contact.url}}",
 				title="{{contact.title}}",
