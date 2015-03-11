@@ -7,7 +7,7 @@ var gulp = require('gulp'),
 gulp.task('heroku:upload', ['heroku:config'], $.shell.task([
     'git add -A .',
     'git commit -m update',
-    'echo Wait until Heroku build is finished',
+    'echo Wait until Heroku build is finished...',
     'git push heroku master'
 ], { cwd: path.heroku.dist,
      ignoreErrors: !gulp.config.debug,

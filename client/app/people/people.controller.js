@@ -16,11 +16,11 @@ angular.module('romaleev')
 	            }
 	        })
 			.state('people.list', {
-				url: '/list/:filter',
+				url: '/list:filter',
 				templateUrl: 'app/people/people.list.html',
 			})
 			.state('people.grid', {
-				url: '/grid/:filter',
+				url: '/grid:filter',
 				templateUrl: 'app/people/people.grid.html',
 			})
 	        .state('details', {

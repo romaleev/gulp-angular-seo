@@ -1,5 +1,5 @@
 div.list(
-	ng-repeat="person in people | filter: searchFilter | filter: $stateParams.filter ? {hired: $stateParams.filter == 'hired'} : {}"
+	ng-repeat="person in people | filter: searchFilter | filter: $stateParams.filter ? {hired: $stateParams.filter == '&hired'} : {}"
 )
 	span.bold( ng-bind='person.fullname' )
 	span.text-primary.pull-right( ng-bind='person.salary'	)

@@ -4,6 +4,7 @@ var gulp = require('gulp'),
     $ = gulp.$,
     path = gulp.config.path,
     runSequence = require('run-sequence'),
+    del = require('del'),
     server;
 
 require('require-dir')('./gulp-prod');
@@ -29,8 +30,8 @@ gulp.task('server:stop', function(cb) {
 });
 
 gulp.task('clean', function(cb) {
-    require('del')([
-        path.tmp + '/**/*.*'
+    del([
+        path.tmp,
     ], cb);
 });
 
@@ -44,6 +45,7 @@ gulp.distTasks = [
     'image',
     'css:user'
 ];
+
 
 gulp.task('dist', $.sync(gulp).async(gulp.distTasks, 'dist'));
 

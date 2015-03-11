@@ -79,7 +79,7 @@
 			"dist": "tmp/dist/img"
 		},
 		"seo":{
-			"urls": ["/", "/people/list/", "/people/grid/"],
+			"urls": ["/", "/people/list", "/people/grid"],
 			"dist": "tmp/dist/snapshots"
 		}
 	},

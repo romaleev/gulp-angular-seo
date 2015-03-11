@@ -38,7 +38,10 @@ gulp.task('dist:opt', function(cb) {
         })
         .on('end', function() {
             if(no(path.config)){ //decline cancelling if config.json changed
-                if(no(path.html.index)) cancel('html', tasks);
+                if(no(path.html.index)) {
+                    cancel('html:inject', tasks);
+                    cancel('html', tasks);
+                }
                 if(no(path.js.user) && no(path.html.partials)) cancel('js:user', tasks); //js:user dependent on both js:user and html.partials htat are injected into js.
                 if(no(path.js.vendor)) cancel('js:vendor', tasks);
                 if(no(path.css.user)) cancel('css:user', tasks);

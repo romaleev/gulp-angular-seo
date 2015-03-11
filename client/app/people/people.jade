@@ -31,15 +31,15 @@ div( id='people' )
 				span.hidden-xs  All
 				span  {{peopleService.allCount}}
 			button.btn.btn-default(
-					ng-click="$state.go($state.current, {'filter': 'available'})"
-					ng-class="{active: $stateParams.filter == 'available'}"
+					ng-click="$state.go($state.current, {'filter': '&available'})"
+					ng-class="{active: $stateParams.filter == '&available'}"
 				)
 				span.glyphicon.glyphicon-edit.text-success
 				span.hidden-xs  Available
 				span  {{peopleService.availableCount}}
 			button.btn.btn-default(
-					ng-click="$state.go($state.current, {'filter': 'hired'})"
-					ng-class="{active: $stateParams.filter == 'hired'}"
+					ng-click="$state.go($state.current, {'filter': '&hired'})"
+					ng-class="{active: $stateParams.filter == '&hired'}"
 				)
 				span.glyphicon.glyphicon-check.text-danger
 				span.hidden-xs  Hired

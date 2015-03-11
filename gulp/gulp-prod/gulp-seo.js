@@ -16,7 +16,7 @@ gulp.task('seo', function(cb) {
         if (--files === 0) cb();
     }
     urls.forEach(function(url, i, arr) {
-        var fileName = url == '/' ? '/index.html' : url.replace(/\/+$/, '') + '.html'; //regexp: remove trailing slash
+        var fileName = url == '/' ? '/index.html' : url.match(/^.*[^\/]/)[0] + '.html'; //regexp: avoid trailing slash
         phantom.create(function(ph) {
             ph.createPage(function(page) {
                 page.open(host + url, function(status) {
@@ -24,7 +24,7 @@ gulp.task('seo', function(cb) {
                         return document.getElementsByTagName("html")[0].innerHTML.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
                     }, function(result) {
                         var filePath = path.seo.dist + fileName;
-                        mkdirp(filePath.match(/^.*\//)[0], function(err) {
+                        mkdirp(filePath.match(/^.*\//)[0], function(err) { //regexp: get folder path
                             if (err) console.error(err);
                             fs.writeFile(filePath, result, function(err) {
                                 if (err) console.log(err);
