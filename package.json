@@ -57,11 +57,6 @@
         "less": "latest",
         "jade": "latest",
         "browser-sync": "latest",
-        "gulp-nodemon": "latest",
-        "gulp-livereload": "latest",
-        "serve-static": "latest",
-        "serve-index": "latest",
-        "connect": "latest",
-        "connect-livereload": "latest"
+        "gulp-nodemon": "latest"
     }
 }

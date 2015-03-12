@@ -10,6 +10,6 @@ angular.module('romaleev')
 				controller: 'HomeCtrl'
 	        });
 	})
-	.controller('HomeCtrl', function($scope, homeService) {
-		$scope.contacts = homeService.contacts;
+	.controller('HomeCtrl', function($scope, homeConstant) {
+		$scope.contacts = homeConstant.contacts;
 	});
