@@ -10,8 +10,11 @@ angular.module('romaleev', ['ui.router'])
 		$scope.tab_title = homeConstant.tab_title;
 		$scope.header_title = homeConstant.header_title;
 	})
-	.run(function($rootScope, $state, $stateParams) {
+	.run(function($rootScope, $state, $stateParams, $location, $window) {
 	    $rootScope.$state = $state;
     	$rootScope.$stateParams = $stateParams;
+    	$rootScope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams) {
+			$window.ga('send', 'pageview', $location.path());
+		});
 	    console.log('ready');
 	});

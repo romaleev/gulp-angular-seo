@@ -29,7 +29,7 @@ angular.module('romaleev')
                 return people.map(function(item, i, arr) {
                     salaries[item._id] = item.price;
                     var aboutCut = item.about.substr(0, 99),
-                        aboutCutSentence = aboutCut.match(/^[\s\S]*\./);
+                        aboutCutSentence = aboutCut.match(/^[\s\S]*\./); //regexp: cut after last dot
                     return {
                         id: item._id,
                         fullname: item.name.last + ', ' + item.name.first,
@@ -82,24 +82,4 @@ angular.module('romaleev')
         this.availableCount = 0;
         this.hiredCount = 0;
         this.hiredSum = 0;
-
-        /*this.init = function() {
-            Single get()
-        };*/
-
-        /*this.getHiredSum = function() {
-            return hiredSum;
-        };
-
-        this.getHiredCount = function() {
-            return hired.length;
-        };
-
-        this.getAllCount = function() {
-            return allCount;
-        };
-
-        this.getAvailableCount = function() {
-            return allCount - hired.length;
-        };*/
     });
