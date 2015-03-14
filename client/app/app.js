@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('romaleev', ['ui.router'])
+angular.module('romaleev', ['ui.router', 'ngSanitize'])
 	.config(function($locationProvider, $compileProvider, $urlRouterProvider, $urlMatcherFactoryProvider) {
 		$locationProvider.html5Mode(true).hashPrefix('!');
 		$urlRouterProvider.otherwise('/');
@@ -11,10 +11,14 @@ angular.module('romaleev', ['ui.router'])
 		$scope.header_title = homeConstant.header_title;
 	})
 	.run(function($rootScope, $state, $stateParams, $location, $window) {
-	    $rootScope.$state = $state;
+		$rootScope.$state = $state;
     	$rootScope.$stateParams = $stateParams;
     	$rootScope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams) {
-			$window.ga('send', 'pageview', $location.path());
+	    	$rootScope.pageTitle = 'Roman Malieiev - ' + $state.current.title;
+			$window.ga('send', 'pageview', {
+				path: $location.path(),
+				title: $rootScope.pageTitle
+			});
 		});
 	    console.log('ready');
 	});

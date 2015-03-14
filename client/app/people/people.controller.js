@@ -4,7 +4,6 @@ angular.module('romaleev')
 	.config(function($stateProvider) {
 	    $stateProvider
 	        .state('people', {
-				title: 'People',
 	            url: '/people',
 	            templateUrl: 'app/people/people.html',
 	            controller: 'PeopleCtrl',
@@ -16,10 +15,12 @@ angular.module('romaleev')
 	            }
 	        })
 			.state('people.list', {
+				title: 'People List',
 				url: '/list:filter',
 				templateUrl: 'app/people/people.list.html',
 			})
 			.state('people.grid', {
+				title: 'People Grid',
 				url: '/grid:filter',
 				templateUrl: 'app/people/people.grid.html',
 			})
