@@ -26,7 +26,7 @@ angular.module('romaleev')
 			})
 	        .state('details', {
 				title: 'Details',
-	            url: '/id/:personId',
+	            url: '/details/:personId',
 				templateUrl: 'app/people/details.html',
 				controller: 'DetailsCtrl',
 	            resolve: {

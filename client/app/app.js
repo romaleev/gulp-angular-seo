@@ -15,6 +15,7 @@ angular.module('romaleev', ['ui.router', 'ngSanitize'])
     	$rootScope.$stateParams = $stateParams;
     	$rootScope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams) {
 	    	$rootScope.pageTitle = 'Roman Malieiev - ' + $state.current.title;
+	    	$rootScope.prevState = fromState.name;
 			$window.ga('send', 'pageview', {
 				path: $location.path(),
 				title: $rootScope.pageTitle
