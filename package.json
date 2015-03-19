@@ -24,6 +24,7 @@
         "mkdirp": "latest",
         "multimatch": "latest",
         "run-sequence": "latest",
+        "cli-color": "latest",
         "progress": "latest",
         "gulp": "latest",
         "gulp-if": "latest",

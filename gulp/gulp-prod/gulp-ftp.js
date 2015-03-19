@@ -38,7 +38,7 @@ gulp.task('ftp:config', function(cb) {
         gulp.config.ftpConnection = vinylFtp.create(require('../../ftp.json'));
         cb();
     } catch (e) {
-        console.log('No "./ftp.json" config, creating:');
+        console.warn('No "./ftp.json" config, creating:');
         var prompt = require('prompt');
         prompt.message = 'ftp.json';
         prompt.start();

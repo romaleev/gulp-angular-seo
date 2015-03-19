@@ -2,12 +2,13 @@
 
 var gulp = require('gulp'),
     $ = gulp.$,
-    path = gulp.config.path;
+    path = gulp.config.path,
+    clc = require("cli-color");
 
 gulp.task('heroku:upload', ['heroku:config'], $.shell.task([
     'git add -A .',
     'git commit -m update',
-    'echo Wait until Heroku build is finished...',
+    'echo '+ clc.yellowBright('Wait until Heroku build is finished...'),
     'git push heroku master'
 ], { cwd: path.heroku.dist,
      ignoreErrors: !gulp.config.debug,
@@ -17,7 +18,7 @@ gulp.task('heroku:upload', ['heroku:config'], $.shell.task([
 
 gulp.task('heroku:config', function(cb) {
     if(!require('fs').existsSync(path.heroku.git)){
-        console.log('You need to be logged in Heroku first: heroku auth:whoami | heroku login');
+        console.warn('You need to be logged in Heroku first: heroku auth:whoami | heroku login');
         require('run-sequence')('heroku:config:copy', 'heroku:config:shell', cb);
     } else cb();
 });
