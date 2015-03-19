@@ -33,5 +33,7 @@ gulp.task('heroku:config:copy', function() {
 
 gulp.task('heroku:config:shell', $.shell.task([
     'git init',
-    'heroku apps:create ' + path.heroku.appName //optional: 'heroku ps:scale web=1'
+    'heroku apps:create ' + path.heroku.appName, //optional: 'heroku ps:scale web=1'
+    'heroku git:remote -a romaleev',
+    'echo if you already have heroku app type: "cd tmp" and "git pull heroku master"'
 ], {cwd: path.heroku.dist, ignoreErrors: !gulp.config.debug}));
