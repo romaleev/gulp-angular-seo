@@ -10,7 +10,9 @@ gulp.task('ftp:upload', ['ftp:config'], function() {
         size = 0,
         bar;
 
-    return gulp.src(path.ftp.src)
+    return gulp.src(path.ftp.htaccess)
+        .pipe($.concat('.htaccess'))
+        .pipe($.addSrc(path.ftp.src))
         .pipe($.if(gulp.config.cache, $.changed(path.ftp.cache, { hasChanged: $.changed.compareSha1Digest })))
         .on('data', function() {
             size++;

@@ -31,7 +31,9 @@ gulp.task('server:stop', function(cb) {
 
 gulp.task('clean', function(cb) {
     del([
-        path.tmp,
+        path.dist,
+        path.dist_cache,
+        path.ftp.cache
     ], cb);
 });
 

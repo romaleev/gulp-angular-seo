@@ -26,6 +26,7 @@
         "run-sequence": "latest",
         "cli-color": "latest",
         "progress": "latest",
+        "apache-server-configs": "latest",
         "gulp": "latest",
         "gulp-if": "latest",
         "gulp-shell": "latest",

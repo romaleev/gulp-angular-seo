@@ -1,97 +1,98 @@
 {
-	"browser": "chrome",
-	"debug": false,
-	"url": {
-		"server": {
-			"dev": "http://localhost:8000",
-			"prod": "http://localhost:7997"
-		}
-	},
-	"path": {
-		"config": "config.json",
-		"client": "client",
-		"dist": "tmp/dist",
-		"dist_cache": "tmp/src-cache",
-		"phantomjs": "node_modules/phantomjs/lib/phantom/",
-		"server": {
-			"dev": "server/server-dev.js",
-			"prod": "server/server-prod.js"
-		},
-		"html": {
-			"index": "client/index.jade",
-			"partials": [
-				"client/**/*.jade",
-				"!client/index.jade"
-			]
-		},
-		"js":{
-			"dist": "tmp/dist/scripts",
-			"vendor": [
-				"bower_components/jquery/dist/jquery.min.js",
-				"bower_components/angular/angular.min.js",
-				"bower_components/angular-ui-router/release/angular-ui-router.min.js",
-				"bower_components/angular-sanitize/angular-sanitize.min.js",
-				"bower_components/bootstrap/dist/js/bootstrap.min.js"
-			],
-			"user": "client/**/*.js"
-		},
-		"css":{
-			"dist": "tmp/dist/styles",
-			"vendor": [
-				"bower_components/bootstrap/dist/css/bootstrap.min.css",
-				"bower_components/bootstrap/dist/css/bootstrap-theme.min.css",
-				"bower_components/fontawesome/css/font-awesome.min.css"
-			],
-			"user": "client/**/*.less",
-			"uncss": {
-				"html": ["tmp/dist/snapshots/**/*.html"],
-				"ignore": [
-					".collapse", ".collapsing", ".collapsed", ".collapse.in",
-					".btn-success", ".btn-danger", ".active",
-					".col-xs-6", ".col-sm-6", ".col-md-4", ".col-lg-4", ".col-sm-2", ".col-lg-2", ".col-xs-12"
-				]
-			}
-		},
-		"ftp": {
-			"src": [
-            	"tmp/dist/**/*.*",
-            	"server/.htaccess"
-        	],
-			"cache": "tmp/ftp-cache",
-			"root": "/public_html"
-		},
-		"heroku":{
-			"appName": "romaleev",
-			"src": "server/heroku/{**,.*}",
-			"dist": "tmp",
-			"git": "tmp/.git"
-		},
-		"fonts": {
-			"src": [
-            	"client/fonts/*.{woff,woff2}",
-            	"bower_components/fontawesome/fonts/fontawesome-webfont.{woff,woff2}",
-            	"bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.{woff,woff2}"
-        	],
-			"dist": "tmp/dist/fonts"
-		},
-		"img": {
-			"src": "client/img/**/*.*",
-			"dist": "tmp/dist/img"
-		},
-		"seo":{
-			"urls": ["/", "/people/list", "/people/grid"],
-			"dist": "tmp/dist/snapshots"
-		}
-	},
-	"devPath": {
-		"validate": [
-			"./server/server-dev.js",
-			"./client/**/*.js"
-		],
-		"browserSync":{
-			"reload": "client/**/*.{js,jade}",
-			"inject": "client/**/*.less"
-		},
-		"liveReload": "client/**/*.*"
-	}
+    "browser": "chrome",
+    "debug": false,
+    "url": {
+        "server": {
+            "dev": "http://localhost:8000",
+            "prod": "http://localhost:7997"
+        }
+    },
+    "path": {
+        "config": "config.json",
+        "client": "client",
+        "dist": "tmp/dist",
+        "dist_cache": "tmp/src-cache",
+        "phantomjs": "node_modules/phantomjs/lib/phantom/",
+        "server": {
+            "dev": "server/server-dev.js",
+            "prod": "server/server-prod.js"
+        },
+        "html": {
+            "index": "client/index.jade",
+            "partials": [
+                "client/**/*.jade",
+                "!client/index.jade"
+            ]
+        },
+        "js": {
+            "dist": "tmp/dist/scripts",
+            "vendor": [
+                "bower_components/jquery/dist/jquery.min.js",
+                "bower_components/angular/angular.min.js",
+                "bower_components/angular-ui-router/release/angular-ui-router.min.js",
+                "bower_components/angular-sanitize/angular-sanitize.min.js",
+                "bower_components/bootstrap/dist/js/bootstrap.min.js"
+            ],
+            "user": "client/**/*.js"
+        },
+        "css": {
+            "dist": "tmp/dist/styles",
+            "vendor": [
+                "bower_components/bootstrap/dist/css/bootstrap.min.css",
+                "bower_components/bootstrap/dist/css/bootstrap-theme.min.css",
+                "bower_components/fontawesome/css/font-awesome.min.css"
+            ],
+            "user": "client/**/*.less",
+            "uncss": {
+                "html": ["tmp/dist/snapshots/**/*.html"],
+                "ignore": [
+                    ".collapse", ".collapsing", ".collapsed", ".collapse.in",
+                    ".btn-success", ".btn-danger", ".active",
+                    ".col-xs-6", ".col-sm-6", ".col-md-4", ".col-lg-4", ".col-sm-2", ".col-lg-2", ".col-xs-12"
+                ]
+            }
+        },
+        "ftp": {
+            "src": "tmp/dist/**/*.*",
+            "htaccess": [
+                "server/.htaccess",
+                "node_modules/apache-server-configs/dist/.htaccess"
+            ],
+            "cache": "tmp/ftp-cache",
+            "root": "/public_html"
+        },
+        "heroku": {
+            "appName": "romaleev",
+            "src": "server/heroku/{**,.*}",
+            "dist": "tmp",
+            "git": "tmp/.git"
+        },
+        "fonts": {
+            "src": [
+                "client/fonts/*.{woff,woff2}",
+                "bower_components/fontawesome/fonts/fontawesome-webfont.{woff,woff2}",
+                "bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.{woff,woff2}"
+            ],
+            "dist": "tmp/dist/fonts"
+        },
+        "img": {
+            "src": "client/img/**/*.*",
+            "dist": "tmp/dist/img"
+        },
+        "seo": {
+            "urls": ["/", "/people/list", "/people/grid"],
+            "dist": "tmp/dist/snapshots"
+        }
+    },
+    "devPath": {
+        "validate": [
+            "./server/server-dev.js",
+            "./client/**/*.js"
+        ],
+        "browserSync": {
+            "reload": "client/**/*.{js,jade}",
+            "inject": "client/**/*.less"
+        },
+        "liveReload": "client/**/*.*"
+    }
 }

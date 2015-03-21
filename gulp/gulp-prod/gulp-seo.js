@@ -34,7 +34,8 @@ gulp.task('seo', function(cb) {
                     console.error('[', url, ']', msgStack.join('\n'));
                 });
                 page.set('onResourceError', function(resourceError) {
-                    console.error('[', url, ']', resourceError.errorCode, resourceError.errorString);
+                    if (!/vendor.css/.test(resourceError.errorString))
+                        console.error('[', url, ']', resourceError.errorCode, resourceError.errorString);
                 });
                 page.open(host + url, function(status) {
                     if(status != 'success') console.error('status:', status);
