@@ -9,7 +9,7 @@ gulp.task('js:vendor', function() {
         .pipe($.sourcemaps.init({
             loadMaps: true
         }))
-        .pipe($.concat('vendor.js'))
+        .pipe($.concat(path.js.vendor_file))
         .pipe($.sourcemaps.write('.'))
         .pipe(gulp.dest(path.js.dist));
 });
@@ -22,14 +22,14 @@ gulp.task('js:user', function() {
     var html2js = gulp.src(path.html.partials)
             .pipe($.jade())
             .pipe($.ngHtml2js({
-                moduleName: "romaleev",
+                moduleName: path.js.html2jsModuleName,
                 prefix: ""
             }))
             .pipe($.concat('html2js'));
 
     return require('streamqueue')({objectMode: true}, js, html2js)
         .pipe($.uglify())
-        .pipe($.concat('scripts.js'))
+        .pipe($.concat(path.js.user_file))
         .pipe($.sourcemaps.write('.'))
         .pipe(gulp.dest(path.js.dist));
 });

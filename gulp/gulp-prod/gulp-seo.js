@@ -3,26 +3,35 @@
 var gulp = require('gulp'),
     $ = gulp.$,
     path = gulp.config.path,
+    fs = require('fs'),
     mkdirp = require('mkdirp');
 
 gulp.task('seo', function(cb) {
     var host = gulp.config.url.server.prod,
-        fs = require('fs'),
-        phantom = require('phantom'),
-        urls = path.seo.urls,
-        files = urls.length;
+        urls = path.seo.urls;
+
+    phantomSnapshots(urls.map(function(item, i, arr) {
+        return {
+            href: item,
+            url: host + item,
+            file: path.seo.dist + (item == '/' ? '/index.html' : item.match(/^.*[^\/]/)[0] + '.html') //regexp: avoid trailing slash
+        };
+    }), cb);
+});
+
+function phantomSnapshots(data, cb) {
+    var phantom = require('phantom'),
+        files = data.length;
 
     function ready() {
         if (--files === 0) cb();
     }
-    urls.forEach(function(url, i, arr) {
-        var fileName = url == '/' ? '/index.html' : url.match(/^.*[^\/]/)[0] + '.html'; //regexp: avoid trailing slash
-
+    data.forEach(function(item) {
         phantom.create(function(ph) {
             ph.createPage(function(page) {
-                if(gulp.config.debug)
+                if (gulp.config.debug)
                     page.set('onConsoleMessage', function(msg) {
-                        console.log('[', url, ']', msg);
+                        console.log('[', item.href, ']', msg);
                     });
                 page.set('onError', function(msg, trace) {
                     var msgStack = [msg.match(/^.{0,200}/)[0] + '...:'];
@@ -31,23 +40,22 @@ gulp.task('seo', function(cb) {
                             msgStack.push(' -> ' + t.file + ': ' + t.line + (t.function ? ' (in function "' + t.function+'")' : ''));
                         });
                     }
-                    console.error('[', url, ']', msgStack.join('\n'));
+                    console.error('[', item.href, ']', msgStack.join('\n'));
                 });
                 page.set('onResourceError', function(resourceError) {
                     if (!/vendor.css/.test(resourceError.errorString))
-                        console.error('[', url, ']', resourceError.errorCode, resourceError.errorString);
+                        console.error('[', item.href, ']', resourceError.errorCode, resourceError.errorString);
                 });
-                page.open(host + url, function(status) {
-                    if(status != 'success') console.error('status:', status);
+                page.open(item.url, function(status) {
+                    if (status != 'success') console.error('status:', status);
                     page.evaluate(function() { //regexp: remove <script> tags
                         return document.getElementsByTagName("html")[0].innerHTML.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
                     }, function(result) {
-                        var filePath = path.seo.dist + fileName;
-                        mkdirp(filePath.match(/^.*\//)[0], function(err) { //regexp: get folder path
+                        mkdirp(item.file.match(/^.*\//)[0], function(err) { //regexp: get folder path
                             if (err) console.error(err);
-                            fs.writeFile(filePath, result, function(err) {
+                            fs.writeFile(item.file, result, function(err) {
                                 if (err) console.error(err);
-                                if (path.debug) console.log('seo: ' + filePath);
+                                if (path.debug) console.log('seo: ' + item.file);
                                 ready();
                             });
                         });
@@ -58,7 +66,9 @@ gulp.task('seo', function(cb) {
             });
         }, {
             path: path.phantomjs,
-            dnodeOpts: { weak: false } //fix to avoid error: 'cannot find module "weak"'
+            dnodeOpts: {
+                weak: false
+            } //fix to avoid error: 'cannot find module "weak"'
         });
     });
-});
+}

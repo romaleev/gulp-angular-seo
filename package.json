@@ -27,6 +27,7 @@
         "cli-color": "latest",
         "progress": "latest",
         "apache-server-configs": "latest",
+        "bluebird": "latest",
         "gulp": "latest",
         "gulp-if": "latest",
         "gulp-shell": "latest",

@@ -33,7 +33,10 @@
                 "bower_components/angular-sanitize/angular-sanitize.min.js",
                 "bower_components/bootstrap/dist/js/bootstrap.min.js"
             ],
-            "user": "client/**/*.js"
+            "vendor_file": "vendor.js",
+            "user": "client/**/*.js",
+            "user_file": "scripts.js",
+            "html2jsModuleName": "romaleev"
         },
         "css": {
             "dist": "tmp/dist/styles",
@@ -42,7 +45,9 @@
                 "bower_components/bootstrap/dist/css/bootstrap-theme.min.css",
                 "bower_components/fontawesome/css/font-awesome.min.css"
             ],
+            "vendor_file": "vendor.css",
             "user": "client/**/*.less",
+            "user_file": "styles.css",
             "uncss": {
                 "html": ["tmp/dist/snapshots/**/*.html"],
                 "ignore": [

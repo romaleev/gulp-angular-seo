@@ -39,7 +39,7 @@ gulp.task('clean', function(cb) {
 
 gulp.distTasks = [
     [
-        ['server:start', 'js:vendor', ['html:inject', 'html', 'js:user']],
+        ['server:start', 'js:vendor', 'css:vendor_init', ['html:inject', 'html', 'js:user']],
         'seo',
         'css:vendor'
     ],
