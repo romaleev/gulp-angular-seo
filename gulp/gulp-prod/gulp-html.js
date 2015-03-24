@@ -2,36 +2,40 @@
 
 var gulp = require('gulp'),
     $ = gulp.$,
-    path = gulp.config.path;
+    task = gulp.config.task;
 
 gulp.task('html', function() {
     var assets = $.useref.assets();
-    return gulp.src(path.html.index)
+    return gulp.src(task.html.index)
         .pipe($.jade({
             pretty: true
         }))
         .pipe($.useref())
-        .pipe(gulp.dest(path.dist));
+        .pipe(gulp.dest(task.common.dist));
 });
 
 gulp.task('html:inject', function() {
-	return gulp.src(path.html.index)
-		.pipe(gulp.$.inject(gulp.src(path.js.vendor, {read: false}), {
+	return gulp.src(task.html.index)
+		.pipe(gulp.$.inject(gulp.src(task.js.vendor, {read: false}), {
 			name: 'vendorJS',
 			addRootSlash: false,
 			relative: true
 		}))
-		.pipe(gulp.$.inject(gulp.src(path.css.vendor, {read: false}), {
+		.pipe(gulp.$.inject(gulp.src(task.css.vendor, {read: false}), {
 			name: 'vendorCSS',
 			addRootSlash: false,
 			relative: true
 		}))
-		.pipe(gulp.$.inject(gulp.src(path.js.user, {read: false}), {
+		.pipe(gulp.$.inject(
+			gulp.src(task.js.user, {read: false})
+				.pipe($.sort(function (a, b) {
+				    return a.path.match(task.js.user_order) ? -1 : 1;
+				})), {
 			name: 'userJS',
 			addRootSlash: false,
 			relative: true
 		}))
-		.pipe(gulp.$.inject(gulp.src(path.css.user, {read: false}), {
+		.pipe(gulp.$.inject(gulp.src(task.css.user, {read: false}), {
 			name: 'userCSS',
 			addRootSlash: false,
 			relative: true,
@@ -42,5 +46,5 @@ gulp.task('html:inject', function() {
 				return gulp.$.inject.transform.apply(gulp.$.inject.transform, arguments);
 			}
 		}))
-		.pipe(gulp.dest(path.client));
+		.pipe(gulp.dest(task.common.client));
 });

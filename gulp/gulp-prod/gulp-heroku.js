@@ -2,38 +2,39 @@
 
 var gulp = require('gulp'),
     $ = gulp.$,
-    path = gulp.config.path,
-    clc = require("cli-color");
+    task = gulp.config.task;
 
 gulp.task('heroku:upload', ['heroku:config'], $.shell.task([
     'git add -A .',
     'git commit -m update',
-    'echo '+ clc.yellowBright('Wait until Heroku build is finished...'),
+    'echo '+ $.clc.yellowBright('Wait until Heroku build is finished...'),
     'git push heroku master'
-], { cwd: path.heroku.dist,
+], { cwd: task.heroku.dist,
      ignoreErrors: !gulp.config.debug,
      env: {Path: ''} //fix to avoid error: 'git-helper for https not found'
 }));
 
 
 gulp.task('heroku:config', function(cb) {
-    if(!require('fs').existsSync(path.heroku.git)){
-        console.warn('You need to be logged in Heroku first: heroku auth:whoami | heroku login');
-        require('run-sequence')('heroku:config:copy', 'heroku:config:shell', cb);
-    } else cb();
+    $.fs.open(task.heroku.git, 'r')
+        .then(cb)
+        .catch(function(err) {
+            console.warn('You need to be logged in Heroku first: heroku auth:whoami | heroku login');
+            $.runSequence('heroku:config:copy', 'heroku:config:shell', cb);
+        });
 });
 
 gulp.task('heroku:config:copy', function() {
-    return gulp.src(path.heroku.src)
-        .pipe($.changed(path.heroku.dist, {
+    return gulp.src(task.heroku.src)
+        .pipe($.changed(task.heroku.dist, {
             hasChanged: $.changed.compareSha1Digest
         }))
-        .pipe(gulp.dest(path.heroku.dist));
+        .pipe(gulp.dest(task.heroku.dist));
 });
 
 gulp.task('heroku:config:shell', $.shell.task([
     'git init',
-    'heroku apps:create ' + path.heroku.appName, //optional: 'heroku ps:scale web=1'
+    'heroku apps:create ' + task.heroku.appName, //optional: 'heroku ps:scale web=1'
     'heroku git:remote -a romaleev',
     'echo if you already have heroku app type: "cd tmp" and "git pull heroku master"'
-], {cwd: path.heroku.dist, ignoreErrors: !gulp.config.debug}));
+], {cwd: task.heroku.dist, ignoreErrors: !gulp.config.debug}));

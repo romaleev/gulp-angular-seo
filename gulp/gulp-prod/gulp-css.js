@@ -2,34 +2,38 @@
 
 var gulp = require('gulp'),
     $ = gulp.$,
-    path = gulp.config.path,
-    bluebird = require('bluebird'),
-    fs = bluebird.promisifyAll(require('fs')),
-    mkdirp = bluebird.promisify(require('mkdirp'));
+    task = gulp.config.task;
 
-gulp.task('css:vendor_init', function(cb) {// init empty vendor.css to prevent seo warning before it is generated
-    var file = path.css.dist + '/' + path.css.vendor_file;
-    fs.openAsync(file, 'r').catch(function(err){
-        return mkdirp(path.css.dist).then(fs.writeFileAsync(file, ''));
-    }).finally(cb);
+gulp.task('css:vendor_init', function(cb) { // init empty vendor.css to prevent seo warning before it is generated
+    var file = task.css.dist + '/' + task.css.vendor_file;
+    $.fs.open(file, 'r')
+        .then(cb)
+        .catch(function(err) {
+            $.mkdirp(task.css.dist)
+                .then(function() {
+                    $.fs.writeFile(file, '').then(cb);
+                });
+        });
 });
 
+
+
 gulp.task('css:vendor', function() {//TODO add sourcemaps when uncss will be supported
-    return gulp.src(path.css.vendor)
-        .pipe($.concat(path.css.vendor_file))
-        .pipe($.uncss(path.css.uncss))
+    return gulp.src(task.css.vendor)
+        .pipe($.concat(task.css.vendor_file))
+        .pipe($.uncss(task.css.uncss))
         .pipe($.minifyCss())
-        .pipe(gulp.dest(path.css.dist));
+        .pipe(gulp.dest(task.css.dist));
 });
 
 gulp.task('css:user', function() {
-    return gulp.src(path.css.user)
+    return gulp.src(task.css.user)
         .pipe($.sourcemaps.init())
         .pipe($.less())
         .pipe($.minifyCss())
-        .pipe($.concat(path.css.user_file))
+        .pipe($.concat(task.css.user_file))
         .pipe($.sourcemaps.write('.'))
-        .pipe(gulp.dest(path.css.dist));
+        .pipe(gulp.dest(task.css.dist));
 });
 
 //TODO for generator

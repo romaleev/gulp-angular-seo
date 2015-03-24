@@ -9,5 +9,6 @@
     "document": false,
     "process": false
   },
-  "indent": 1
+  "indent": 1,
+  "expr": true
 }

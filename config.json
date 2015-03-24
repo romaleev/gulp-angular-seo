@@ -7,12 +7,13 @@
             "prod": "http://localhost:7997"
         }
     },
-    "path": {
-        "config": "config.json",
-        "client": "client",
-        "dist": "tmp/dist",
-        "dist_cache": "tmp/src-cache",
-        "phantomjs": "node_modules/phantomjs/lib/phantom/",
+    "task": {
+        "common": {
+            "config": "config.json",
+            "client": "client",
+            "dist": "tmp/dist",
+            "dist_cache": "tmp/src-cache"
+        },
         "server": {
             "dev": "server/server-dev.js",
             "prod": "server/server-prod.js"
@@ -35,6 +36,7 @@
             ],
             "vendor_file": "vendor.js",
             "user": "client/**/*.js",
+            "user_order": "(app).js$",
             "user_file": "scripts.js",
             "html2jsModuleName": "romaleev"
         },
@@ -80,16 +82,16 @@
             ],
             "dist": "tmp/dist/fonts"
         },
-        "img": {
+        "images": {
             "src": "client/img/**/*.*",
             "dist": "tmp/dist/img"
         },
         "seo": {
             "urls": ["/", "/people/list", "/people/grid"],
-            "dist": "tmp/dist/snapshots"
-        }
-    },
-    "devPath": {
+            "testUrls": ["/"],
+            "dist": "tmp/dist/snapshots",
+            "phantomjs": "node_modules/phantomjs/lib/phantom/"
+        },
         "validate": [
             "./server/server-dev.js",
             "./client/**/*.js"
