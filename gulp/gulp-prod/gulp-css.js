@@ -5,18 +5,17 @@ var gulp = require('gulp'),
     task = gulp.config.task;
 
 gulp.task('css:vendor_init', function(cb) { // init empty vendor.css to prevent seo warning before it is generated
-    var file = task.css.dist + '/' + task.css.vendor_file;
+    var file = task.css.dist + '/' + task.css.vendor_file,
+        end = function(){cb();};
     $.fs.open(file, 'r')
-        .then(cb)
+        .then(end)
         .catch(function(err) {
             $.mkdirp(task.css.dist)
                 .then(function() {
-                    $.fs.writeFile(file, '').then(cb);
+                    $.fs.writeFile(file, '').then(end);
                 });
         });
 });
-
-
 
 gulp.task('css:vendor', function() {//TODO add sourcemaps when uncss will be supported
     return gulp.src(task.css.vendor)

@@ -1,20 +1,17 @@
 'use strict';
 
 var gulp = require('gulp'),
-	$ = require('gulp-load-plugins')();
+	$ = require('gulp-load-plugins')(),
+	_requireDir = require('require-dir'),
+	_clc = require("cli-color");
 
-	$.requireDir = require('require-dir');
-	$.clc = require("cli-color");
-	$.runSequence = require('run-sequence');
-	$.opn = require('opn');
-	$.multimatch = require("multimatch");
-	$.promisify = promisify;
-	$.mkdirp = promisify(require('mkdirp'), {inPipe: true});
-	$.fs = promisifyAll(require('fs'), ['open', 'writeFile'], {inPipe: true});
+$.promisify = promisify;
+$.mkdirp = promisify(require('mkdirp'));
+$.fs = promisifyAll(require('fs'), ['open', 'writeFile']);
 
-	gulp.config = require('./config.json');
-	gulp.$ = $;
-	$.requireDir('./gulp');
+gulp.config = require('./config.json');
+gulp.$ = $;
+_requireDir('./gulp');
 
 gulp.task('default', ['dev']);
 gulp.task('serve', ['dev']);
@@ -30,13 +27,12 @@ gulp.task('po', ['prod:opt']);
 gulp.task('fo', ['ftp:opt']);
 gulp.task('ho', ['heroku:opt']);
 
-function promisify(func, _opt){
-	var opt = _opt || {};
+function promisify(func){
 	return function(){
 		var _args = arguments;
 		return new Promise(function(resolve, reject){
 			func.apply(null, Array.prototype.slice.call(_args).concat(function(err, rez){
-				err ? reject(err) : resolve(opt.inPipe ? null : rez);
+				err ? reject(err) : resolve(rez);
 			}));
 		});
 	};
@@ -59,11 +55,11 @@ function decorator(object, prop, callback){
 	};
 }
 decorator(console, 'info', function(val){
-	return gulp.$.clc.greenBright(val);
+	return _clc.greenBright(val);
 });
 decorator(console, 'warn', function(val){
-	return gulp.$.clc.yellowBright(val);
+	return _clc.yellowBright(val);
 });
 decorator(console, 'error', function(val){
-	return gulp.$.clc.redBright(val);
+	return _clc.redBright(val);
 });

@@ -2,24 +2,27 @@
 
 var gulp = require('gulp'),
     $ = gulp.$,
-    task = gulp.config.task;
+    task = gulp.config.task,
+    _multimatch = require("multimatch"),
+    _runSequence = require('run-sequence'),
+    _opn = require('opn');
 
 gulp.task('dist:opt', ['_dist:opt'], function(cb) {
-    $.runSequence(['server:stop'], cb);
+    _runSequence(['server:stop'], cb);
 });
 
 gulp.task('prod:opt', ['_dist:opt'], function() {
     console.warn('Server is running: ' + gulp.config.url.server.prod);
-    $.opn(gulp.config.url.server.prod, gulp.config.browser);
+    _opn(gulp.config.url.server.prod, gulp.config.browser);
 });
 
 gulp.task('ftp:opt', ['_dist:opt'], function(cb){
     gulp.config.cache = true;
-    $.runSequence(['ftp:upload', 'server:stop'], cb);
+    _runSequence(['ftp:upload', 'server:stop'], cb);
 });
 
 gulp.task('heroku:opt', ['_dist:opt'], function(cb){
-    $.runSequence(['heroku:upload', 'server:stop'], cb);
+    _runSequence(['heroku:upload', 'server:stop'], cb);
 });
 
 gulp.task('_dist:opt', function(cb) {
@@ -28,7 +31,7 @@ gulp.task('_dist:opt', function(cb) {
         src = [task.common.client + '/**/*.*'].concat(task.common.config).concat(task.js.vendor).concat(task.css.vendor);
 
     function no(patterns){
-        return !$.multimatch(files, patterns).length;
+        return !_multimatch(files, patterns).length;
     }
     function cancel(name, _tasks, _index){
         var tasks = (_index !== undefined) ? _tasks[_index] : _tasks;
@@ -66,6 +69,6 @@ gulp.task('_dist:opt', function(cb) {
                     if(no(task.css.vendor)) cancel('css:vendor', tasks); //cancel if no 'seo' and 'path.css.vendor' changes
                 }
             }
-            $.runSequence($.sync(gulp).async(tasks, 'dist:opt:tmp'), cb);
+            _runSequence($.sync(gulp).async(tasks, 'dist:opt:tmp'), cb);
         });
 });

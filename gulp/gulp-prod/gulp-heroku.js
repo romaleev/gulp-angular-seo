@@ -2,12 +2,14 @@
 
 var gulp = require('gulp'),
     $ = gulp.$,
-    task = gulp.config.task;
+    task = gulp.config.task,
+    _clc = require("cli-color"),
+    _runSequence = require('run-sequence');
 
 gulp.task('heroku:upload', ['heroku:config'], $.shell.task([
     'git add -A .',
     'git commit -m update',
-    'echo '+ $.clc.yellowBright('Wait until Heroku build is finished...'),
+    'echo '+ _clc.yellowBright('Wait until Heroku build is finished...'),
     'git push heroku master'
 ], { cwd: task.heroku.dist,
      ignoreErrors: !gulp.config.debug,
@@ -16,11 +18,12 @@ gulp.task('heroku:upload', ['heroku:config'], $.shell.task([
 
 
 gulp.task('heroku:config', function(cb) {
+    var end = function(){cb();};
     $.fs.open(task.heroku.git, 'r')
-        .then(cb)
+        .then(end)
         .catch(function(err) {
             console.warn('You need to be logged in Heroku first: heroku auth:whoami | heroku login');
-            $.runSequence('heroku:config:copy', 'heroku:config:shell', cb);
+            _runSequence('heroku:config:copy', 'heroku:config:shell', end);
         });
 });
 

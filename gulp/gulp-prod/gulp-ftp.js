@@ -38,6 +38,7 @@ gulp.task('ftp:upload', ['ftp:config'], function() {
 });
 
 gulp.task('ftp:config', function(cb) {
+    var end = function(){cb();};
     try {
         gulp.config.ftpConnection = _vinylFtp.create(require('../../ftp.json'));
         cb();
@@ -51,7 +52,7 @@ gulp.task('ftp:config', function(cb) {
             var ftp = JSON.stringify(result);
             gulp.config.ftpConnection = _vinylFtp.create(ftp);
             $.fs.writeFile('./ftp.json', ftp)
-                .then(cb)
+                .then(end)
                 .catch(console.error);
         });
     }

@@ -5,9 +5,12 @@ var gulp = require('gulp'),
     conf = gulp.config,
     task = conf.task,
     _del = require('del'),
+    _requireDir = require('require-dir'),
+    _runSequence = require('run-sequence'),
+    _opn = require('opn'),
     server;
 
-$.requireDir('./gulp/gulp-prod');
+_requireDir('./gulp-prod');
 
 gulp.distTasks = [
     [
@@ -23,20 +26,20 @@ gulp.distTasks = [
 gulp.task('_dist', $.sync(gulp).async(gulp.distTasks, 'dist'));
 
 gulp.task('dist', ['_dist'], function(cb) {
-    $.runSequence(['server:stop'], cb);
+    _runSequence(['server:stop'], cb);
 });
 
 gulp.task('prod', ['_dist'], function() {
     console.warn('Server is running: ' + gulp.config.url.server.prod);
-    $.opn(gulp.config.url.server.prod, gulp.config.browser);
+    _opn(gulp.config.url.server.prod, gulp.config.browser);
 });
 
 gulp.task('ftp', ['_dist'], function(cb){
-    $.runSequence(['ftp:upload', 'server:stop'], cb);
+    _runSequence(['ftp:upload', 'server:stop'], cb);
 });
 
 gulp.task('heroku', ['_dist'], function(cb){
-    $.runSequence(['heroku:upload', 'server:stop'], cb);
+    _runSequence(['heroku:upload', 'server:stop'], cb);
 });
 
 gulp.task('server:start', function(cb) {
@@ -66,6 +69,6 @@ gulp.task('clean', function(cb) {
     _del([
         task.common.dist,
         task.common.dist_cache,
-        task.common.ftp.cache
+        task.ftp.cache
     ], cb);
 });

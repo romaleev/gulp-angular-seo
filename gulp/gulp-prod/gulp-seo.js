@@ -3,9 +3,11 @@
 var gulp = require('gulp'),
     $ = gulp.$,
     task = gulp.config.task,
-    _phantom = require('phantom');
+    _phantom = require('phantom'),
+    _clc = require("cli-color");
 
 gulp.task('seo', function(cb) {
+    var end = function(){cb();};
     var phantomHTML = $.promisify(_phantomHTML),
         host = gulp.config.url.server.prod,
         urls = task.seo.urls,
@@ -34,7 +36,7 @@ gulp.task('seo', function(cb) {
         phantoms.push(phantom);
     });
     Promise.all(phantoms)
-        .then(function(){cb();})
+        .then(end)
         .catch(console.error);
 });
 
@@ -43,7 +45,7 @@ function _phantomHTML(host, url, cb) {
         ph.createPage(function(page) {
             if (gulp.config.debug)
                 page.set('onConsoleMessage', function(msg) {
-                    console.log('[', url, ']', msg);
+                    console.log(_clc('[' + url + ']'), msg);
                 });
             page.set('onError', function(msg, trace) {
                 var msgStack = [msg.match(/^.{0,200}/)[0] + '...:'];
@@ -52,10 +54,10 @@ function _phantomHTML(host, url, cb) {
                         msgStack.push(' -> ' + t.file + ': ' + t.line + (t.function ? ' (in function "' + t.function+'")' : ''));
                     });
                 }
-                cb($.clc.inverse('[' + url + ']') + ' ' + msgStack.join('\n'));
+                cb(_clc.inverse('[' + url + ']') + ' ' + msgStack.join('\n'));
             });
             page.set('onResourceError', function(resourceError) {
-                cb($.clc.inverse('[' + url + ']') + ' ' + resourceError.errorCode + ' ' + resourceError.errorString);
+                cb(_clc.inverse('[' + url + ']') + ' ' + resourceError.errorCode + ' ' + resourceError.errorString);
             });
             page.open(host + url, function(status) {
                 if (status != 'success') cb('status: ' + status);
