@@ -7,8 +7,8 @@ var gulp = require('gulp'),
     _clc = require("cli-color");
 
 gulp.task('seo', function(cb) {
-    var end = function(){cb();};
-    var phantomHTML = $.promisify(_phantomHTML),
+    var end = function(){cb();},
+        phantomHTML = $.promisify(_phantomHTML),
         host = gulp.config.url.server.prod,
         urls = task.seo.urls,
         threads = urls.length,

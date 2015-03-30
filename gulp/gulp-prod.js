@@ -47,14 +47,13 @@ gulp.task('server:start', function(cb) {
     server = require('child_process').spawn('node', [task.server.prod]);
     server.stderr.setEncoding('utf8');
     server.stderr.on('data', function(text) {
-        console.error('Server: ' + text);
+        console.error(text);
         cb();
     });
     server.stdout.setEncoding('utf8');
     server.stdout.on('data', function(text) {
-        if(text.indexOf(conf.url.server.prod) != -1){
-            cb();
-        } else console.warn('Server: ' + text);
+        if(text.trim()) console.info(text);
+        cb();
     });
 });
 

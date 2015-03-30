@@ -6,7 +6,8 @@ var express = require('express'),
     bowerPath = path.join(__dirname, '/../bower_components'),
     less = require('less'),
     fs = require('fs'),
-    url = require('../config.json').url.server.dev,
+    conf = require('../config.json'),
+    url = conf.url.server.dev,
     port = url.slice(-4);
 
 express()
@@ -43,5 +44,5 @@ express()
         });
     })
     .listen(port, function() {
-        console.log('DEV ' + url);
+        console.log(conf.debug ? 'DEV server started: ' + url : '');
     });

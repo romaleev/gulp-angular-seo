@@ -1,9 +1,9 @@
 'use strict';
 
 var express = require('express'),
-    path = require('path'),
-    clientPath = path.join(__dirname, '/../tmp/dist'),
-    url = require('../config.json').url.server.prod,
+    clientPath = require('path').join(__dirname, '/../tmp/dist'),
+    conf = require('../config.json'),
+    url = conf.url.server.prod,
     port = url.slice(-4);
 
 express()
@@ -23,5 +23,5 @@ express()
         res.sendFile(clientPath + '/index.html');
     })
     .listen(port, function() {
-        console.log('PROD ' + url);
+        console.log(conf.debug ? 'PROD server started: ' + url : '');
     });

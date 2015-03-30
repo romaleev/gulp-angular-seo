@@ -11,18 +11,16 @@ gulp.task('nodemon', function(cb) {
 	return $.nodemon({
 		script: task.server.dev,
 		ext: 'js',
-		watch: task.server.dev,
-		verbose: gulp.config.debug
+		watch: task.server.dev
 	}).on('start', function() {
 		if (!called) {
 			called = true;
-			_browserSync.init({
+			_browserSync({
 				proxy: gulp.config.url.server.dev,
 				browser: gulp.config.browser,
 				notify: false,
 				logLevel: gulp.config.debug ? "debug" : "silent"
-			});
-			cb();
+			}, cb);
 		}
 	}).on('restart', function() {
 		_browserSync.reload();
@@ -30,6 +28,8 @@ gulp.task('nodemon', function(cb) {
 });
 
 gulp.task('dev', ['html:inject', 'nodemon'], function() {
+	console.warn('Server is running: ' + gulp.config.url.server.dev);
+
 	$.watch(task.validate, {ignoreInitial: false})
 		.pipe($.jshint())
 		.pipe($.jshint.reporter('jshint-stylish'));
