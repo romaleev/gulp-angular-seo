@@ -6,11 +6,11 @@ angular.module('romaleev')
         contacts: [{
             title: "Linkedin",
             icon: "fa-linkedin",
-            url: "http://linkedin/in/romaleev"
+            url: "http://linkedin.com/in/romaleev"
         }, {
             title: "GitHub",
             icon: "fa-github",
-            url: "https://github.com/romaleev"
+            url: "http://github.com/romaleev"
         }, {
             title: "StackOverflow",
             icon: "fa-stack-overflow",

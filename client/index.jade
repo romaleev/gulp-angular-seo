@@ -1,7 +1,8 @@
 doctype html
-html( ng-app='romaleev' )
+html( ng-app='romaleev' manifest='http://romaleev.com/romaleev.appcache')
 	head
 		meta( charset='utf8' )
+		meta( name="apple-mobile-web-app-capable" content="yes" )
 		meta( name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" )
 		meta( name="author" content="Roman Malieiev" )
 		meta( name="keywords" content="romaleev, Roman Malieiev, web developer" )
@@ -36,10 +37,25 @@ html( ng-app='romaleev' )
 			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 			ga('create', 'UA-60757328-1', 'auto');
 			ga('send', 'pageview');
+		script( type="application/ld+json").
+			{ "@context" : "http://schema.org",
+			  "@type" : "Organization",
+			  "name" : "Roman Malieiev",
+			  "logo": "http://romaleev.com/assets/img/roma.jpg",
+			  "url" : "http://romaleev.com",
+			  "sameAs" : [
+			  	"http://plus.google.com/+Romaleevcom",
+			  	"http://linkedin.com/in/romaleev",
+			    "http://www.facebook.com/romaleev",
+			    "http://github.com/romaleev",
+			    "http://instagram.com/romaleev",
+			    "http://stackoverflow.com/users/991818/roman-malieiev"
+			  ]
+			}
 	body
-		a( href="/" rel="author" )
-		a( href="https://plus.google.com/+Romaleevcom" rel="me" )
-		a( href="https://plus.google.com/+Romaleevcom" rel="publisher" )
+		a( href="http://plus.google.com/+Romaleevcom" rel="author" )
+		a( href="http://plus.google.com/+Romaleevcom" rel="publisher" )
+		a( href="http://plus.google.com/+Romaleevcom" rel="me" )
 
 		nav.navbar.navbar-default.navbar-fixed-top( id="navbar" ng-controller="NavbarCtrl" )
 			div.container-fluid
@@ -50,7 +66,7 @@ html( ng-app='romaleev' )
 						span.icon-bar
 						span.icon-bar
 					a.navbar-brand( ui-sref="home" )
-						img.logo( alt="Roman Malieiev", src="img/logo.jpg" )
+						img.logo( alt="Roman Malieiev" src="assets/img/logo.jpg" width="32" height="32")
 						span( ng-bind="header_title" )
 
 				div.collapse.navbar-collapse

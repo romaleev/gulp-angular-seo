@@ -45,7 +45,7 @@ function promisifyAll(obj, methods, _opt){
 	return rez;
 }
 
-function decorator(object, prop, callback){
+function decorate(object, prop, callback){
 	var old = object[prop];
 	object[prop] = function(){
 		var arr = [];
@@ -54,12 +54,13 @@ function decorator(object, prop, callback){
 		old.apply(object, arr);
 	};
 }
-decorator(console, 'info', function(val){
-	return _clc.greenBright(val);
-});
-decorator(console, 'warn', function(val){
-	return _clc.yellowBright(val);
-});
-decorator(console, 'error', function(val){
-	return _clc.redBright(val);
-});
+function colorify(color){
+	return function(val){
+		var inversed = val && val.toString().match(/(^\[.*\])(.*$)/),
+			rez = inversed ? (_clc.inverse(inversed[1]) + inversed[2]) : val;
+		return color ? _clc[color](rez) : rez;
+	};
+}
+decorate(console, 'info', colorify('greenBright'));
+decorate(console, 'warn', colorify('yellowBright'));
+decorate(console, 'error', colorify('redBright'));

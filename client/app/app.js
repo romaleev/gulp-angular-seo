@@ -21,5 +21,6 @@ angular.module('romaleev', ['ui.router', 'ngSanitize'])
 				title: $rootScope.pageTitle
 			});
 		});
+		if ($window.applicationCache) $window.applicationCache.addEventListener('updateready', $window.location.reload);
 	    console.log('ready');
 	});

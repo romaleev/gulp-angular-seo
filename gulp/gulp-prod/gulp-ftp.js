@@ -12,9 +12,7 @@ gulp.task('ftp:upload', ['ftp:config'], function() {
         size = 0,
         bar;
 
-    return gulp.src(task.ftp.htaccess)
-        .pipe($.concat('.htaccess'))
-        .pipe($.addSrc(task.ftp.src))
+    return gulp.src(task.ftp.src)
         .pipe($.if(gulp.config.cache, $.changed(task.ftp.cache, { hasChanged: $.changed.compareSha1Digest })))
         .on('data', function() {
             size++;
@@ -56,4 +54,10 @@ gulp.task('ftp:config', function(cb) {
                 .catch(console.error);
         });
     }
+});
+
+gulp.task('ftp:htaccess', function(cb) {
+    return gulp.src(task.ftp.htaccess)
+        .pipe($.concat('.htaccess'))
+        .pipe(gulp.dest(task.common.dist));
 });

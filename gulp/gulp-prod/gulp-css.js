@@ -2,7 +2,8 @@
 
 var gulp = require('gulp'),
     $ = gulp.$,
-    task = gulp.config.task;
+    conf = gulp.config,
+    task = conf.task;
 
 gulp.task('css:vendor_init', function(cb) { // init empty vendor.css to prevent seo warning before it is generated
     var file = task.css.dist + '/' + task.css.vendor_file,
@@ -12,8 +13,9 @@ gulp.task('css:vendor_init', function(cb) { // init empty vendor.css to prevent 
         .catch(function(err) {
             $.mkdirp(task.css.dist)
                 .then(function() {
-                    $.fs.writeFile(file, '').then(end);
-                });
+                    return $.fs.writeFile(file, '');
+                })
+                .then(end);
         });
 });
 
@@ -22,6 +24,7 @@ gulp.task('css:vendor', function() {//TODO add sourcemaps when uncss will be sup
         .pipe($.concat(task.css.vendor_file))
         .pipe($.uncss(task.css.uncss))
         .pipe($.minifyCss())
+        .pipe($.replace(/\@font-face\{.*?\}/g,'')) //font-face declaration cut
         .pipe(gulp.dest(task.css.dist));
 });
 

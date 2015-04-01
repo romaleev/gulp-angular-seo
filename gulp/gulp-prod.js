@@ -14,16 +14,20 @@ _requireDir('./gulp-prod');
 
 gulp.distTasks = [
     [
-        ['server:start', 'js:vendor', 'css:vendor_init', ['html', 'js:user']],
-        'seo',
-        'css:vendor'
+        [
+            ['server:start', 'js:vendor', 'css:vendor_init', ['html', 'js:user']],
+            'seo',
+            ['seo:sitemap', 'css:vendor']
+        ],
+        'fonts',
+        'images',
+        'css:user',
+        'ftp:htaccess'
     ],
-    'fonts',
-    'images',
-    'css:user'
+    'manifest'
 ];
 
-gulp.task('_dist', $.sync(gulp).async(gulp.distTasks, 'dist'));
+gulp.task('_dist', $.sync(gulp).sync(gulp.distTasks, 'dist'));
 
 gulp.task('dist', ['_dist'], function(cb) {
     _runSequence(['server:stop'], cb);
@@ -70,4 +74,16 @@ gulp.task('clean', function(cb) {
         task.common.dist_cache,
         task.ftp.cache
     ], cb);
+});
+
+gulp.task('manifest', function() {
+    return gulp.src(task.manifest.src, {base: task.common.dist})
+        .pipe($.manifest({
+            hash: true,
+            preferOnline: true,
+            network: task.manifest.network,
+            filename: task.manifest.name,
+            cache: task.manifest.cache
+        }))
+        .pipe(gulp.dest(task.common.dist));
 });

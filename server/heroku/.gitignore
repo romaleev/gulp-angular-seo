@@ -6,3 +6,4 @@ logs/*
 *-cache/
 !.gitkeep
 npm-debug.log
+.htaccess

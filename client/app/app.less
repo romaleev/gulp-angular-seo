@@ -3,7 +3,7 @@
 	font-family: 'Open Sans';
 	font-style: normal;
 	font-weight: 600;
-	src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url(/fonts/OpenSansLatin600.woff2) format('woff2'), url(/fonts/OpenSansLatin600.woff) format('woff');
+	src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url('/assets/fonts/OpenSansLatin600.woff2') format('woff2'), url('/assets/fonts/OpenSansLatin600.woff') format('woff');
 }
 .bold{
 	font-size: 120%;
@@ -22,8 +22,6 @@ body{
 }
 img.logo{
 	float: left;
-	width: 32px;
-	height: 32px;
 	margin-right: 0.7em;
 	margin-top: -0.35em;
 }
@@ -37,4 +35,15 @@ img.logo{
   transition: height 0.35s ease 1s linear;
   -webkit-transition: height 0.35s ease;
   transition: height 0.35s ease;
+}
+
+@font-face {/*font-awesome fix*/
+  font-family: 'FontAwesome';
+  src: url('/assets/fonts/fontawesome-webfont.woff2') format('woff2'), url('/assets/fonts/fontawesome-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {/*font-bootstrap fix*/
+  font-family: 'Glyphicons Halflings';
+  src: url('/assets/fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('/assets/fonts/glyphicons-halflings-regular.woff') format('woff');
 }

@@ -28,13 +28,17 @@ gulp.task('heroku:opt', ['_dist:opt'], function(cb){
 gulp.task('_dist:opt', function(cb) {
     var tasks = gulp.distTasks,
         files = [],
-        src = [task.common.client + '/**/*.*'].concat(task.common.config).concat(task.js.vendor).concat(task.css.vendor);
+        src = [task.common.client + '/**/*.*']
+                .concat(task.common.config)
+                .concat(task.ftp.htaccess)
+                .concat(task.js.vendor)
+                .concat(task.css.vendor);
 
     function no(patterns){
         return !_multimatch(files, patterns).length;
     }
     function cancel(name, _tasks, _index){
-        var tasks = (_index !== undefined) ? _tasks[_index] : _tasks;
+        var tasks = (_index === undefined) ? _tasks : _tasks[_index];
         var ind = tasks.indexOf(name);
         if(ind !== -1){
             tasks.splice(ind, 1);
@@ -46,7 +50,7 @@ gulp.task('_dist:opt', function(cb) {
         }
     }
 
-    gulp.src(src)
+    gulp.src(src, {base: '.'})
         .pipe($.changed(task.common.dist_cache, {
             hasChanged: $.changed.compareSha1Digest
         }))
@@ -63,12 +67,17 @@ gulp.task('_dist:opt', function(cb) {
                 if(no(task.css.user)) cancel('css:user', tasks);
                 if(no(task.fonts.src)) cancel('fonts', tasks);
                 if(no(task.images.src)) cancel('images', tasks);
-                if(tasks[0] && tasks[0][0] && tasks[0][0][0] == 'server:start' && tasks[0][0][1] == 'css:vendor_init'){
-                    cancel('css:vendor_init', tasks);
-                    cancel('seo', tasks); //cancel if no 'js:vendor', 'html' and 'js:user' changes
-                    if(no(task.css.vendor)) cancel('css:vendor', tasks); //cancel if no 'seo' and 'path.css.vendor' changes
+                if(no(task.ftp.htaccess)) cancel('ftp:htaccess', tasks);
+                if(tasks[0] && tasks[0][0] && tasks[0][0][0] && tasks[0][0][0].length === 2){ // == ['server:start', 'css:vendor_init']
+                    cancel('seo', tasks); //because no 'js:vendor', 'html' and 'js:user' changes
+                    cancel('seo:sitemap', tasks); //because no 'seo' changes
+                    cancel('css:vendor_init', tasks); //because no 'seo' changes
+                    if(no(task.css.vendor)){ //because no 'seo' and 'path.css.vendor' changes
+                        cancel('css:vendor', tasks);
+                        cancel('manifest', tasks);
+                    }
                 }
             }
-            _runSequence($.sync(gulp).async(tasks, 'dist:opt:tmp'), cb);
+            _runSequence($.sync(gulp).sync(tasks, 'dist:opt:tmp'), cb);
         });
 });

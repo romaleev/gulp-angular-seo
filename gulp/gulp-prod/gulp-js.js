@@ -2,14 +2,13 @@
 
 var gulp = require('gulp'),
     $ = gulp.$,
-    task = gulp.config.task,
+    conf = gulp.config,
+    task = conf.task,
     _streamqueue = require('streamqueue');
 
 gulp.task('js:vendor', function() {
     return gulp.src(task.js.vendor)
-        .pipe($.sourcemaps.init({
-            loadMaps: true
-        }))
+    .pipe($.sourcemaps.init({loadMaps: true}))
         .pipe($.concat(task.js.vendor_file))
         .pipe($.sourcemaps.write('.'))
         .pipe(gulp.dest(task.js.dist));

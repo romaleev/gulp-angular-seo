@@ -7,6 +7,7 @@
             "prod": "http://localhost:7997"
         }
     },
+    "web": "http://romaleev.com",
     "task": {
         "common": {
             "config": "config.json",
@@ -17,6 +18,20 @@
         "server": {
             "dev": "server/server-dev.js",
             "prod": "server/server-prod.js"
+        },
+        "manifest": {
+            "name": "romaleev.appcache",
+            "src": [
+                "tmp/dist/assets/**/*.*",
+                "tmp/dist/scripts/*.js",
+                "tmp/dist/styles/*.css"
+            ],
+            "network": [
+                "http://www.google-analytics.com",
+                "http://beta.json-generator.com",
+                "http://lorempixel.com"
+            ],
+            "cache": []
         },
         "html": {
             "index": "client/index.jade",
@@ -76,15 +91,15 @@
         },
         "fonts": {
             "src": [
-                "client/fonts/*.{woff,woff2}",
+                "client/assets/fonts/*.{woff,woff2}",
                 "bower_components/fontawesome/fonts/fontawesome-webfont.{woff,woff2}",
                 "bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.{woff,woff2}"
             ],
-            "dist": "tmp/dist/fonts"
+            "dist": "tmp/dist/assets/fonts"
         },
         "images": {
-            "src": "client/img/**/*.*",
-            "dist": "tmp/dist/img"
+            "src": "client/assets/img/**/*.*",
+            "dist": "tmp/dist/assets/img"
         },
         "seo": {
             "urls": ["/", "/people/list", "/people/grid"],
