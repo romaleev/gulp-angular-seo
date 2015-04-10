@@ -2,7 +2,7 @@
 
 angular.module('romaleev')
     .service('peopleService', function($http) {
-        var path = 'http://beta.json-generator.com/api/json/get/AuPwfL0?callback=JSON_CALLBACK',
+        var path = 'http://beta.json-generator.com/api/json/get/BghOLRG?callback=JSON_CALLBACK',
             hired = [],
             salaries = {},
             _this = this;
