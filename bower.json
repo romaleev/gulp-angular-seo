@@ -10,7 +10,9 @@
         "angular": "latest",
 		"angular-ui-router": "latest",
         "angular-sanitize": "latest",
+        "angular-bootstrap": "latest",
         "bootstrap": "latest",
-        "fontawesome": "latest"
+        "fontawesome": "latest",
+        "json-formatter": "latest"
     }
 }

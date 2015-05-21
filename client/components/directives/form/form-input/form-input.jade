@@ -1,0 +1,47 @@
+div.form-group.has-feedback( ng-class="required && (input.$dirty ? (input.$invalid ? 'has-error' : 'has-success') : 'has-warning')" )
+	label.control-label( for="{{name}}" ng-if="title" ng-bind="title" )
+	input.form-control(
+		name="{{name}}"
+		type="{{type}}"
+		placeholder="{{placeholder}}"
+		tooltip="{{warning}}"
+		tooltip-placement="top"
+		tooltip-enable="warning && !model[name]"
+		aria-describedby="{{name}}Status"
+		ng-model="model[name]"
+		ng-minlength="minlength"
+		ng-maxlength="maxlength"
+		ng-required="required"
+		ng-pattern="pattern"
+		ng-change="onchange"
+	)
+	span.glyphicon.form-control-feedback(
+		aria-hidden="true"
+		ng-class="required && (input.$dirty ? (input.$invalid ? 'glyphicon-remove' : 'glyphicon-ok') : 'glyphicon-warning-sign')"
+	)
+	span.sr-only( id="{{name}}Status" ) (warning)
+	//- p.help-block.error( ng-show="input.$dirty && (input.$error.required || input.$error.email)" ng-bind="warning")
+	//- div.form-group( ng-class="form[name].$dirty && (form[name].$invalid ? 'has-error' : 'has-success')" )
+	//- popover="{{warning}}"
+	//- popover-trigger="{{{true: 'show', false: 'hide'}[form[name].$dirty && form[name].$invalid]}}"
+	//- tooltip-trigger="{{{true: 'mouseenter', false: 'never'}[form[name].$invalid]}}"
+	//- tooltip-trigger="{{form[name].$invalid ? 'mouseenter' : 'never'}}"
+
+	//- div.input-group( ng-if="addonLeft || addonRight" )
+		span.input-group-addon( ng-if="addonLeft" ng-bind="addonLeft" )
+		input.form-control(
+			name="{{name}}"
+			type="{{type}}"
+			placeholder="{{placeholder}}"
+			ng-model="model[name]"
+			ng-minlength="minlength"
+			ng-maxlength="maxlength"
+			ng-required="required"
+			ng-pattern="pattern"
+			ng-change="onchange"
+			aria-describedby="{{name}}Status"
+			tooltip="{{warning}}"
+			tooltip-placement="top"
+			tooltip-enable="warning && !model[name]"
+		)
+		span.input-group-addon( ng-if="addonRight" ng-bind="addonRight" )

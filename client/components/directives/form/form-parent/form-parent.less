@@ -1,0 +1,24 @@
+form.form-parent{
+	margin: 1em;
+	padding: 1em;
+	border: 1px solid grey;
+	border-radius: 0.5em;
+	background-color: rgb(250, 250, 250);
+	&.form-success{
+		border-color: green;
+	}
+	&.form-warning{
+		border-color: olive;
+	}
+	&.form-error{
+		border-color: darkred;
+	}
+	.form-select{
+		select{
+			padding: 0.33em;
+		}
+		.form-control-feedback>{
+			margin-right: 1.5em;
+		}
+	}
+}

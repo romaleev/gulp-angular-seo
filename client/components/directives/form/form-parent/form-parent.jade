@@ -1,0 +1,2 @@
+form.form-parent( name='{{name}}' novalidate ng-submit="_submit()" ng-class="form[name].$dirty ? (form[name].$invalid ? 'form-error' : 'form-success') : (form[name].$error.required && 'form-warning')" )
+	h4.text-center( ng-if="title" ng-bind="title" )

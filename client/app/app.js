@@ -1,10 +1,19 @@
 'use strict';
 
-angular.module('romaleev', ['ui.router', 'ngSanitize'])
-	.config(function($locationProvider, $compileProvider, $urlRouterProvider, $urlMatcherFactoryProvider) {
+angular.module('romaleev', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'jsonFormatter'])
+	.config(function($tooltipProvider,$locationProvider, $compileProvider, $urlRouterProvider, $urlMatcherFactoryProvider) {
 		$locationProvider.html5Mode(true).hashPrefix('!');
 		$urlRouterProvider.otherwise('/');
 		$compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|tel|mailto|skype):/);
+		/*$tooltipProvider.setTriggers({
+		   	'show': 'hide'
+		});*/
+		$tooltipProvider.setTriggers({
+		   	'mouseenter': 'mouseleave',
+		    'click': 'click',
+		    'focus': 'blur',
+		    'never': 'mouseleave' // <- This ensures the tooltip will go away on mouseleave
+		 });
 	})
 	.controller('NavbarCtrl', function ($scope, homeConstant) {
 		$scope.tab_title = homeConstant.tab_title;

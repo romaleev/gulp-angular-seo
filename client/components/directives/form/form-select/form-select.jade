@@ -1,0 +1,19 @@
+div.form-group.has-feedback.form-select( ng-class="required && (select.$dirty ? (select.$invalid ? 'has-error' : 'has-success') : (inactive && 'has-warning'))" )
+	label.control-label( for="{{name}}" ng-if="title" ng-bind="title" )
+	select.form-control(
+		name="{{name}}"
+		type="{{type}}"
+		ng-model="model[name]"
+		ng-options="data_value for data_value in data"
+		ng-required="required"
+		ng-change="onchange"
+		tooltip="{{warning}}"
+		tooltip-placement="top"
+		tooltip-enable="warning && !model[name]"
+	)
+		option( ng-if="inactive" ng-bind="value" value="" selected disabled )
+	span.glyphicon.form-control-feedback(
+		aria-hidden="true"
+		ng-class="required && (select.$dirty ? (select.$invalid ? 'glyphicon-remove' : 'glyphicon-ok') : 'glyphicon-warning-sign')"
+	)
+	span.sr-only( id="{{name}}Status" ) (warning)

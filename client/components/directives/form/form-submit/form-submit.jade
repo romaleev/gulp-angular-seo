@@ -1,0 +1,11 @@
+button.btn.btn-default(
+		type="submit"
+)
+	span( ng-bind="title" )
+	span &nbsp;&nbsp;
+	span.glyphicon.has-error(
+		aria-hidden="true"
+		ng-class=" (form.$invalid ? 'glyphicon-warning-sign' : 'glyphicon-ok')"
+	)
+
+	//- form.$error.required.length &&

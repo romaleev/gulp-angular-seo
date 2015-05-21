@@ -1,0 +1,135 @@
+div( id="validation" )
+	h2.text-center Form Validation Example
+
+	div.row
+		div.col-lg-9.col-xs-12
+			form-parent( name='form0' title="Login" model="model0" success="alert('Valid')" error="alert('Invalid')" )
+				form-input( name="email" type="email" title="Email" placeholder="email" warning="please enter valid email" addon-left="@"  )
+				form-input( name="password" type="password" title="Password" placeholder="password" warning="please enter password"  )
+				form-submit( title="Submit" )
+		div.col-lg-3.col-xs-12
+			form-parent( title="Login Model" model="a" )
+				json-formatter( json="$parent.model0" open="1" )
+
+	div.row
+		div.col-lg-9.col-xs-12
+			form-parent( name='form3' title="Register" model="model1" success="alert('Valid')" error="alert('Invalid')" )
+				div.row
+					div.col-lg-2
+						form-select( name="gender" data="$parent.gender" selected)
+					div.col-lg-5
+						form-input( name="first_name" type="text" placeholder="First name" warning="please enter first name" required )
+					div.col-lg-5
+						form-input( name="second_name" type="text" placeholder="Second name" warning="please enter second name" required )
+				div.row
+					div.col-lg-7.col-xs-12
+						form-date( name="date" title="Date of birth" required)
+					div.col-lg-5.col-xs-12
+						form-input( name="email" title="Email" type="email" placeholder="email" warning="please enter valid email" required )
+				form-submit( title="Submit" )
+		div.col-lg-3.col-xs-12
+			form-parent( title="Register Model" model="b" )
+				json-formatter( json="$parent.model1" open="2" )
+//-
+	div.row
+		h4 Email/Password
+		form( name='form1' novalidate ng-submit="alert(form1.model.email + ':' + form1.model.password)" )
+			form-input( name="email" type="email" label="email:" placeholder="email" warning="please enter valid email" required )
+			form-input( name="password" type="password" label="password:" placeholder="password" warning="please enter password" required )
+			button.btn.btn-default( type="submit" ) Submit
+
+	br
+
+	div.row
+		h4 Email/Password inline
+		form.form-inline( name='form2' novalidate ng-submit="alert(form2.model.email + ':' + form2.model.password)" )
+			form-input( name="email" type="email" placeholder="email" warning="please enter valid email" required )
+			form-input( name="password" type="password" placeholder="password" warning="please enter password" required )
+			button.btn.btn-default( type="submit" ng-disabled="form2.$invalid" ) Submit
+
+	div.row
+		h4 Aerlingus Register
+		form.form-inline( name='form3' novalidate ng-submit="alert(form3.model.gender + ' ' + form3.model.first_name + ' ' + form3.model.second_name)")
+			div.input-group
+				form-select( name="gender" model="gender")
+				form-select( name="gender2" model="gender" onchange="console.log(form3.gender2)" title="?")
+				form-input( name="first_name" type="text" onchange="console.log(form3.first_name.$error)" placeholder="First name" warning="please enter first name" required )
+				form-input( name="second_name" type="text" placeholder="Second name" warning="please enter second name" required )
+				form-date( name="date" label="Date of birth" )
+			button.btn.btn-default( type="submit" ng-disabled="form3.$invalid" ) Submit
+
+			//- angular.forEach($scope.form.$error.required, function(field) {field.$setDirty();});
+//-
+	form( name="form" novalidate ng-submit="alert(email1 + ':' + password1)" )
+		div.form-group( ng-class="form.email.$dirty && (form.email.$invalid ? 'has-error' : 'has-success')" )
+			label( for="email" ) Email:
+			input.form-control( type="email" id="email" placeholder="email" name="email" ng-model="email1" required )
+			p.help-block.error( ng-show="form.email.$dirty && (form.email.$error.required || form.email.$error.email)" ) please enter valid email
+		div.form-group( ng-class="form.password.$dirty && (form.password.$invalid ? 'has-error' : 'has-success')" )
+			label( for="password" ) Password:
+			input.form-control( type="password" placeholder="password" name="password" ng-model="password1" required )
+			p.help-block.error( ng-show="form.password.$dirty && form.password.$error.required" ) please enter password
+		button.btn.btn-default( type="submit" ng-disabled="form.$invalid" ) Submit
+
+	br
+
+	form.form-inline( name="form" novalidate ng-submit="alert(email2 + ':' + password2)" )
+		div.form-group( ng-class="form.email.$dirty && (form.email.$invalid ? 'has-error' : 'has-success')" )
+			label( for="email" ) Email:
+			input.form-control( type="email" id="email" placeholder="email" name="email" ng-model="email2" required )
+			p.help-block.error( ng-show="form.email.$dirty && (form.email.$error.required || form.email.$error.email)" ) please enter valid email
+		div.form-group( ng-class="form.password.$dirty && (form.password.$invalid ? 'has-error' : 'has-success')" )
+			label( for="password" ) Password:
+			input.form-control( type="password" placeholder="password" name="password" ng-model="password2" required )
+			p.help-block.error( ng-show="form.password.$dirty && form.password.$error.required" ) please enter password
+		button.btn.btn-default( type="submit" ng-disabled="form.$invalid" ) Submit
+
+	br
+
+	form.form-inline( name="form" novalidate ng-submit="alert(email2 + ':' + password2)" )
+		div.form-group( ng-class="form.email.$dirty && (form.email.$invalid ? 'has-error' : 'has-success')" )
+			label.sr-only( for="email" ) Email:
+			input.form-control( type="email" id="email" placeholder="email" name="email" ng-model="email2" required )
+			p.help-block.error( ng-show="form.email.$dirty && (form.email.$error.required || form.email.$error.email)" ) please enter valid email
+		div.form-group( ng-class="form.password.$dirty && (form.password.$invalid ? 'has-error' : 'has-success')" )
+			label.sr-only( for="password" ) Password:
+			input.form-control( type="password" placeholder="password" name="password" ng-model="password2" required )
+			p.help-block.error( ng-show="form.password.$dirty && form.password.$error.required" ) please enter password
+		button.btn.btn-default( type="submit" ng-disabled="form.$invalid" ) Submit
+
+	br
+
+	form.form-inline( name="form" novalidate ng-submit="alert(email2 + ':' + password2)" )
+		div.form-group( ng-class="form.email.$dirty && (form.email.$invalid ? 'has-error' : 'has-success')" )
+			label.sr-only( for="email" ) Email:
+			div.input-group
+				div.input-group-addon $
+				input.form-control( type="text" id="text" placeholder="sum" name="text" ng-model="text" required )
+				p.help-block.error( ng-show="form.email.$dirty && (form.email.$error.required || form.email.$error.email)" ) please enter valid sum
+				div.input-group-addon .00
+		button.btn.btn-default( type="submit" ng-disabled="form.$invalid" ) Submit
+
+	br
+
+	form.form-horizontal( name="form" novalidate ng-submit="alert(email3 + ':' + password3)" )
+		div.form-group( ng-class="form.email.$dirty && (form.email.$invalid ? 'has-error' : 'has-success')" )
+			label.control-label.col-sm-2( for="email" ) Email:
+			div.col-sm-10
+				input.form-control( type="email" id="email" placeholder="email" name="email" ng-model="email3" required )
+				p.help-block.error( ng-show="form.email.$dirty && (form.email.$error.required || form.email.$error.email)" ) please enter valid email
+		div.form-group( ng-class="form.password.$dirty && (form.password.$invalid ? 'has-error' : 'has-success')" )
+			label.control-label.col-sm-2( for="password" ) Password:
+			div.col-sm-10
+				input.form-control( type="password" placeholder="password" name="password" ng-model="password3" required )
+				p.help-block.error( ng-show="form.password.$dirty && form.password.$error.required" ) please enter password
+		button.btn.btn-default.col-sm-offset-2( type="submit" ng-disabled="form.$invalid" ) Submit
+
+				form-select( name="gender" data="$parent.gender")
+				form-select( name="gender2" data="$parent.gender" value="???")
+				form-select( name="gender3" data="$parent.gender"  value="Ms")
+				form-select( name="gender4" data="$parent.gender" required)
+				form-select( name="gender5" data="$parent.gender" value="?" required)
+				form-select( name="gender6" data="$parent.gender"  value="Ms" required)
+				form-select( name="gender7" data="$parent.gender" selected required)
+				form-select( name="gender8" data="$parent.gender" selected value="?" required)
+				form-select( name="gender9" data="$parent.gender" selected value="Ms" required)

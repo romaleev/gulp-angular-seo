@@ -46,8 +46,11 @@
                 "bower_components/jquery/dist/jquery.min.js",
                 "bower_components/angular/angular.min.js",
                 "bower_components/angular-ui-router/release/angular-ui-router.min.js",
+                "bower_components/angular-bootstrap/ui-bootstrap.min.js",
+                "bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js",
                 "bower_components/angular-sanitize/angular-sanitize.min.js",
-                "bower_components/bootstrap/dist/js/bootstrap.min.js"
+                "bower_components/bootstrap/dist/js/bootstrap.min.js",
+                "bower_components/json-formatter/dist/json-formatter.min.js"
             ],
             "vendor_file": "vendor.js",
             "user": "client/**/*.js",
@@ -60,19 +63,12 @@
             "vendor": [
                 "bower_components/bootstrap/dist/css/bootstrap.min.css",
                 "bower_components/bootstrap/dist/css/bootstrap-theme.min.css",
-                "bower_components/fontawesome/css/font-awesome.min.css"
+                "bower_components/fontawesome/css/font-awesome.min.css",
+                "bower_components/json-formatter/dist/json-formatter.min.css"
             ],
             "vendor_file": "vendor.css",
             "user": "client/**/*.less",
-            "user_file": "styles.css",
-            "uncss": {
-                "html": ["tmp/dist/snapshots/**/*.html"],
-                "ignore": [
-                    ".collapse", ".collapsing", ".collapsed", ".collapse.in",
-                    ".btn-success", ".btn-danger", ".active",
-                    ".col-xs-6", ".col-sm-6", ".col-md-4", ".col-lg-4", ".col-sm-2", ".col-lg-2", ".col-xs-12"
-                ]
-            }
+            "user_file": "styles.css"
         },
         "ftp": {
             "src": "tmp/dist/**/*.*",
@@ -102,8 +98,8 @@
             "dist": "tmp/dist/assets/img"
         },
         "seo": {
-            "urls": ["/", "/people/list", "/people/grid"],
-            "testUrls": ["/"],
+            "urls": ["/", "/people/list", "/people/grid", "/validation"],
+            "testUrls": ["/", "/validation"],
             "dist": "tmp/dist/snapshots",
             "phantomjs": "node_modules/phantomjs/lib/phantom/"
         },

@@ -22,7 +22,7 @@ gulp.task('css:vendor_init', function(cb) { // init empty vendor.css to prevent 
 gulp.task('css:vendor', function() {//TODO add sourcemaps when uncss will be supported
     return gulp.src(task.css.vendor)
         .pipe($.concat(task.css.vendor_file))
-        .pipe($.uncss(task.css.uncss))
+        // .pipe($.uncss(task.css.uncss))
         .pipe($.minifyCss())
         .pipe($.replace(/\@font-face\{.*?\}/g,'')) //font-face declaration cut
         .pipe(gulp.dest(task.css.dist));
