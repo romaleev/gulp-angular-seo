@@ -18,7 +18,15 @@ form.form-parent{
 			padding: 0.33em;
 		}
 		.form-control-feedback>{
-			margin-right: 1.5em;
+			right: 1em;
+		}
+	}
+	.form-date [class*="col-"]{
+		&:not(:first-child){
+			padding-left: 2px;
+		}
+		&:not(:last-child){
+			padding-right: 2px;
 		}
 	}
 }
