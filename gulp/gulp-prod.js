@@ -19,8 +19,7 @@ gulp.distTasks = [
             'seo',
             ['seo:sitemap', 'css:vendor']
         ],
-        'fonts',
-        'images',
+        'assets',
         'css:user',
         'ftp:htaccess'
     ],

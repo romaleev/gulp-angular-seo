@@ -15,17 +15,17 @@ angular.module('romaleev')
 	            }
 	        })
 			.state('people.list', {
-				title: 'People List',
+				title: 'Angular State Dashboard - People List',
 				url: '/list:filter',
 				templateUrl: 'app/people/people.list.html',
 			})
 			.state('people.grid', {
-				title: 'People Grid',
+				title: 'Angular State Dashboard - People Grid',
 				url: '/grid:filter',
 				templateUrl: 'app/people/people.grid.html',
 			})
 	        .state('details', {
-				title: 'Details',
+				title: 'Angular State Dashboard - Details',
 	            url: '/details/:personId',
 				templateUrl: 'app/people/details.html',
 				controller: 'DetailsCtrl',

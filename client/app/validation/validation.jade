@@ -1,18 +1,18 @@
 div( id="validation" )
-	h2.text-center Form Validation Example
+	h3.text-center Angular Bootstrap Validation
 
 	div.row
-		div.col-lg-9.col-xs-12
+		div.col-lg-8
 			form-parent( name='form0' title="Login" model="model0" success="alert('Valid')" error="alert('Invalid')" )
 				form-input( name="email" type="email" title="Email" placeholder="email" warning="please enter valid email" addon-left="@"  )
 				form-input( name="password" type="password" title="Password" placeholder="password" warning="please enter password"  )
 				form-submit( title="Submit" )
-		div.col-lg-3.col-xs-12
+		div.col-lg-4
 			form-parent( title="Login Model" model="a" )
 				json-formatter( json="$parent.model0" open="1" )
 
 	div.row
-		div.col-lg-9.col-xs-12
+		div.col-lg-8
 			form-parent( name='form3' title="Register" model="model1" success="alert('Valid')" error="alert('Invalid')" )
 				div.row
 					div.col-lg-2
@@ -27,7 +27,7 @@ div( id="validation" )
 					div.col-lg-5.col-xs-12
 						form-input( name="email" title="Email" type="email" placeholder="email" warning="please enter valid email" required )
 				form-submit( title="Submit" )
-		div.col-lg-3.col-xs-12
+		div.col-lg-4
 			form-parent( title="Register Model" model="b" )
 				json-formatter( json="$parent.model1" open="2" )
 //-

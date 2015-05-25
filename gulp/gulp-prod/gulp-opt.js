@@ -65,8 +65,8 @@ gulp.task('_dist:opt', function(cb) {
                 if(no(task.js.user) && no(task.html.partials)) cancel('js:user', tasks); //js:user dependent on both js:user and html.partials htat are injected into js.
                 if(no(task.js.vendor)) cancel('js:vendor', tasks);
                 if(no(task.css.user)) cancel('css:user', tasks);
-                if(no(task.fonts.src)) cancel('fonts', tasks);
-                if(no(task.images.src)) cancel('images', tasks);
+                if(no(task.assets.fonts.src)) cancel('fonts', tasks);
+                if(no(task.assets.images.src)) cancel('images', tasks);
                 if(no(task.ftp.htaccess)) cancel('ftp:htaccess', tasks);
                 if(tasks[0] && tasks[0][0] && tasks[0][0][0] && tasks[0][0][0].length === 2){ // == ['server:start', 'css:vendor_init']
                     cancel('seo', tasks); //because no 'js:vendor', 'html' and 'js:user' changes

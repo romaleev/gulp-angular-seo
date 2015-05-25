@@ -4,6 +4,7 @@ var express = require('express'),
     path = require('path'),
     clientPath = path.join(__dirname, '/../client'),
     bowerPath = path.join(__dirname, '/../bower_components'),
+    configPath = path.join(__dirname, "/../config.json"),
     less = require('less'),
     fs = require('fs'),
     conf = require('../config.json'),
@@ -37,6 +38,9 @@ express()
                 response.send(css.css);
             });
         });
+    })
+    .get("/config.json", function(request, response) {
+        response.sendFile(configPath);
     })
     .get("*", function(request, response) {
         response.render("./index.jade", {

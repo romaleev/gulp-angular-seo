@@ -30,6 +30,8 @@ angular.module('romaleev', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'jsonForm
 				title: $rootScope.pageTitle
 			});
 		});
-		if ($window.applicationCache) $window.applicationCache.addEventListener('updateready', $window.location.reload);
+		if ($window.applicationCache) $window.applicationCache.addEventListener('updateready', function(){
+			$window.location.reload(true);
+		});
 	    console.log('ready');
 	});

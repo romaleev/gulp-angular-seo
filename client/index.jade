@@ -25,6 +25,7 @@ html( ng-app='romaleev' manifest='http://romaleev.com/romaleev.appcache')
 		// build:css styles/styles.css
 		//- userCSS:less
 		link(rel="stylesheet", href="app/app.css")
+		link(rel="stylesheet", href="app/build/build.css")
 		link(rel="stylesheet", href="app/home/home.css")
 		link(rel="stylesheet", href="app/people/details.css")
 		link(rel="stylesheet", href="app/people/people.css")
@@ -77,17 +78,21 @@ html( ng-app='romaleev' manifest='http://romaleev.com/romaleev.appcache')
 						li( ui-sref-active="active" )
 							a.hidden-xs( ui-sref="home" ) Home
 							a.visible-xs( ui-sref="home" data-toggle="collapse" data-target=".navbar-collapse" ) Home
-						li.dropdown( ng-class="{ active: $state.includes('validation') || $state.includes('people')}" )
+						li.dropdown( ng-class="{ active: !$state.includes('home') }" )
 							a.dropdown-toggle( data-toggle="dropdown" role="button" aria-expanded="false" href="" ) Examples
 								span.caret
 							ul.dropdown-menu( role="menu"  )
 								li( ng-class="{ active: $state.includes('people') }" )
-									a.hidden-xs( ui-sref="people.list" ) People
-									a.visible-xs( ui-sref="people.list" data-toggle="collapse" data-target=".navbar-collapse" ) People
+									a.hidden-xs( ui-sref="people.list" ) Angular State Dashboard
+									a.visible-xs( ui-sref="people.list" data-toggle="collapse" data-target=".navbar-collapse" ) Angular Dashboard
 								li.divider
-								li( ng-class="{ active: $state.includes('validation') }" )
-									a.hidden-xs( ui-sref="validation" ) Validation
-									a.visible-xs( ui-sref="validation" data-toggle="collapse" data-target=".navbar-collapse" ) Validation
+								li( ui-sref-active="active" )
+									a.hidden-xs( ui-sref="validation" ) Angular Bootstrap Validation
+									a.visible-xs( ui-sref="validation" data-toggle="collapse" data-target=".navbar-collapse" ) Angular Validation
+								li.divider
+								li( ui-sref-active="active" )
+									a.hidden-xs( ui-sref="build" ) Gulp Build
+									a.visible-xs( ui-sref="build" data-toggle="collapse" data-target=".navbar-collapse" ) Gulp Build
 
 		div.container-fluid( ui-view )
 
@@ -113,15 +118,15 @@ html( ng-app='romaleev' manifest='http://romaleev.com/romaleev.appcache')
 		//- userJS:js
 		script(src="app/app.js")
 		script(src="components/services/people.service.js")
-		script(src="components/directives/form/form-submit/form-submit.controller.js")
 		script(src="components/directives/form/form-select/form-select.controller.js")
+		script(src="components/directives/form/form-submit/form-submit.controller.js")
 		script(src="components/directives/form/form-parent/form-parent.controller.js")
 		script(src="components/directives/form/form-input/form-input.controller.js")
 		script(src="components/directives/form/form-date/form-date.controller.js")
 		script(src="components/filters.js")
-		script(src="components/services/home.service.js")
 		script(src="app/validation/validation.controller.js")
 		script(src="app/people/people.controller.js")
 		script(src="app/home/home.controller.js")
+		script(src="app/build/build.controller.js")
 		//- endinject
 		// endbuild

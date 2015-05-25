@@ -85,21 +85,23 @@
             "dist": "tmp",
             "git": "tmp/.git"
         },
-        "fonts": {
-            "src": [
-                "client/assets/fonts/*.{woff,woff2}",
-                "bower_components/fontawesome/fonts/fontawesome-webfont.{woff,woff2}",
-                "bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.{woff,woff2}"
-            ],
-            "dist": "tmp/dist/assets/fonts"
-        },
-        "images": {
-            "src": "client/assets/img/**/*.*",
-            "dist": "tmp/dist/assets/img"
+        "assets": {
+            "fonts": {
+                "src": [
+                    "client/assets/fonts/*.{woff,woff2}",
+                    "bower_components/fontawesome/fonts/fontawesome-webfont.{woff,woff2}",
+                    "bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.{woff,woff2}"
+                ],
+                "dist": "tmp/dist/assets/fonts"
+            },
+            "images": {
+                "src": "client/assets/img/**/*.*",
+                "dist": "tmp/dist/assets/img"
+            }
         },
         "seo": {
-            "urls": ["/", "/people/list", "/people/grid", "/validation"],
-            "testUrls": ["/", "/validation"],
+            "urls": ["/", "/people/list", "/people/grid", "/validation", "/build"],
+            "testUrls": ["/", "/validation", "/build"],
             "dist": "tmp/dist/snapshots",
             "phantomjs": "node_modules/phantomjs/lib/phantom/"
         },

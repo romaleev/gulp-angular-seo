@@ -3,9 +3,9 @@ ng-form.form-date( name="{{name}}" ng-model="model")
 		div.col-lg-12
 			label.control-label( for="{{name}}" ng-if="$parent.title" ng-bind="$parent.title" )
 	div.row
-		div.col-lg-3.col-xs-3
+		div.col-lg-3.col-xs-4
 			form-select( name="day" value="Day" data="days" warning="select day" ng-required="required"  )
-		div.col-lg-5.col-xs-5
+		div.col-lg-5.col-xs-4
 			form-select( name="month" value="Month" data="months" warning="select month" ng-required="required" )
 		div.col-lg-4.col-xs-4
 			form-input( name="year" type="text" placeholder="Year"  minlength="4" maxlength="4" pattern="^[0-9]{4,4}$" warning="select year" ng-required="required" )

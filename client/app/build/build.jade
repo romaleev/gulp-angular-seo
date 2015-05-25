@@ -1,0 +1,27 @@
+div( id="build" )
+	h3.text-center Gulp build
+
+	div.row
+		div.col-lg-4.col-lg-offset-4
+			h3.text-center Single Config Json
+			json-formatter( json="config" open="2" )
+
+	div.row
+		div.col-lg-12
+			h3.text-center Development tasks
+			div.col-sm-6.col-md-4.col-lg-4.grid(
+				ng-repeat="task in dev_tasks"
+		)
+				div.form
+					h4.title( ng-bind='task.title' )
+					p( ng-bind='task.info' )
+
+	div.row
+		div.col-lg-12
+			h3.text-center Production tasks
+			div.col-sm-6.col-md-4.col-lg-4.grid(
+				ng-repeat="task in prod_tasks"
+			)
+				div.form
+					h4.title( ng-bind='task.title' )
+					p( ng-bind='task.info' )
