@@ -7,12 +7,12 @@
         "**/*.txt"
     ],
     "dependencies": {
-        "angular": "latest",
-		"angular-ui-router": "latest",
-        "angular-sanitize": "latest",
-        "angular-bootstrap": "latest",
-        "bootstrap": "latest",
-        "fontawesome": "latest",
-        "json-formatter": "latest"
+        "angular": "1.5.x",
+		"angular-ui-router": "0.3.x",
+        "angular-sanitize": "1.5.x",
+        "angular-bootstrap": "2.x.x",
+        "bootstrap": "3.x.x",
+        "fontawesome": "4.x.x",
+        "json-formatter": "0.x.x"
     }
 }

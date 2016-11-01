@@ -14,6 +14,8 @@ Source code: https://github.com/romaleev/gulp-angular-seo
 
 ### Checkout and install it:
 ```
+Make sure NPM is installed
+Bower and Gulp are installed globally (npm install -g bower@1.x.x, npm install -g gulp@3.x.x)
 git clone https://github.com/romaleev/gulp-angular-seo
 cd gulp-angular-seo
 npm install

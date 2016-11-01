@@ -1,14 +1,14 @@
 'use strict';
 
 angular.module('romaleev', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'jsonFormatter'])
-	.config(function($tooltipProvider,$locationProvider, $compileProvider, $urlRouterProvider, $urlMatcherFactoryProvider) {
+	.config(function($uibTooltipProvider,$locationProvider, $compileProvider, $urlRouterProvider, $urlMatcherFactoryProvider) {
 		$locationProvider.html5Mode(true).hashPrefix('!');
 		$urlRouterProvider.otherwise('/');
 		$compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|tel|mailto|skype):/);
 		/*$tooltipProvider.setTriggers({
 		   	'show': 'hide'
 		});*/
-		$tooltipProvider.setTriggers({
+		$uibTooltipProvider.setTriggers({
 		   	'mouseenter': 'mouseleave',
 		    'click': 'click',
 		    'focus': 'blur',

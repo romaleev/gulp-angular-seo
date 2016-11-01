@@ -3,7 +3,8 @@
 var gulp = require('gulp'),
     $ = gulp.$,
     conf = gulp.config,
-    task = conf.task;
+    task = conf.task,
+    phantom = require('phantom');
 
 gulp.task('seo', function(cb) {
     var end = function(){cb();},
@@ -36,6 +37,7 @@ gulp.task('seo', function(cb) {
                     return phantomHTML(host + url + '?_escaped_fragment_=', opt);
                 })
                 .then(function(_html){
+                    //console.log(1, html.length, _html.length)
                     console.assert(html == _html,'[',url,']',"?_escaped_fragment_=");
                 });
         phantoms.push(phantom);
@@ -81,7 +83,49 @@ function phantomHTML(url, opt) {
         },
         _optPhantom = _opt.phantom || {};
 
-    return new Promise(function(resolve, reject){
+    var ph, page = null;
+    return new Promise(function(resolve, reject) {
+        phantom.create(['--disk-cache=yes'], _optPhantom)
+          .then(function (instance) {
+              ph = instance;
+              return instance.createPage();
+          })
+          .then(function (_page) {
+              page = _page;
+              if (_verbose)
+                  page.setting('onConsoleMessage', _onConsoleMessage);
+              page.setting('onError', function (msg, trace) {
+                  reject(_onError(msg, trace));
+              });
+              page.setting('onResourceError', function (resourceError) {
+                  reject(_onResourceError(resourceError));
+              });
+              return page.open(url);
+          })
+          .then(function (status) {
+              setTimeout(function(){
+                  if (status != 'success') reject('status: ' + status);
+                  page.evaluate(function () { //regexp: remove <script> tags
+                        return document.getElementsByTagName("html")[0].innerHTML.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+                    })
+                    .then(function(html){
+                        page.setting('onResourceError', undefined); //assert error fix
+                        ph.exit(0);
+                        resolve(html);
+                    })
+                    .catch(function(err){
+                        ph.exit(0);
+                        reject(err);
+                    });
+              }, 1000);
+          })
+          .catch(function (error) {
+              console.log(error);
+              ph.exit();
+          });
+    });
+
+    if(false) return new Promise(function(resolve, reject){
         require('phantom').create(function(ph) {
             ph.createPage(function(page) {
                 if (_verbose)
