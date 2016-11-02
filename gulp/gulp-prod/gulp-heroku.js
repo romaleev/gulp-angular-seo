@@ -1,10 +1,9 @@
-'use strict';
+import gulp from 'gulp';
+import _clc from 'cli-color';
+import _runSequence from 'run-sequence';
 
-var gulp = require('gulp'),
-    $ = gulp.$,
-    task = gulp.config.task,
-    _clc = require("cli-color"),
-    _runSequence = require('run-sequence');
+let $ = gulp.$,
+    task = gulp.config.task;
 
 gulp.task('heroku:upload', ['heroku:config'], $.shell.task([
     'git add -A .',
@@ -17,23 +16,22 @@ gulp.task('heroku:upload', ['heroku:config'], $.shell.task([
 }));
 
 
-gulp.task('heroku:config', function(cb) {
-    var end = function(){cb();};
+gulp.task('heroku:config', (cb)=> {
+    let end = ()=> cb();
     $.fs.open(task.heroku.git, 'r')
         .then(end)
-        .catch(function(err) {
+        .catch((err)=> {
             console.warn('You need to be logged in Heroku first: heroku auth:whoami | heroku login');
             _runSequence('heroku:config:copy', 'heroku:config:shell', end);
         });
 });
 
-gulp.task('heroku:config:copy', function() {
-    return gulp.src(task.heroku.src)
+gulp.task('heroku:config:copy', ()=>
+    gulp.src(task.heroku.src)
         .pipe($.changed(task.heroku.dist, {
             hasChanged: $.changed.compareSha1Digest
         }))
-        .pipe(gulp.dest(task.heroku.dist));
-});
+        .pipe(gulp.dest(task.heroku.dist)));
 
 gulp.task('heroku:config:shell', $.shell.task([
     'git init',

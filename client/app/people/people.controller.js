@@ -1,7 +1,5 @@
-'use strict';
-
 angular.module('romaleev')
-	.config(function($stateProvider) {
+	.config(($stateProvider)=>
 	    $stateProvider
 	        .state('people', {
 	            url: '/people',
@@ -9,9 +7,8 @@ angular.module('romaleev')
 	            controller: 'PeopleCtrl',
 	            abstract: true,
 	            resolve: {
-	            	people: function(peopleService){
-	            		return peopleService.getPeople();
-	            	}
+	            	people: (peopleService)=>
+                        peopleService.getPeople()
 	            }
 	        })
 			.state('people.list', {
@@ -30,17 +27,15 @@ angular.module('romaleev')
 				templateUrl: 'app/people/details.html',
 				controller: 'DetailsCtrl',
 	            resolve: {
-	            	person: function(peopleService, $stateParams){
-	            		return peopleService.getPerson($stateParams.personId);
-	            	}
+	            	person: (peopleService, $stateParams)=>
+                        peopleService.getPerson($stateParams.personId)
 	            }
-	        });
-	})
-	.controller('PeopleCtrl', function($scope, people, peopleService) {
+	        }))
+	.controller('PeopleCtrl', function($scope, people, peopleService){
 		$scope.people = people;
 		$scope.peopleService = peopleService;
 	})
-	.controller('DetailsCtrl', function($scope, person, peopleService) {
+	.controller('DetailsCtrl', function($scope, person, peopleService){
 		$scope.person = person;
 		$scope.peopleService = peopleService;
 	});

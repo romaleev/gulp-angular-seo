@@ -1,32 +1,29 @@
-'use strict';
+import gulp from 'gulp';
+import _multimatch from 'multimatch';
+import _runSequence from 'run-sequence';
+import _opn from 'opn';
 
-var gulp = require('gulp'),
-    $ = gulp.$,
-    task = gulp.config.task,
-    _multimatch = require("multimatch"),
-    _runSequence = require('run-sequence'),
-    _opn = require('opn');
+let $ = gulp.$,
+    task = gulp.config.task;
 
-gulp.task('dist:opt', ['_dist:opt'], function(cb) {
-    _runSequence(['server:stop'], cb);
-});
+gulp.task('dist:opt', ['_dist:opt'], (cb)=>
+    _runSequence(['server:stop'], cb));
 
-gulp.task('prod:opt', ['_dist:opt'], function() {
+gulp.task('prod:opt', ['_dist:opt'], ()=> {
     console.warn('Server is running: ' + gulp.config.url.server.prod);
     _opn(gulp.config.url.server.prod, gulp.config.browser);
 });
 
-gulp.task('ftp:opt', ['_dist:opt'], function(cb){
+gulp.task('ftp:opt', ['_dist:opt'], (cb)=> {
     gulp.config.cache = true;
     _runSequence(['ftp:upload', 'server:stop'], cb);
 });
 
-gulp.task('heroku:opt', ['_dist:opt'], function(cb){
-    _runSequence(['heroku:upload', 'server:stop'], cb);
-});
+gulp.task('heroku:opt', ['_dist:opt'], (cb)=>
+    _runSequence(['heroku:upload', 'server:stop'], cb));
 
-gulp.task('_dist:opt', function(cb) {
-    var tasks = gulp.distTasks,
+gulp.task('_dist:opt', (cb)=> {
+    let tasks = gulp.distTasks,
         files = [],
         src = [task.common.client + '/**/*.*']
                 .concat(task.common.config)
@@ -34,21 +31,21 @@ gulp.task('_dist:opt', function(cb) {
                 .concat(task.js.vendor)
                 .concat(task.css.vendor);
 
-    function no(patterns){
-        return !_multimatch(files, patterns).length;
-    }
-    function cancel(name, _tasks, _index){
-        var tasks = (_index === undefined) ? _tasks : _tasks[_index];
-        var ind = tasks.indexOf(name);
+    let no = (patterns)=>
+        !_multimatch(files, patterns).length;
+
+    let cancel = (name, _tasks, _index)=> {
+        let tasks = (_index === undefined) ? _tasks : _tasks[_index];
+        let ind = tasks.indexOf(name);
         if(ind !== -1){
             tasks.splice(ind, 1);
             if(tasks.length === 0 && _index !== undefined)
                 _tasks.splice(_index, 1);
         } else {
-            for(var i = 0; i < tasks.length; i++)
+            for(let i = 0; i < tasks.length; i++)
                 if(Array.isArray(tasks[i])) cancel(name, tasks, i);
         }
-    }
+    };
 
     gulp.src(src, {base: '.'})
         .pipe($.changed(task.common.dist_cache, {
@@ -56,10 +53,9 @@ gulp.task('_dist:opt', function(cb) {
         }))
         .pipe($.debug({title: 'dist:opt'}))
         .pipe(gulp.dest(task.common.dist_cache))
-        .on('data', function(file) {
-            files.push(file.history[0].slice(file.cwd.length + 1));
-        })
-        .on('end', function() {
+        .on('data', (file)=>
+            files.push(file.history[0].slice(file.cwd.length + 1)))
+        .on('end', ()=> {
             if(no(task.common.config)){ //decline cancelling if config.json changed
                 if(no(task.html.index)) cancel('html', tasks);
                 if(no(task.js.user) && no(task.html.partials)) cancel('js:user', tasks); //js:user dependent on both js:user and html.partials htat are injected into js.

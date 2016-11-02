@@ -1,6 +1,6 @@
 'use strict';
 
-var express = require('express'),
+let express = require('express'),
     path = require('path'),
     clientPath = path.join(__dirname, '/../client'),
     bowerPath = path.join(__dirname, '/../bower_components'),
@@ -17,36 +17,30 @@ express()
     .use(express.static(clientPath))
     .use('/bower_components', express.static(bowerPath))
     .use(require('morgan')('combined', {
-        skip: function(req, res) {
-            return res.statusCode < 400;
-        }
+        skip: (req, res)=>
+            res.statusCode < 400
     }))
     .use(require('errorhandler')({
         dumpExceptions: true,
         showStack: true
     }))
-    .get("/*.html", function(request, response) {
+    .get("/*.html", (request, response)=>
         response.render('./' + request.params[0] + '.jade', {
             pretty: true
-        });
-    })
-    .get("/*.css", function(request, response) {
-        fs.readFile(clientPath + '/' + request.params[0] + '.less', 'utf8', function(err, data) {
+        }))
+    .get("/*.css", (request, response)=>
+        fs.readFile(clientPath + '/' + request.params[0] + '.less', 'utf8', (err, data)=> {
             if (err) throw new Error(err.toString());
-            less.render(data, function(e, css) {
+            less.render(data, (e, css)=> {
                 response.set('Content-Type', 'text/css');
                 response.send(css.css);
             });
-        });
-    })
-    .get("/config.json", function(request, response) {
-        response.sendFile(configPath);
-    })
-    .get("*", function(request, response) {
+        }))
+    .get("/config.json", (request, response)=>
+        response.sendFile(configPath))
+    .get("*", (request, response)=>
         response.render("./index.jade", {
             pretty: true
-        });
-    })
-    .listen(port, function() {
-        console.log(conf.debug ? 'DEV server started: ' + url : '');
-    });
+        }))
+    .listen(port, ()=>
+        console.log(conf.debug ? 'DEV server started: ' + url : ''));

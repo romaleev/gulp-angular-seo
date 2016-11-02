@@ -1,5 +1,8 @@
 {
-  "globalstrict": true,
+  "esversion": 6,
+  "globalstrict": false,
+  "strict": false,
+  "node": true,
   "globals": {
     "angular": false,
     "module": false,

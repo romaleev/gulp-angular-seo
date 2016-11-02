@@ -1,12 +1,11 @@
-'use strict';
+import gulp from 'gulp';
 
-var gulp = require('gulp'),
-    $ = gulp.$,
+let $ = gulp.$,
     conf = gulp.config,
     task = conf.task;
 
-gulp.task('html', function() {
-    var assets = $.useref.assets();
+gulp.task('html', ()=> {
+    let assets = $.useref.assets();
     return gulp.src(task.html.index)
         .pipe($.jade({
             pretty: true

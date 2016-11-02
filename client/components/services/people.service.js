@@ -1,34 +1,28 @@
-'use strict';
-
 angular.module('romaleev')
     .service('peopleService', function($http) {
-        var path = 'http://beta.json-generator.com/api/json/get/BghOLRG?callback=JSON_CALLBACK',
+        let path = 'http://beta.json-generator.com/api/json/get/BghOLRG?callback=JSON_CALLBACK',
             hired = [],
-            salaries = {},
-            _this = this;
+            salaries = {};
 
-        function get(id) {
-            var all = arguments.length === 0 || arguments[0] === undefined;
-            return $http.jsonp(path).then(function(response) {
-                if (all) {
+        let get = (id)=> {
+            return $http.jsonp(path).then((response)=> {
+                if (!id) {
                     return response.data;
                 }
-                for (var i = 0; i < response.data.length; i++) {
+                for (let i = 0; i < response.data.length; i++) {
                     if (response.data[i]._id == id) return response.data[i];
                 }
                 return null;
-            }).catch(function(error) {
-                console.error(error);
-            });
-        }
+            }).catch((error)=> console.error(error));
+        };
 
-        this.getPeople = function() {
-            return get().then(function(people) {
-                _this.allCount = people.length;
-                _this.availableCount = people.length - hired.length;
-                return people.map(function(item, i, arr) {
+        this.getPeople = ()=>
+            get().then((people)=> {
+                this.allCount = people.length;
+                this.availableCount = people.length - hired.length;
+                return people.map((item, i, arr)=> {
                     salaries[item._id] = item.price;
-                    var aboutCut = item.about.substr(0, 99),
+                    let aboutCut = item.about.substr(0, 99),
                         aboutCutSentence = aboutCut.match(/^[\s\S]*\./); //regexp: cut after last dot
                     return {
                         id: item._id,
@@ -41,10 +35,9 @@ angular.module('romaleev')
                     };
                 });
             });
-        };
 
-        this.getPerson = function(id) {
-            return get(id).then(function(person) {
+        this.getPerson = (id)=>
+            get(id).then((person)=> {
                 salaries[id] = person.price;
                 return {
                     Name: '<span class="bold">' + person.name.first + ' ' + person.name.last + '</span>',
@@ -57,10 +50,9 @@ angular.module('romaleev')
                     Salary: '<span class="text-primary">' + person.price + ',000$</span>'
                 };
             });
-        };
 
-        this.hire = function(id) {
-            var index = hired.indexOf(id);
+        this.hire = (id)=> {
+            let index = hired.indexOf(id);
             if (index === -1) {
                 hired.push(id);
                 this.hiredSum += salaries[id];
@@ -74,9 +66,8 @@ angular.module('romaleev')
             return index === -1;
         };
 
-        this.isHired = function(id){
-            return hired.indexOf(id) != -1;
-        };
+        this.isHired = (id)=>
+            hired.indexOf(id) != -1;
 
         this.allCount = 0;
         this.availableCount = 0;

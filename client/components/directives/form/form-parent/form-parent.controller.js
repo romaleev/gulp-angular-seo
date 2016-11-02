@@ -1,8 +1,8 @@
 "use strict";
 
 angular.module('romaleev')
-    .directive('formParent', function() {
-        return {
+    .directive('formParent', ()=>
+        ({
             restrict: 'E',
             replace: true,
             transclude: true,
@@ -17,30 +17,27 @@ angular.module('romaleev')
                 json: '@'
             },
             templateUrl: 'components/directives/form/form-parent/form-parent.html',
-            controller: function($scope, $http) {
+            controller: function($scope, $http){
+                let setDirty = (...args)=> {
+                    let item = args[0];
+                    if(!item || !item.$error) return;
+                    if(item.$error.required === true){
+                        item.$setDirty();
+                    } else angular.forEach(item.$error.required, setDirty);
+                };
                 if(!$scope.model){
                     $scope.model = {};
                 } else if(typeof $scope.model != 'object') throw new Error('non object');
                 $scope.form = $scope;
-                $scope._submit = function(){
+                $scope._submit = ()=> {
                     if($scope.submit) $scope.submit();
                     if($scope[$scope.name].$invalid){
                         if($scope.error) $scope.error();
                         setDirty($scope[$scope.name]);
                     } else if($scope.success) $scope.success();
                 };
-                function setDirty(){
-                    var item = arguments[0];
-                    if(!item || !item.$error) return;
-                    if(item.$error.required === true){
-                        item.$setDirty();
-                    } else angular.forEach(item.$error.required, setDirty);
-                }
             },
-            link: function(scope, element, attr, ctrl, transcludeFn) {
-                transcludeFn(scope, function(clone) {
-                    element.append(clone);
-                });
-            }
-        };
-    });
+            link: (scope, element, attr, ctrl, transcludeFn)=>
+                transcludeFn(scope, (clone)=>
+                    element.append(clone))
+        }));

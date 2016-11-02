@@ -1,8 +1,8 @@
 "use strict";
 
 angular.module('romaleev')
-    .directive('formSelect', function() {
-        return {
+    .directive('formSelect', ()=>
+        ({
             require: '^form',
             restrict: 'E',
             replace: true,
@@ -15,7 +15,7 @@ angular.module('romaleev')
                 onchange: '&'
             },
             templateUrl: 'components/directives/form/form-select/form-select.html',
-            link: function(scope, element, attrs, form) {
+            link: (scope, element, attrs, form)=> {
             	scope.select = form[scope.name];
                 scope.model = scope.$parent.model;
                 if(scope.value){
@@ -27,5 +27,4 @@ angular.module('romaleev')
                         scope.model[scope.name] = scope.data[0];
                 } else scope.inactive = true;
             }
-        };
-    });
+        }));

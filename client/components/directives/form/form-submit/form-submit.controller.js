@@ -1,8 +1,8 @@
 "use strict";
 
 angular.module('romaleev')
-    .directive('formSubmit', function() {
-        return {
+    .directive('formSubmit', ()=>
+        ({
             require: '^form',
             restrict: 'E',
             replace: true,
@@ -12,8 +12,6 @@ angular.module('romaleev')
                 onclick: '&'
             },
             templateUrl: 'components/directives/form/form-submit/form-submit.html',
-            link: function(scope, element, attrs, form) {
-                scope.form = form;
-            }
-        };
-    });
+            link: (scope, element, attrs, form)=>
+                scope.form = form
+        }));

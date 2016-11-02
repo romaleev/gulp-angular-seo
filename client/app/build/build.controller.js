@@ -1,15 +1,12 @@
-'use strict';
-
 angular.module('romaleev')
-    .config(function($stateProvider) {
+    .config(($stateProvider)=>
         $stateProvider
             .state('build', {
                 title: 'Gulp Build',
                 url: '/build',
                 templateUrl: 'app/build/build.html',
                 controller: 'BuildCtrl'
-            });
-    })
+            }))
     .constant('buildConstant', {
         development_tasks: [{
             title: 'Live Reload',
@@ -67,7 +64,6 @@ angular.module('romaleev')
         $scope.log = console.log.bind(console);
         $scope.dev_tasks = buildConstant.development_tasks;
         $scope.prod_tasks = buildConstant.production_tasks;
-        $http.get('/config.json').success(function(data) {
-            $scope.config = data;
-        });
+        $http.get('/config.json').success((data)=>
+            $scope.config = data);
     });
