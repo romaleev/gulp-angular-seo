@@ -31,7 +31,7 @@ gulp.task('js:user', ()=> {
             .pipe($.concat('html2js'));
 
     return _streamqueue({objectMode: true}, js, html2js)
-        .pipe($.uglify())
+        .pipe($.uglify({ mangle: false }))
         .pipe($.concat(task.js.user_file))
         .pipe($.sourcemaps.write('.'))
         .pipe(gulp.dest(task.js.dist));

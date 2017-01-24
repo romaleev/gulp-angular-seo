@@ -1,5 +1,5 @@
 {
-    "browser": "chrome",
+    "browser": "google chrome",
     "debug": false,
     "url": {
         "server": {
